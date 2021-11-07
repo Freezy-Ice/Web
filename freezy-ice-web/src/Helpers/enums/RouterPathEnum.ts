@@ -1,4 +1,4 @@
 export enum RouterPathEnum {
-  HOME = '/',
-  Error404 = '',
+    HOME = '/',
+    Error404 = '',
 }

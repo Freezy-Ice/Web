@@ -3,7 +3,7 @@ import IState from '../Interface/IState';
 import reducerCommon from './Common/reducer';
 
 const reducers: Reducer<IState> = combineReducers<IState>({
-  common: reducerCommon,
+    common: reducerCommon,
 });
 
 export default reducers;

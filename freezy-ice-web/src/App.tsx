@@ -6,15 +6,15 @@ import Router from './router';
 import { Store } from './Store';
 
 function App() {
-  dotenv.config();
+    dotenv.config();
 
-  return (
-    <Provider store={Store}>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
-    </Provider>
-  );
+    return (
+        <Provider store={Store}>
+            <BrowserRouter>
+                <Router />
+            </BrowserRouter>
+        </Provider>
+    );
 }
 
 export default App;
