@@ -1,11 +1,5 @@
 // @flow
-import {
-    Backdrop,
-    CircularProgress,
-    Divider,
-    Theme,
-    Typography,
-} from '@mui/material';
+import { Backdrop, CircularProgress, Divider, Theme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import * as React from 'react';
 
@@ -37,38 +31,21 @@ export default function Loading(props: Props) {
     return (
         <Backdrop
             className={classes.backdrop}
-            open={
-                open ||
-                state.loading ||
-                state.saving ||
-                state.processing
-            }
+            open={open || state.loading || state.saving || state.processing}
         >
             <div className={classes.root}>
                 {state.loading && (
-                    <Typography
-                        variant="h1"
-                        component="h2"
-                        gutterBottom
-                    >
+                    <Typography variant="h1" component="h2" gutterBottom>
                         Ładowanie ...
                     </Typography>
                 )}
                 {state.saving && (
-                    <Typography
-                        variant="h1"
-                        component="h2"
-                        gutterBottom
-                    >
+                    <Typography variant="h1" component="h2" gutterBottom>
                         Zapisywanie ...
                     </Typography>
                 )}
                 {!state.loading && state.processing && (
-                    <Typography
-                        variant="h1"
-                        component="h2"
-                        gutterBottom
-                    >
+                    <Typography variant="h1" component="h2" gutterBottom>
                         Przetwarzanie ...
                     </Typography>
                 )}

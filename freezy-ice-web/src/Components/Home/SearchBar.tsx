@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Home() {
+export default function SearchBar() {
     return (
         <div>
-            <h1>Strona główna</h1>
+            <h1>Wyszukiwanie</h1>
         </div>
     );
 }

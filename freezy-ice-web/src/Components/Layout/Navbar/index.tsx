@@ -36,8 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Navbar() {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] =
-        React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const openProfile = Boolean(anchorEl);
 
     const handleLogout = () => {
@@ -46,9 +45,7 @@ export default function Navbar() {
         setAnchorEl(null);
     };
 
-    const handleMenuProfile = (
-        event: React.MouseEvent<HTMLElement>,
-    ) => {
+    const handleMenuProfile = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -67,10 +64,7 @@ export default function Navbar() {
                     >
                         <HomeIcon />
                     </IconButton>
-                    <Typography
-                        variant="h6"
-                        className={classes.title}
-                    >
+                    <Typography variant="h6" className={classes.title}>
                         <Link
                             color="inherit"
                             href="/"
@@ -105,19 +99,11 @@ export default function Navbar() {
                             open={openProfile}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>
-                                Profile
-                            </MenuItem>
-                            <MenuItem onClick={handleLogout}>
-                                Wyloguj
-                            </MenuItem>
+                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
                         </Menu>
                     </div>
-                    <Button
-                        className={classes.button}
-                        variant="contained"
-                        href="/"
-                    >
+                    <Button className={classes.button} variant="contained" href="/">
                         Zaloguj
                     </Button>
                 </Toolbar>
