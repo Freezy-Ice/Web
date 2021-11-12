@@ -9,7 +9,7 @@ import './index.css';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#f59fbe',
+            main: '#81E2DC',
         },
     },
 });
