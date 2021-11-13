@@ -24,14 +24,14 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'space-between',
             padding: '2%',
         },
-        details_left: {
+        detailsLeft: {
             textAlign: 'left',
         },
-        details_right: {
+        detailsRight: {
             justifyContent: 'right',
             textAlign: 'right',
         },
-        rate_frame: {
+        rateFrame: {
             display: 'flex',
             justifyContent: 'right',
             textAlign: 'right',
@@ -66,7 +66,7 @@ export default function HomeComponentDetails(props: IDefaultProps) {
                 <img src={shop.picture} alt="" width="100%" height="100%" />
             </Paper>
             <Paper className={classes.deatils}>
-                <div className={classes.details_left}>
+                <div className={classes.detailsLeft}>
                     <h2>{shop.name}</h2>
                     <h4>{shop.description}</h4>
                     <h5>
@@ -74,14 +74,14 @@ export default function HomeComponentDetails(props: IDefaultProps) {
                         {stringDateFormat(shop.updatedAt, DateTimeFormatEnum.DateTime)}
                     </h5>
                 </div>
-                <div className={classes.details_right}>
-                    <RoomIcon className={classes.details_right} />
+                <div className={classes.detailsRight}>
+                    <RoomIcon className={classes.detailsRight} />
                     <h5>{shop.address}</h5>
                     <h5>
                         Otwarte od: {stringDateFormat(shop.openAt, DateTimeFormatEnum.HoursMinutes)}{' '}
                         do: {stringDateFormat(shop.closedAt, DateTimeFormatEnum.HoursMinutes)}
                     </h5>
-                    <div className={classes.rate_frame}>
+                    <div className={classes.rateFrame}>
                         <Rating
                             name="read-only"
                             value={shop.grade}
