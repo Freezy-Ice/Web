@@ -61,7 +61,7 @@ export default function HomeComponentDetails(props: IDefaultProps) {
     const { shop } = props;
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} id={shop.id.toString()}>
             <Paper className={classes.picture}>
                 <img src={shop.picture} alt="" width="100%" height="100%" />
             </Paper>
