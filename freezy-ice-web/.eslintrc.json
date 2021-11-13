@@ -37,7 +37,7 @@
     "prettier/prettier": [
       "error",
       {
-        "printWidth": 70,
+        "printWidth": 100,
         "tabWidth": 4,
         "endOfLine": "auto"
       }

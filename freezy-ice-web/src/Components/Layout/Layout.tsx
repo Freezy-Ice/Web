@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
             overflow: 'auto',
             alignContent: 'center',
         },
-        appBarSpacer: theme.mixins.toolbar,
         container: {
             padding: theme.spacing(0),
         },
@@ -57,9 +56,6 @@ export default function Layout(props: IDefaultProps) {
                         >
                             <ToastContainer />
                             <main className={classes.content}>
-                                <div
-                                    className={classes.appBarSpacer}
-                                />
                                 <div className={classes.container}>
                                     <Component {...matchProps} />
                                     <Box pt={4}>
@@ -68,9 +64,7 @@ export default function Layout(props: IDefaultProps) {
                                 </div>
                             </main>
                             <ErrorSnack />
-                            <Loading
-                                open={state.loading || state.saving}
-                            />
+                            <Loading open={state.loading || state.saving} />
                         </IconContext.Provider>
                     </>
                 )}
