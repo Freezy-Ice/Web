@@ -33,7 +33,7 @@ export default function HomeComponents(props: IDefaultProps) {
     return (
         <div className={classes.root}>
             {shops.map((shop) => (
-                <HomeComponentDetails shop={shop} />
+                <HomeComponentDetails shop={shop} key={shop.id} />
             ))}
         </div>
     );

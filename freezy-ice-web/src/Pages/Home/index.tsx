@@ -32,8 +32,8 @@ function Home() {
 
     return (
         <div>
-            <SearchBar />
-            <HomeComponents shops={shops} />
+            <SearchBar key="SearchBar" />
+            <HomeComponents shops={shops} key="HomeComponents" />
         </div>
     );
 }
