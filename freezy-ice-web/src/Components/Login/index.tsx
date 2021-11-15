@@ -11,6 +11,9 @@ import Container from '@mui/material/Container';
 import { Link, NavLink } from 'react-router-dom';
 
 export default function Login() {
+    const [login, setLogin] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -38,6 +41,7 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={(event) => setLogin(event.target.value as string)}
                     />
                     <TextField
                         margin="normal"
@@ -48,6 +52,7 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={(event) => setPassword(event.target.value as string)}
                     />
                     <Link to="/" style={{ textDecoration: 'none' }}>
                         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
