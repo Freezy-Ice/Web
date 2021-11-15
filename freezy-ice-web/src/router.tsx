@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Switch } from 'react-router-dom';
-import Home from './Components/Home';
+import Home from './Pages/Home';
 import Layout from './Components/Layout/Layout';
 import Login from './Components/Login';
 import { RouterPathEnum } from './Helpers/enums';
