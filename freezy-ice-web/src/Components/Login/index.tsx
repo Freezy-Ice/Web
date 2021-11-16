@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'center',
         },
         button: {
-            mt: 3,
-            mb: 2,
+            marginTop: 3,
+            marginBotom: 2,
         },
     }),
 );
@@ -42,7 +42,7 @@ export default function Login() {
                 <Typography component="h1" variant="h5">
                     Logowanie
                 </Typography>
-                <Box component="form" noValidate sx={{ mt: 1 }}>
+                <Box component="form" noValidate sx={{ marginTop: 1 }}>
                     <TextField
                         margin="normal"
                         required
