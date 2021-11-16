@@ -42,7 +42,7 @@ export default function Registration() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Zaloguj się
+                    Zarejestruj się
                 </Typography>
                 <Box component="form" noValidate sx={{ marginTop: 3 }}>
                     <Grid container spacing={2}>
@@ -94,12 +94,12 @@ export default function Registration() {
                         </Grid>
                     </Grid>
                     <Button type="submit" fullWidth variant="contained">
-                        Sign Up
+                        Zarejestruj
                     </Button>
                     <Grid container>
                         <Grid item xs>
                             <NavLink to="/" activeStyle={{ color: '#81E2DC' }}>
-                                Zarejestrój własną lodziarnię?
+                                Zarejestruj własną lodziarnię
                             </NavLink>
                         </Grid>
                         <Grid item>
