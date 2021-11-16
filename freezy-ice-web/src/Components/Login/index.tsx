@@ -9,22 +9,33 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link, NavLink } from 'react-router-dom';
+import { Theme } from '@mui/material/styles';
+import { createStyles, makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        box: {
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        button: {
+            mt: 3,
+            mb: 2,
+        },
+    }),
+);
 
 export default function Login() {
+    const classes = useStyles();
     const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
-            >
+            <Box className={classes.box}>
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -55,7 +66,12 @@ export default function Login() {
                         onChange={(event) => setPassword(event.target.value as string)}
                     />
                     <Link to="/" style={{ textDecoration: 'none' }}>
-                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            className={classes.button}
+                        >
                             Zaloguj
                         </Button>
                     </Link>
