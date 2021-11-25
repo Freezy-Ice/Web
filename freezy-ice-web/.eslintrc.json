@@ -46,6 +46,7 @@
     "@typescript-eslint/no-use-before-define": [
       "error"
     ],
+    "react/require-default-props": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "react/react-in-jsx-scope": "off",

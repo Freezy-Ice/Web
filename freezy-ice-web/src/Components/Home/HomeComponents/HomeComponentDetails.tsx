@@ -5,6 +5,8 @@ import RoomIcon from '@mui/icons-material/Room';
 import * as React from 'react';
 import { stringDateFormat } from '../../../Helpers/date';
 import { DateTimeFormatEnum } from '../../../Helpers/enums';
+import MapModal from '../../Modals/MapModal';
+import { ShopResponse } from '../../../Store/Interface/Shop/ShopResponse';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,22 +45,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IDefaultProps {
-    shop: {
-        id: number;
-        name: string;
-        description: string;
-        updatedAt: string;
-        address: string;
-        openAt: string;
-        closedAt: string;
-        grade: number;
-        picture: string;
-    };
+    shop: ShopResponse;
 }
 
 export default function HomeComponentDetails(props: IDefaultProps) {
     const classes = useStyles();
     const { shop } = props;
+    const [openMap, setOpenMap] = React.useState(false);
 
     return (
         <div className={classes.root} id={shop.id.toString()}>
@@ -75,7 +68,7 @@ export default function HomeComponentDetails(props: IDefaultProps) {
                     </h5>
                 </div>
                 <div className={classes.detailsRight}>
-                    <RoomIcon className={classes.detailsRight} />
+                    <RoomIcon className={classes.detailsRight} onClick={() => setOpenMap(true)} />
                     <h5>{shop.address}</h5>
                     <h5>
                         Otwarte od: {stringDateFormat(shop.openAt, DateTimeFormatEnum.HoursMinutes)}{' '}
@@ -93,6 +86,7 @@ export default function HomeComponentDetails(props: IDefaultProps) {
                     </div>
                 </div>
             </Paper>
+            <MapModal open={openMap} close={setOpenMap} shop={shop} />
         </div>
     );
 }
