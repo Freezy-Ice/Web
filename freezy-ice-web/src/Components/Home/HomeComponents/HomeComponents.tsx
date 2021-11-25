@@ -47,10 +47,10 @@ export default function HomeComponents(props: IDefaultProps) {
             </div>
             <div>
                 {shops.map((shop) => (
-                    <HomeComponentDetails shop={shop} key={shop.id} />
+                    <HomeComponentDetails shop={shop} />
                 ))}
             </div>
-            <MapModal open={openMap} close={setOpenMap} shops={shops} />
+            <MapModal open={openMap} key={shops.length} close={setOpenMap} shops={shops} />
         </div>
     );
 }
