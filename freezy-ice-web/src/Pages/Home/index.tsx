@@ -4,7 +4,7 @@ import HomeComponents from '../../Components/Home/HomeComponents/HomeComponents'
 import SearchBar from '../../Components/Home/SearchBar';
 import { ShopResponse } from '../../Store/Interface/Shop/ShopResponse';
 
-function Home() {
+function HomePage() {
     const [shops] = React.useState<Array<ShopResponse>>([
         {
             id: 1,
@@ -18,6 +18,7 @@ function Home() {
             picture:
                 'https://dictionary.cambridge.org/pl/images/thumb/black_noun_002_03536.jpg?version=5.0.195',
             cords: [51.204574, 16.148809],
+            isFavorite: true,
         },
         {
             id: 2,
@@ -31,6 +32,7 @@ function Home() {
             picture:
                 'https://dictionary.cambridge.org/pl/images/thumb/black_noun_002_03536.jpg?version=5.0.195',
             cords: [51.202184, 16.154527],
+            isFavorite: true,
         },
     ]);
 
@@ -42,4 +44,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default HomePage;

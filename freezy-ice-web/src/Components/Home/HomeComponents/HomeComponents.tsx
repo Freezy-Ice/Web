@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
-import { LatLngExpression } from 'leaflet';
 import HomeComponentDetails from './HomeComponentDetails';
 import MapModal from '../../Modals/MapModal';
 import { ShopResponse } from '../../../Store/Interface/Shop/ShopResponse';

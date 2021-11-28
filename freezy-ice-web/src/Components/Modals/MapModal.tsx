@@ -3,7 +3,6 @@ import * as React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import { Dispatch, SetStateAction } from 'react';
-import { LatLngExpression } from 'leaflet';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import { ShopResponse } from '../../Store/Interface/Shop/ShopResponse';

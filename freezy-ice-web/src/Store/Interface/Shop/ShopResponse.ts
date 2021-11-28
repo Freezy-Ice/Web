@@ -11,4 +11,5 @@ export interface ShopResponse {
     grade: number;
     picture: string;
     cords: LatLngExpression;
+    isFavorite: boolean;
 }
