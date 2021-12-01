@@ -2,8 +2,10 @@ import { Grid, Pagination, Stack } from '@mui/material';
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+
+import '../../Helpers/translations/i18n';
 import ProductInfo from '../../Components/Shop/ProductInfo';
 import { useAppDispatch, useAppSelector } from '../../Store';
 import { productState, ratingsState, shopDetailsState } from '../../Store/selectors';
@@ -27,6 +29,7 @@ function ShopPage() {
     const ratings = useAppSelector(ratingsState);
     const dispatch = useAppDispatch();
     const { id } = useParams<{ id?: string }>();
+    const { t } = useTranslation();
 
     React.useEffect(() => {
         if (id && products === null) {
@@ -58,7 +61,7 @@ function ShopPage() {
                 {ratings !== null ? (
                     <div>
                         <Grid container spacing={2} direction="row" className={classes.root}>
-                            <h1>Opinie:</h1>
+                            <h1>{t('rates')}:</h1>
                             {ratings?.data?.map((rating) => (
                                 <Grid item xs={12} md={12}>
                                     <ShopRating rating={rating} />

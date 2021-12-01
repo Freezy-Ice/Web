@@ -4,6 +4,8 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Button, Grid, IconButton, Rating } from '@mui/material';
 import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useTranslation } from 'react-i18next';
+import '../../Helpers/translations/i18n';
 
 import { ShopDetailsInterface } from '../../Store/Interface/Shop/ShopInterface';
 import { DateTimeFormatEnum } from '../../Helpers/enums';
@@ -68,6 +70,7 @@ export default function ShopBaseInfo(props: IDefaultProps) {
     const { shop } = props;
     const classes = useStyles();
     const [openMap, setOpenMap] = React.useState(false);
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
 
     const handleFavourite = () => {
@@ -109,16 +112,16 @@ export default function ShopBaseInfo(props: IDefaultProps) {
                 </Grid>
                 <Grid item xs={12}>
                     <div className={classes.hourFrame}>
-                        <h3>Godziny otwarcia:</h3>
+                        <h3>{t('openingHours')}:</h3>
                         {shop.openingHours.map((oh) => (
                             <div className={classes.hourBox}>
-                                <h5 className={classes.hours}>:</h5>
+                                <h5 className={classes.hours}>{t(oh.day)}:</h5>
                                 {oh.open ? (
                                     <p className={classes.hours}>
                                         {oh.from}-{oh.to}
                                     </p>
                                 ) : (
-                                    <p className={classes.hours}>Nieczynne</p>
+                                    <p className={classes.hours}>{t('closed')}</p>
                                 )}
                             </div>
                         ))}
