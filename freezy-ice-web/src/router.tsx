@@ -7,11 +7,17 @@ import { RouterPathEnum } from './Helpers/enums';
 import Error404 from './Pages/Error404';
 import Registration from './Components/Registration';
 import ShopPage from './Pages/Shop';
+import RestaurantRegistration from './Components/RestaurantRegistration';
 
 function Router() {
     return (
         <Switch>
             <Layout exact path={RouterPathEnum.HOME} component={HomePage} />
+            <Layout
+                exact
+                path={RouterPathEnum.RESTAURANTREGISTRATION}
+                component={RestaurantRegistration}
+            />
             <Layout exact path={RouterPathEnum.REGISTRATION} component={Registration} />
             <Layout exact path={RouterPathEnum.LOGIN} component={Login} />
             <Layout exact path={RouterPathEnum.SHOP} component={ShopPage} />
