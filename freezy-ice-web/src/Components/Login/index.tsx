@@ -82,7 +82,7 @@ export default function Login() {
                             </NavLink>
                         </Grid>
                         <Grid item>
-                            <NavLink to="/" activeStyle={{ color: '#81E2DC' }}>
+                            <NavLink to="/registration" activeStyle={{ color: '#81E2DC' }}>
                                 Rejestracja
                             </NavLink>
                         </Grid>
