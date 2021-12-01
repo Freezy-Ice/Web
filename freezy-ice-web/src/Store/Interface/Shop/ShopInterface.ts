@@ -1,3 +1,5 @@
+import { PaginationInterface } from './PaginationInterface';
+
 export interface ShopDetailsInterface {
     id: number;
     name: string;
@@ -33,11 +35,7 @@ export interface ShopsInterface {
 
 export interface ShopsIndex {
     data: Array<ShopsInterface>;
-    paginationData: {
-        total: number;
-        perPage: number;
-        currentPage: number;
-    };
+    paginationData: PaginationInterface;
 }
 
 export interface OpeningHoursInterface {

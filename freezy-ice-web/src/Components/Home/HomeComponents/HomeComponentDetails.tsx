@@ -3,6 +3,7 @@ import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import RoomIcon from '@mui/icons-material/Room';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { stringDateFormat } from '../../../Helpers/date';
 import { DateTimeFormatEnum } from '../../../Helpers/enums';
 import MapModal from '../../Modals/MapModal';
@@ -57,7 +58,9 @@ export default function HomeComponentDetails(props: IDefaultProps) {
     return (
         <div className={classes.root} id={shop.id.toString()}>
             <Paper className={classes.picture}>
-                <img src={shop.imageUrl} alt="" width="100%" height="100%" />
+                <Link to={`/shop/${shop.id}`} style={{ textDecoration: 'none' }}>
+                    <img src={shop.imageUrl} alt="" width="100%" height="100%" />
+                </Link>
             </Paper>
             <Paper className={classes.deatils}>
                 <div className={classes.detailsLeft}>

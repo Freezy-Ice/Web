@@ -7,3 +7,4 @@ export const shopsState = (state: RootState) => state.shopState.shopsListState;
 export const categoriesState = (state: RootState) => state.dictionaryState.categoriesListState;
 export const citiesState = (state: RootState) => state.dictionaryState.citiesListState;
 export const flavorsState = (state: RootState) => state.dictionaryState.flavorsListState;
+export const ratingsState = (state: RootState) => state.shopState.ratingsListState;

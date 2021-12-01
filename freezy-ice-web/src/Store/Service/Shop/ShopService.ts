@@ -17,3 +17,8 @@ export const LikeShop = async (shopId: string) =>
 
 export const DislikeShop = async (shopId: string) =>
     SendPostWithoutPayloadRequest(`${url}/ice-cream-shops/${shopId}/dislike`);
+
+export const GetRatings = async (currentPage: number, shopId: string) =>
+    SendGetRequest(
+        `${url}/ice-cream-shops/${shopId}/ratings?per_page=${5}&current_page=${currentPage}`,
+    );
