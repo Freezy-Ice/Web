@@ -28,9 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
         container: {
             padding: theme.spacing(1),
         },
-        fixedHeight: {
-            height: 240,
-        },
     }),
 );
 

@@ -1,100 +1,134 @@
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Avatar, Button, Grid, IconButton, Rating } from '@mui/material';
+import { Button, Grid, IconButton, Rating } from '@mui/material';
 import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { ShopResponse } from '../../Store/Interface/Shop/ShopResponse';
+import { ShopDetailsInterface } from '../../Store/Interface/Shop/ShopInterface';
+import { DateTimeFormatEnum } from '../../Helpers/enums';
+import { stringDateFormat } from '../../Helpers/date';
+import DayEnums from '../../Helpers/enums/DayEnum';
+import { PostLikeAndDislikeShop } from '../../Store/Reducer/Shop/action';
+import { useAppDispatch } from '../../Store';
+import MapModal from '../Modals/MapModal';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-            marginLeft: '20%',
-            marginRight: '20%',
+        shopDetailsFrame: {
+            marginLeft: '10%',
+            marginRight: '10%',
             display: 'flex',
             flexDirection: 'column',
             border: '3px solid #81E2DC',
-            maxWidth: '60vw',
+            maxWidth: '80vw',
+            marginBottom: '2%',
         },
         pictureBox: {
             maxHeight: '30vh',
             overflow: 'hidden',
         },
         rateFrame: {
-            display: 'flex',
-            justifyContent: 'right',
-            textAlign: 'right',
-        },
-        rate: {
-            paddingTop: '10%',
+            textAlign: 'center',
         },
         buttonBox: {
-            marginBottom: '1%',
+            textAlign: 'center',
         },
-        button: {
-            float: 'right',
+        titleFrame: {
+            display: 'flex',
+            flexDirection: 'column',
+            borderBottom: '2px solid #81E2DC',
+        },
+        hourFrame: {
+            display: 'flex',
+            flexDirection: 'column',
+            textAlign: 'center',
+            borderBottom: '2px solid #81E2DC',
+            alignItems: 'center',
+        },
+        hourBox: {
+            display: 'flex',
+            flexDirection: 'row',
+        },
+        hours: {
+            margin: '5px',
+        },
+        descriptionFrame: {
+            paddingLeft: '5%',
+            paddingRight: '5%',
         },
     }),
 );
 
 interface IDefaultProps {
-    shop: ShopResponse;
+    shop: ShopDetailsInterface;
 }
 
 export default function ShopBaseInfo(props: IDefaultProps) {
     const { shop } = props;
     const classes = useStyles();
     const [openMap, setOpenMap] = React.useState(false);
+    const dispatch = useAppDispatch();
+
+    const handleFavourite = () => {
+        PostLikeAndDislikeShop(dispatch, shop.id.toString(), shop.favourite);
+    };
 
     return (
-        <div className={classes.root}>
+        <div className={classes.shopDetailsFrame}>
             <div className={classes.pictureBox}>
-                <img src={shop.picture} alt="" width="100%" height="100%" />
+                <img src={shop.imageUrl} alt="" width="100%" height="100%" />
             </div>
-            <Grid container spacing={2}>
-                <Grid item xs={8}>
-                    <h3>{shop.name}</h3>
-                </Grid>
-                <Grid item xs={4}>
-                    <div className={classes.rateFrame}>
-                        <Rating
-                            name="read-only"
-                            value={shop.grade}
-                            precision={0.5}
-                            readOnly
-                            className={classes.rate}
-                        />
-                        <h5>{shop.grade}</h5>
-                    </div>
-                </Grid>
-                <Grid item xs={6}>
-                    <div>Godziny otwarcia:</div>
-                </Grid>
-                <Grid item xs={6}>
-                    <div className={classes.buttonBox}>
-                        <Button
-                            className={classes.button}
-                            variant="contained"
-                            onClick={() => setOpenMap(true)}
-                        >
-                            <MapTwoToneIcon fontSize="large" color="action" />
-                        </Button>
-                    </div>
-                    <div>
-                        <IconButton size="large">
-                            {shop.isFavorite ? (
-                                <FavoriteIcon style={{ fill: 'red' }} />
-                            ) : (
-                                <FavoriteIcon />
-                            )}
-                        </IconButton>
-                    </div>
+            <Grid container>
+                <Grid
+                    item
+                    xs={12}
+                    sx={{ backgroundColor: 'primary.main' }}
+                    className={classes.titleFrame}
+                >
+                    <Grid textAlign="center" item xs={10}>
+                        <h2>{shop.name}</h2>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <div className={classes.rateFrame}>
+                            <Rating name="read-only" value={shop.rating} precision={0.5} readOnly />
+                        </div>
+                        <div className={classes.buttonBox}>
+                            <Button onClick={() => setOpenMap(true)}>
+                                <MapTwoToneIcon fontSize="large" color="action" />
+                            </Button>
+                            <IconButton size="large" onClick={() => handleFavourite()}>
+                                {shop.favourite ? (
+                                    <FavoriteIcon style={{ fill: 'red' }} />
+                                ) : (
+                                    <FavoriteIcon />
+                                )}
+                            </IconButton>
+                        </div>
+                    </Grid>
                 </Grid>
                 <Grid item xs={12}>
+                    <div className={classes.hourFrame}>
+                        <h3>Godziny otwarcia:</h3>
+                        {shop.openingHours.map((oh) => (
+                            <div className={classes.hourBox}>
+                                <h5 className={classes.hours}>:</h5>
+                                {oh.open ? (
+                                    <p className={classes.hours}>
+                                        {oh.from}-{oh.to}
+                                    </p>
+                                ) : (
+                                    <p className={classes.hours}>Nieczynne</p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </Grid>
+                <Grid item xs={12} className={classes.descriptionFrame}>
                     <p>{shop.description}</p>
                 </Grid>
             </Grid>
+            <MapModal open={openMap} close={setOpenMap} shopDetails={shop} />
         </div>
     );
 }

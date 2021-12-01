@@ -1,26 +1,52 @@
+import { Grid } from '@mui/material';
 import * as React from 'react';
+import { Theme } from '@mui/material/styles';
+import { createStyles, makeStyles } from '@mui/styles';
+
+import { useParams } from 'react-router';
+import ProductInfo from '../../Components/Shop/ProductInfo';
+import { useAppDispatch, useAppSelector } from '../../Store';
+import { productState, shopDetailsState } from '../../Store/selectors';
+import { FetchProductsList, FetchShopDetails } from '../../Store/Reducer/Shop/action';
 import ShopBaseInfo from '../../Components/Shop/ShopBaseInfo';
-import { ShopResponse } from '../../Store/Interface/Shop/ShopResponse';
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            marginRight: '10%',
+            marginLeft: '10%',
+        },
+    }),
+);
 
 function ShopPage() {
-    const [shop] = React.useState<ShopResponse>({
-        id: 1,
-        name: 'Lodziarnia 1',
-        description: 'Testowy pierwszy opis lodziarni',
-        updatedAt: '2015-05-16T05:50:06',
-        address: 'Miasto ul. Daleka 11',
-        openAt: '2015-05-16T05:50:06',
-        closedAt: '2015-05-16T15:50:06',
-        grade: 1.5,
-        picture:
-            'https://dictionary.cambridge.org/pl/images/thumb/black_noun_002_03536.jpg?version=5.0.195',
-        cords: [51.204574, 16.148809],
-        isFavorite: true,
-    });
+    const classes = useStyles();
+    const products = useAppSelector(productState);
+    const shop = useAppSelector(shopDetailsState);
+    const dispatch = useAppDispatch();
+    const { id } = useParams<{ id?: string }>();
+
+    React.useEffect(() => {
+        if (id && products === null) {
+            FetchProductsList(dispatch, id);
+        }
+        if (id && shop === null) {
+            FetchShopDetails(dispatch, id);
+        }
+    }, [products, dispatch, id, shop]);
 
     return (
         <div>
-            <ShopBaseInfo shop={shop} />
+            {shop !== null ? <ShopBaseInfo shop={shop?.data} /> : null}
+            <div className={classes.root}>
+                <Grid container spacing={2} direction="row" className={classes.root}>
+                    {products?.data?.map((product) => (
+                        <Grid item xs={12} md={4}>
+                            <ProductInfo product={product} />
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
         </div>
     );
 }

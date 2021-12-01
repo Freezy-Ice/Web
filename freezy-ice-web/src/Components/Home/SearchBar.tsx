@@ -11,6 +11,13 @@ import {
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../Store';
+import {
+    FetchCategoriesList,
+    FetchCitiesList,
+    FetchFlavorsList,
+} from '../../Store/Reducer/Dictionaries/action';
+import { categoriesState, citiesState, flavorsState } from '../../Store/selectors';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -42,44 +49,24 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function SearchBar() {
     const classes = useStyles();
-    const [cities] = React.useState([
-        { label: 'Legnica' },
-        { label: 'Wrocław' },
-        { label: 'Sosnowiec' },
-    ]);
-    const [categories] = React.useState([
-        { id: 1, name: 'Włoskie' },
-        { id: 2, name: 'Amerykańskie' },
-        { id: 3, name: 'Gałkowe' },
-        { id: 10, name: 'Włoskie' },
-        { id: 20, name: 'Amerykańskie' },
-        { id: 30, name: 'Gałkowe' },
-        { id: 100, name: 'Włoskie' },
-        { id: 200, name: 'Amerykańskie' },
-        { id: 300, name: 'Gałkowe' },
-        { id: 1000, name: 'Włoskie' },
-        { id: 2000, name: 'Amerykańskie' },
-    ]);
-    const [flavors] = React.useState([
-        { id: 1, name: 'Truskawka' },
-        { id: 2, name: 'Malina' },
-        { id: 3, name: 'Czekolada' },
-        { id: 4, name: 'Wanilia' },
-        { id: 5, name: 'Wiśnia' },
-        { id: 6, name: 'Śmietankowy' },
-        { id: 7, name: 'Truskawka' },
-        { id: 8, name: 'Malina' },
-        { id: 9, name: 'Czekolada' },
-        { id: 10, name: 'Wanilia' },
-        { id: 20, name: 'Wiśnia' },
-        { id: 30, name: 'Śmietankowy' },
-        { id: 100, name: 'Truskawka' },
-        { id: 200, name: 'Malina' },
-        { id: 300, name: 'Czekolada' },
-        { id: 1000, name: 'Wanilia' },
-        { id: 2000, name: 'Wiśnia' },
-        { id: 3000, name: 'Śmietankowy' },
-    ]);
+
+    const cities = useAppSelector(citiesState);
+    const categories = useAppSelector(categoriesState);
+    const flavors = useAppSelector(flavorsState);
+    const dispatch = useAppDispatch();
+
+    React.useEffect(() => {
+        if (cities === null) {
+            FetchCitiesList(dispatch);
+        }
+        if (categories === null) {
+            FetchCategoriesList(dispatch);
+        }
+        if (flavors === null) {
+            FetchFlavorsList(dispatch);
+        }
+    }, [cities, categories, flavors, dispatch]);
+
     const [sortType, setSortType] = React.useState(0);
     const [categoryId, setCategoryId] = React.useState(0);
     const [tasteId, setTasteId] = React.useState(0);
@@ -92,21 +79,23 @@ export default function SearchBar() {
     return (
         <Paper className={classes.root}>
             <div>
-                <Autocomplete
-                    sx={{ mb: '3px' }}
-                    disablePortal
-                    className={classes.textField}
-                    id="combo-box"
-                    options={cities}
-                    renderInput={(params) => (
-                        <TextField
-                            className={classes.textField}
-                            {...params}
-                            label="Miasto"
-                            onChange={(event) => setCityName(event.target.value as string)}
-                        />
-                    )}
-                />
+                {cities && (
+                    <Autocomplete
+                        sx={{ mb: '3px' }}
+                        disablePortal
+                        className={classes.textField}
+                        id="combo-box"
+                        options={cities!.data.map((c) => c.name)}
+                        renderInput={(params) => (
+                            <TextField
+                                className={classes.textField}
+                                {...params}
+                                label="Miasto"
+                                onChange={(event) => setCityName(event.target.value as string)}
+                            />
+                        )}
+                    />
+                )}
                 <TextField
                     sx={{ mb: '3px' }}
                     className={classes.textField}
@@ -170,7 +159,7 @@ export default function SearchBar() {
             <div className={classes.filterBox}>
                 <div className={classes.filterField}>
                     <h3 className={classes.h3}>Kategorie: </h3>
-                    {categories.map((category) => (
+                    {categories?.data.map((category) => (
                         <Chip
                             key={category.id}
                             color="primary"
@@ -183,7 +172,7 @@ export default function SearchBar() {
                 </div>
                 <div>
                     <h3 className={classes.h3}>Smaki: </h3>
-                    {flavors.map((taste) => (
+                    {flavors?.data.map((taste) => (
                         <Chip
                             key={taste.id}
                             color="primary"
