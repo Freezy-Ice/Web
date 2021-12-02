@@ -6,6 +6,16 @@ enum ActionsEnums {
     LOADING = 'Loading',
     SAVING = 'Saving',
     PROCESSING = 'Processing',
+
+    GET_PRODUCTS = 'GET_PRODUCTS',
+    GET_SHOP_DETAILS = 'GET_SHOP_DETAILS',
+    GET_SHOPS = 'GET_SHOPS',
+
+    GET_CITIES = 'GET_CITIES',
+    GET_FLAVORS = 'GET_FLAVORS',
+    GET_CATEGORIES = 'GET_CATEGORIES',
+
+    GET_RATINGS = 'GET_RATINGS',
 }
 
 export default ActionsEnums;

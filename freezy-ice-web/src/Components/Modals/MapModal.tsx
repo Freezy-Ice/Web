@@ -3,10 +3,10 @@ import * as React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import { Dispatch, SetStateAction } from 'react';
-import { LatLngExpression } from 'leaflet';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { ShopResponse } from '../../Store/Interface/Shop/ShopResponse';
+import { LatLngExpression } from 'leaflet';
+import { ShopDetailsInterface, ShopsInterface } from '../../Store/Interface/Shop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -24,13 +24,28 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IDefaultProps {
     open: boolean;
     close: Dispatch<SetStateAction<boolean>>;
-    shops?: Array<ShopResponse>;
-    shop?: ShopResponse;
+    shops?: Array<ShopsInterface>;
+    shop?: ShopsInterface;
+    shopDetails?: ShopDetailsInterface;
 }
 
 export default function MapModal(props: IDefaultProps) {
     const classes = useStyles();
-    const { open, close, shops, shop } = props;
+    const { open, close, shops, shop, shopDetails } = props;
+    const [coord, setCoord] = React.useState<LatLngExpression | null>(null);
+    const [coords, setCoords] = React.useState<Array<LatLngExpression>>([]);
+
+    React.useEffect(() => {
+        if (shop && shop !== null && coord === null) {
+            setCoord([shop.coords.lat, shop.coords.lng]);
+        }
+        if (shopDetails && shopDetails !== null && coord === null) {
+            setCoord([shopDetails.coords.lat, shopDetails.coords.lng]);
+        }
+        if (shops && shops !== null && coords.length === 0) {
+            shops.map((s) => setCoords((oldArray) => [...oldArray, [s.coords.lat, s.coords.lng]]));
+        }
+    }, [shopDetails, shops, coords, coord]);
 
     return (
         <Dialog fullScreen open={open} onClose={() => close(false)}>
@@ -46,20 +61,20 @@ export default function MapModal(props: IDefaultProps) {
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            {shops ? (
-                <MapContainer center={shops[0].cords} zoom={13} scrollWheelZoom>
+            {shops && coords ? (
+                <MapContainer center={coords[0]} zoom={13} scrollWheelZoom>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    {shops.map((item) => (
-                        <Marker position={item.cords}>
+                    {shops.map((item, index) => (
+                        <Marker position={coords[index]}>
                             <Popup>
                                 <h3>{item.name}</h3>
                                 <div>
                                     <Rating
                                         name="read-only"
-                                        value={item.grade}
+                                        value={item.rating}
                                         precision={0.5}
                                         readOnly
                                         className={classes.rate}
@@ -70,19 +85,19 @@ export default function MapModal(props: IDefaultProps) {
                     ))}
                 </MapContainer>
             ) : null}
-            {shop ? (
-                <MapContainer center={shop.cords} zoom={13} scrollWheelZoom>
+            {(shop || shopDetails) && coord ? (
+                <MapContainer center={coord} zoom={13} scrollWheelZoom>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={shop.cords}>
+                    <Marker position={coord}>
                         <Popup>
-                            <h3>{shop.name}</h3>
+                            <h3>{shop ? shop.name : shopDetails?.name}</h3>
                             <div className={classes.rateFrame}>
                                 <Rating
                                     name="read-only"
-                                    value={shop.grade}
+                                    value={shop ? shop.rating : shopDetails?.rating}
                                     precision={0.5}
                                     readOnly
                                     className={classes.rate}
