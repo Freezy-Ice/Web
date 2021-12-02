@@ -1,7 +1,6 @@
 import { AppBar, Dialog, IconButton, Rating, Toolbar } from '@mui/material';
 import * as React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import { Dispatch, SetStateAction } from 'react';
 import { LatLngExpression } from 'leaflet';
 import { Theme } from '@mui/material/styles';
@@ -41,9 +40,7 @@ export default function MapModal(props: IDefaultProps) {
                         color="inherit"
                         onClick={() => close(false)}
                         aria-label="close"
-                    >
-                        <CloseOutlined />
-                    </IconButton>
+                    />
                 </Toolbar>
             </AppBar>
             {shops ? (
