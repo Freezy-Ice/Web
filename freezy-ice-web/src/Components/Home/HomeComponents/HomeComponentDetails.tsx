@@ -3,10 +3,11 @@ import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import RoomIcon from '@mui/icons-material/Room';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { stringDateFormat } from '../../../Helpers/date';
 import { DateTimeFormatEnum } from '../../../Helpers/enums';
 import MapModal from '../../Modals/MapModal';
-import { ShopResponse } from '../../../Store/Interface/Shop/ShopResponse';
+import { ShopsInterface } from '../../../Store/Interface/Shop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         picture: {
             flexGrow: 1,
+            width: '30%',
             maxWidth: '30%',
         },
         deatils: {
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IDefaultProps {
-    shop: ShopResponse;
+    shop: ShopsInterface;
 }
 
 export default function HomeComponentDetails(props: IDefaultProps) {
@@ -56,33 +58,38 @@ export default function HomeComponentDetails(props: IDefaultProps) {
     return (
         <div className={classes.root} id={shop.id.toString()}>
             <Paper className={classes.picture}>
-                <img src={shop.picture} alt="" width="100%" height="100%" />
+                <Link to={`/shop/${shop.id}`} style={{ textDecoration: 'none' }}>
+                    <img src={shop.imageUrl} alt="" width="100%" height="100%" />
+                </Link>
             </Paper>
             <Paper className={classes.deatils}>
                 <div className={classes.detailsLeft}>
                     <h2>{shop.name}</h2>
-                    <h4>{shop.description}</h4>
+                    {shop.description.length > 100 ? (
+                        <h4>{shop.description.slice(0, 100)}...</h4>
+                    ) : (
+                        shop.description
+                    )}
                     <h5>
                         Ostatnia aktualizacja:
-                        {stringDateFormat(shop.updatedAt, DateTimeFormatEnum.DateTime)}
+                        {shop.updatedAt}
                     </h5>
                 </div>
                 <div className={classes.detailsRight}>
                     <RoomIcon className={classes.detailsRight} onClick={() => setOpenMap(true)} />
                     <h5>{shop.address}</h5>
                     <h5>
-                        Otwarte od: {stringDateFormat(shop.openAt, DateTimeFormatEnum.HoursMinutes)}{' '}
-                        do: {stringDateFormat(shop.closedAt, DateTimeFormatEnum.HoursMinutes)}
+                        Otwarte od: {shop.openingHours.from} do: {shop.openingHours.to}
                     </h5>
                     <div className={classes.rateFrame}>
                         <Rating
                             name="read-only"
-                            value={shop.grade}
+                            value={shop.rating}
                             precision={0.5}
                             readOnly
                             className={classes.rate}
                         />
-                        <h5>{shop.grade} </h5>
+                        <h5>{shop.rating} </h5>
                     </div>
                 </div>
             </Paper>

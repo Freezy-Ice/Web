@@ -26,10 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignContent: 'center',
         },
         container: {
-            padding: theme.spacing(0),
-        },
-        fixedHeight: {
-            height: 240,
+            padding: theme.spacing(1),
         },
     }),
 );

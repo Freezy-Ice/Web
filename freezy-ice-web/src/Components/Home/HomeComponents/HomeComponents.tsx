@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
-import { LatLngExpression } from 'leaflet';
 import HomeComponentDetails from './HomeComponentDetails';
 import MapModal from '../../Modals/MapModal';
-import { ShopResponse } from '../../../Store/Interface/Shop/ShopResponse';
+import { ShopsIndex } from '../../../Store/Interface/Shop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IDefaultProps {
-    shops: Array<ShopResponse>;
+    shops: ShopsIndex;
 }
 
 export default function HomeComponents(props: IDefaultProps) {
@@ -46,11 +45,11 @@ export default function HomeComponents(props: IDefaultProps) {
                 </Button>
             </div>
             <div>
-                {shops.map((shop) => (
+                {shops?.data?.map((shop) => (
                     <HomeComponentDetails shop={shop} />
                 ))}
             </div>
-            <MapModal open={openMap} key={shops.length} close={setOpenMap} shops={shops} />
+            <MapModal open={openMap} close={setOpenMap} shops={shops?.data} />
         </div>
     );
 }
