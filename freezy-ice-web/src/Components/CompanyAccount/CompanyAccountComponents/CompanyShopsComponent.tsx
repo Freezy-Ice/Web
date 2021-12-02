@@ -6,7 +6,6 @@ import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
 import { LatLngExpression } from 'leaflet';
 import CompanyShopComponentDetails from './CompanyShopComponentDetails';
 import MapModal from '../../Modals/MapModal';
-import { ShopResponse } from '../../../Store/Interface/Shop/ShopResponse';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,12 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-interface IDefaultProps {
-    shops: Array<ShopResponse>;
-}
-
-export default function CompanyShopComponent(props: IDefaultProps) {
-    const { shops } = props;
+export default function CompanyShopComponent() {
     const classes = useStyles();
     const [openMap, setOpenMap] = React.useState(false);
 
@@ -45,12 +39,7 @@ export default function CompanyShopComponent(props: IDefaultProps) {
                     <MapTwoToneIcon fontSize="large" color="action" />
                 </Button>
             </div>
-            <div>
-                {shops.map((shop) => (
-                    <CompanyShopComponentDetails shop={shop} />
-                ))}
-            </div>
-            <MapModal open={openMap} key={shops.length} close={setOpenMap} shops={shops} />
+            <div />
         </div>
     );
 }

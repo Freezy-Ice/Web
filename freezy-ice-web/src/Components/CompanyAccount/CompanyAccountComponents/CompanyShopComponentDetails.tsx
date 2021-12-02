@@ -6,7 +6,6 @@ import * as React from 'react';
 import { stringDateFormat } from '../../../Helpers/date';
 import { DateTimeFormatEnum } from '../../../Helpers/enums';
 import MapModal from '../../Modals/MapModal';
-import { ShopResponse } from '../../../Store/Interface/Shop/ShopResponse';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -44,49 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-interface IDefaultProps {
-    shop: ShopResponse;
-}
-
-export default function CompanyShopComponentDetails(props: IDefaultProps) {
+export default function CompanyShopComponentDetails() {
     const classes = useStyles();
-    const { shop } = props;
     const [openMap, setOpenMap] = React.useState(false);
-
-    return (
-        <div className={classes.root} id={shop.id.toString()}>
-            <Paper className={classes.picture}>
-                <img src={shop.picture} alt="" width="100%" height="100%" />
-            </Paper>
-            <Paper className={classes.deatils}>
-                <div className={classes.detailsLeft}>
-                    <h2>{shop.name}</h2>
-                    <h4>{shop.description}</h4>
-                    <h5>
-                        Ostatnia aktualizacja:
-                        {stringDateFormat(shop.updatedAt, DateTimeFormatEnum.DateTime)}
-                    </h5>
-                </div>
-                <div className={classes.detailsRight}>
-                    <RoomIcon className={classes.detailsRight} onClick={() => setOpenMap(true)} />
-                    <h5>{shop.address}</h5>
-                    <h5>
-                        Otwarte od: {stringDateFormat(shop.openAt, DateTimeFormatEnum.HoursMinutes)}{' '}
-                        do: {stringDateFormat(shop.closedAt, DateTimeFormatEnum.HoursMinutes)}
-                    </h5>
-                    <div className={classes.rateFrame}>
-                        <Rating
-                            name="read-only"
-                            value={shop.grade}
-                            precision={0.5}
-                            readOnly
-                            className={classes.rate}
-                        />
-                        <h5>{shop.grade} </h5>
-                    </div>
-                </div>
-            </Paper>
-            <MapModal open={openMap} close={setOpenMap} shop={shop} />
-        </div>
-    );
 }

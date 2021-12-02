@@ -11,11 +11,13 @@ import ErrorSnack from '../LayoutComponents/ErrorSnack';
 import Loading from '../LayoutComponents/Loading';
 import { useAppSelector } from '../../Store';
 import { commonState } from '../../Store/selectors';
+import LoginInterface from '../../Store/Interface/Auth/AuthInterface';
 
 interface IDefaultProps {
     component: any;
     path: string;
     exact: boolean;
+    login?: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,7 +37,7 @@ export default function Layout(props: IDefaultProps) {
     const classes = useStyles();
     const state = useAppSelector(commonState);
 
-    const { component: Component, ...rest } = props;
+    const { component: Component, login, ...rest } = props;
 
     return (
         <div>
@@ -54,7 +56,7 @@ export default function Layout(props: IDefaultProps) {
                             <ToastContainer />
                             <main className={classes.content}>
                                 <div className={classes.container}>
-                                    <Component {...matchProps} />
+                                    <Component {...matchProps} fetchLogin={() => login} />
                                     <Box pt={4}>
                                         <Footer />
                                     </Box>

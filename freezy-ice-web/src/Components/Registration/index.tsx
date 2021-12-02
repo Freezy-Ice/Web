@@ -114,7 +114,13 @@ export default function Registration() {
                     </Button>
                     <Grid>
                         <Grid item pt={2}>
-                            <NavLink to="/login">Masz już konto? Zaloguj się</NavLink>
+                            <NavLink
+                                to="/login"
+                                activeStyle={{ color: '#81E2DC' }}
+                                style={{ color: '#81E2DC', textDecoration: 'none' }}
+                            >
+                                Masz już konto? Zaloguj się
+                            </NavLink>
                         </Grid>
                     </Grid>
                 </Box>

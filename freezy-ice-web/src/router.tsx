@@ -9,8 +9,18 @@ import Registration from './Components/Registration';
 import ShopPage from './Pages/Shop';
 import RestaurantRegistration from './Components/RestaurantRegistration';
 import CompanyAccount from './Components/CompanyAccount';
+import { useAppDispatch, useAppSelector } from './Store';
+import { tokenState } from './Store/selectors';
+import LoginInterface from './Store/Interface/Auth/AuthInterface';
+import { FetchLogin } from './Store/Reducer/Auth/action';
 
 function Router() {
+    const token = useAppSelector(tokenState);
+
+    const fetchToken = () => {
+        console.log('router');
+    };
+
     return (
         <Switch>
             <Layout exact path={RouterPathEnum.COMPANYACCOUNT} component={CompanyAccount} />
@@ -21,7 +31,7 @@ function Router() {
                 component={RestaurantRegistration}
             />
             <Layout exact path={RouterPathEnum.REGISTRATION} component={Registration} />
-            <Layout exact path={RouterPathEnum.LOGIN} component={Login} />
+            <Layout exact path={RouterPathEnum.LOGIN} component={Login} login={() => fetchToken} />
             <Layout exact path={RouterPathEnum.SHOP} component={ShopPage} />
             <Layout exact={false} path={RouterPathEnum.Error404} component={Error404} />
 

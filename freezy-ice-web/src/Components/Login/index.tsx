@@ -10,6 +10,9 @@ import Container from '@mui/material/Container';
 import { Link, NavLink } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
+import LoginInterface from '../../Store/Interface/Auth/AuthInterface';
+import { useAppDispatch } from '../../Store';
+import { FetchLogin } from '../../Store/Reducer/Auth/action';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,10 +29,22 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default function Login() {
+interface IDefaultProps {
+    fetchLogin: () => void;
+}
+
+export default function Login(props: IDefaultProps) {
     const classes = useStyles();
+    const { fetchLogin } = props;
     const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const dispatch = useAppDispatch();
+
+    const handleLoginButton = () => {
+        console.log('login');
+        fetchLogin();
+        FetchLogin(dispatch, { login, password });
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -62,24 +77,32 @@ export default function Login() {
                         autoComplete="current-password"
                         onChange={(event) => setPassword(event.target.value as string)}
                     />
-                    <Link to="/" style={{ textDecoration: 'none' }}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            className={classes.button}
-                        >
-                            Zaloguj
-                        </Button>
-                    </Link>
+                    {/* <Link to="/" style={{ textDecoration: 'none' }}> */}
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        className={classes.button}
+                        onClick={handleLoginButton}
+                    >
+                        Zaloguj
+                    </Button>
+                    {/* </Link> */}
                     <Grid container>
                         <Grid item xs>
-                            <NavLink to="/" activeStyle={{ color: '#81E2DC' }}>
+                            <NavLink
+                                to="/"
+                                activeStyle={{ color: '#81E2DC' }}
+                                style={{ color: '#81E2DC', textDecoration: 'none' }}
+                            >
                                 Zapomniałeś hasła?
                             </NavLink>
                         </Grid>
                         <Grid item pt={2}>
-                            <NavLink to="/registration" activeStyle={{ color: '#81E2DC' }}>
+                            <NavLink
+                                to="/registration"
+                                activeStyle={{ color: '#81E2DC' }}
+                                style={{ color: '#81E2DC', textDecoration: 'none' }}
+                            >
                                 Rejestracja
                             </NavLink>
                         </Grid>

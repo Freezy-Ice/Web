@@ -16,6 +16,8 @@ enum ActionsEnums {
     GET_CATEGORIES = 'GET_CATEGORIES',
 
     GET_RATINGS = 'GET_RATINGS',
+
+    GET_TOKEN = 'GET_TOKEN',
 }
 
 export default ActionsEnums;
