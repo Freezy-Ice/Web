@@ -4,6 +4,7 @@ import * as React from 'react';
 import HomeComponents from '../../Components/Home/HomeComponents/HomeComponents';
 import SearchBar from '../../Components/Home/SearchBar';
 import { useAppDispatch, useAppSelector } from '../../Store';
+import { PaginationInterface } from '../../Store/Interface/Shop/PaginationInterface';
 import { FetchShops } from '../../Store/Reducer/Shop/action';
 import { shopsState } from '../../Store/selectors';
 
@@ -21,13 +22,13 @@ function HomePage() {
         if (shops !== null) FetchShops(dispatch, value);
     };
 
-    const paginationComponent = () => (
+    const paginationComponent = (pagination: PaginationInterface) => (
         <Stack spacing={2} alignItems="center">
             <Pagination
                 color="primary"
                 size="large"
-                count={shops!.paginationData.total / 5}
-                page={shops!.paginationData.currentPage}
+                count={pagination.total / 5}
+                page={pagination.currentPage}
                 onChange={handleChange}
             />
         </Stack>
@@ -36,11 +37,11 @@ function HomePage() {
     return (
         <div>
             <SearchBar key="SearchBar" />
-            {shops !== null ? (
+            {shops && shops !== null ? (
                 <div>
-                    {paginationComponent()}
+                    {paginationComponent(shops.paginationData)}
                     <HomeComponents shops={shops} key="HomeComponents" />
-                    {paginationComponent()}
+                    {paginationComponent(shops.paginationData)}
                 </div>
             ) : null}
         </div>

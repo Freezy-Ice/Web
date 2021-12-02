@@ -77,7 +77,9 @@ export default function HomeComponentDetails(props: IDefaultProps) {
                 </div>
                 <div className={classes.detailsRight}>
                     <RoomIcon className={classes.detailsRight} onClick={() => setOpenMap(true)} />
-                    <h5>{shop.address}</h5>
+                    <h5>
+                        {shop.city} {shop.address}
+                    </h5>
                     <h5>
                         Otwarte od: {shop.openingHours.from} do: {shop.openingHours.to}
                     </h5>

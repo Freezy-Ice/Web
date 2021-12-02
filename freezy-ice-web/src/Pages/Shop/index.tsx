@@ -32,16 +32,16 @@ function ShopPage() {
     const { t } = useTranslation();
 
     React.useEffect(() => {
-        if (id && products === null) {
+        if (id) {
             FetchProductsList(dispatch, id);
         }
-        if (id && shop === null) {
+        if (id) {
             FetchShopDetails(dispatch, id);
         }
-        if (id && ratings === null) {
+        if (id) {
             FetchRatings(dispatch, 1, id);
         }
-    }, [products, dispatch, id, shop]);
+    }, []);
 
     const handlePagination = (event: React.ChangeEvent<unknown>, value: number) => {
         if (ratings !== null) FetchRatings(dispatch, value, id!);
