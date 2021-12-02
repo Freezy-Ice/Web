@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         textAlign: 'center',
     },
     backdrop: {
-        zIndex: theme.zIndex.drawer + 1,
+        zIndex: 1,
         color: '#fff',
     },
 }));
