@@ -10,3 +10,4 @@ export const flavorsState = (state: RootState) => state.dictionaryState.flavorsL
 export const ratingsState = (state: RootState) => state.shopState.ratingsListState;
 export const userProfileState = (state: RootState) => state.profileState.userProfileState;
 export const userFavouriteShopsState = (state: RootState) => state.profileState.favouriteShopsState;
+export const userRatingsState = (state: RootState) => state.profileState.ratingState;

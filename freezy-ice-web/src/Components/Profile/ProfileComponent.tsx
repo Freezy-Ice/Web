@@ -36,8 +36,6 @@ function ProfileComponent() {
         FetchUserProfile(dispatch);
     }, []);
 
-    console.log(userProfile);
-
     return (
         <Grid className={classes.root} container direction="row">
             <Grid xs={12} md={4} item sx={{ bgcolor: 'primary.main', textAlign: 'center' }}>

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Button, Pagination, Stack } from '@mui/material';
+import { Button, Pagination, Paper, Stack } from '@mui/material';
 import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
 import MapModal from '../Modals/MapModal';
 import { useAppDispatch, useAppSelector } from '../../Store';
-import { userFavouriteShopsState } from '../../Store/selectors';
-import { FetchFavouriteShops } from '../../Store/Reducer/Profile/action';
-import HomeComponentDetails from '../Home/HomeComponents/HomeComponentDetails';
+import { userFavouriteShopsState, userRatingsState } from '../../Store/selectors';
+import { FetchFavouriteShops, FetchUserRatings } from '../../Store/Reducer/Profile/action';
+import RatingComponent from './RatingComponent';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -15,63 +15,54 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             flexDirection: 'column',
         },
-        buttonBox: {
-            marginBottom: '1%',
-        },
         button: {
             float: 'right',
+        },
+        ratingComponent: {
+            marginBottom: '2%',
+            backgroundColor: 'red',
         },
     }),
 );
 
-export default function FavouriteComponent() {
+export default function RatingsComponent() {
     const classes = useStyles();
-    const [openMap, setOpenMap] = React.useState(false);
 
-    const shops = useAppSelector(userFavouriteShopsState);
+    const userRatings = useAppSelector(userRatingsState);
     const dispatch = useAppDispatch();
 
     React.useEffect(() => {
-        if (shops === null) {
-            FetchFavouriteShops(dispatch, 1);
-        }
-    }, [shops]);
-
-    console.log(shops);
+        FetchUserRatings(dispatch, 1);
+    }, []);
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        if (shops !== null) FetchFavouriteShops(dispatch, value);
+        if (userRatings !== null) FetchUserRatings(dispatch, value);
     };
 
     return (
         <div>
-            {shops && shops !== null ? (
+            {userRatings && userRatings !== null ? (
                 <div className={classes.root}>
-                    <h1>Polubione lodziarnie</h1>
-                    <div className={classes.buttonBox}>
-                        <Button
-                            className={classes.button}
-                            variant="contained"
-                            onClick={() => setOpenMap(true)}
-                        >
-                            <MapTwoToneIcon fontSize="large" color="action" />
-                        </Button>
-                    </div>
+                    <h1>Twoje oceny:</h1>
                     <div>
-                        {shops?.data?.map((shop) => (
-                            <HomeComponentDetails shop={shop} />
+                        {userRatings?.data?.map((rating) => (
+                            <Paper elevation={3} className={classes.ratingComponent}>
+                                <RatingComponent
+                                    rating={rating}
+                                    currentPage={userRatings?.paginationData.currentPage}
+                                />
+                            </Paper>
                         ))}
                     </div>
                     <Stack spacing={2} alignItems="center">
                         <Pagination
                             color="primary"
                             size="large"
-                            count={shops!.paginationData.total / 5}
-                            page={shops!.paginationData.currentPage}
+                            count={userRatings?.paginationData.total / 5}
+                            page={userRatings?.paginationData.currentPage}
                             onChange={handleChange}
                         />
                     </Stack>
-                    <MapModal open={openMap} close={setOpenMap} shops={shops?.data} />
                 </div>
             ) : null}
         </div>

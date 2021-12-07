@@ -6,6 +6,7 @@ import { Box, Button, Grid } from '@mui/material';
 import ProfileEnum from '../../Helpers/enums/ProfileEnum';
 import ProfileComponent from '../../Components/Profile/ProfileComponent';
 import FavouriteComponent from '../../Components/Profile/FavouriteComponent';
+import RatingsComponent from '../../Components/Profile/RatingsComponent';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,8 +24,6 @@ function ProfilePage() {
     const classes = useStyles();
     const [navigation, setNavigation] = React.useState(ProfileEnum.profil);
     const { t } = useTranslation();
-
-    console.log(navigation);
 
     return (
         <div className={classes.root}>
@@ -74,6 +73,11 @@ function ProfilePage() {
             {navigation === ProfileEnum.favourite && (
                 <Box className={classes.box}>
                     <FavouriteComponent />
+                </Box>
+            )}
+            {navigation === ProfileEnum.ratings && (
+                <Box className={classes.box}>
+                    <RatingsComponent />
                 </Box>
             )}
         </div>

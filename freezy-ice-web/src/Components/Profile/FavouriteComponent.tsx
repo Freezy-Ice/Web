@@ -37,8 +37,6 @@ export default function FavouriteComponent() {
         }
     }, [shops]);
 
-    console.log(shops);
-
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         if (shops !== null) FetchFavouriteShops(dispatch, value);
     };

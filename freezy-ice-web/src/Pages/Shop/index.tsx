@@ -49,7 +49,7 @@ function ShopPage() {
 
     return (
         <div>
-            {shop !== null ? <ShopBaseInfo shop={shop?.data} /> : null}
+            {shop && shop !== null ? <ShopBaseInfo shop={shop?.data} /> : null}
             <div className={classes.root}>
                 <Grid container spacing={2} direction="row" className={classes.root}>
                     {products?.data?.map((product) => (
@@ -71,8 +71,8 @@ function ShopPage() {
                                 <Pagination
                                     color="primary"
                                     size="large"
-                                    count={ratings!.paginationData.total / 5}
-                                    page={ratings!.paginationData.currentPage}
+                                    count={ratings?.paginationData.total / 5}
+                                    page={ratings?.paginationData.currentPage}
                                     onChange={handlePagination}
                                 />
                             </Stack>

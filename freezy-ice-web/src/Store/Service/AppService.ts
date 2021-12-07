@@ -116,16 +116,17 @@ export const SendDeleteRequest = async (url: string) =>
         },
     })
         .then((response) => {
-            if (response.ok) {
-                toast.success('Usunięto', {
-                    position: toast.POSITION.TOP_CENTER,
-                });
-            } else {
+            if (!response.ok) {
                 toast.error('Usuwanie zakończyło się niepowodzeniem', {
                     position: toast.POSITION.TOP_CENTER,
                 });
             }
             return response.status === 200 ? response.json() : '';
+        })
+        .then((data) => {
+            toast.success(data.message, {
+                position: toast.POSITION.TOP_CENTER,
+            });
         })
         .catch(() => {
             toast.error('Usuwanie zakończyło się niepowodzeniem', {

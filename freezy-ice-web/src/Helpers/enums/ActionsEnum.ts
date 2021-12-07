@@ -19,6 +19,7 @@ enum ActionsEnums {
 
     GET_USER_PROFILE = 'GET_USER_PROFILE',
     GET_FAVOURITE_SHOPS = 'GET_FAVOURITE_SHOPS',
+    GET_USER_RATINGS = 'GET_USER_RATINGS',
 }
 
 export default ActionsEnums;
