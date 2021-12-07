@@ -49,7 +49,7 @@ function ProfilePage() {
                         key={1}
                         sx={{ display: 'block' }}
                     >
-                        <h3>Komentarze</h3>
+                        <h3>Oceny</h3>
                     </Button>
                 </Grid>
                 <Grid item xs={12} md={4}>

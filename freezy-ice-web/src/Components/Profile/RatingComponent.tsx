@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Grid, IconButton, Paper, Rating } from '@mui/material';
+import { Grid, IconButton, Rating } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from 'react-router-dom';
 
 import RatingInterface from '../../Store/Interface/Profile/RatingInterface';
 import { FetchUserRatings, RemoveUserRating } from '../../Store/Reducer/Profile/action';
@@ -51,7 +52,9 @@ export default function RatingComponent(props: IDefaultProps) {
         <div className={classes.root}>
             <Grid container>
                 <Grid item xs={12} md={10}>
-                    <h2>{rating.name}</h2>
+                    <Link to={`/shop/${rating.id}`} style={{ textDecoration: 'none' }}>
+                        <h2>{rating.name}</h2>
+                    </Link>
                 </Grid>
                 <Grid className={classes.buttonBox} item xs={12} md={2}>
                     <IconButton onClick={deleteRating} size="large">

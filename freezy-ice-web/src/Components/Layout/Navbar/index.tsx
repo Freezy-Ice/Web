@@ -96,7 +96,7 @@ export default function Navbar() {
                                 activeStyle={{ color: 'black' }}
                                 style={{ color: 'black', textDecoration: 'none' }}
                             >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem onClick={handleClose}>Profil</MenuItem>
                             </NavLink>
                             <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
                         </Menu>
