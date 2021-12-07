@@ -1,4 +1,5 @@
 import { SendGetRequest, SendPostRequest, SendPostWithoutPayloadRequest } from '../AppService';
+import { CreateRatingModel } from './Models/CreateRatingModel';
 
 const perPage = `${process.env.PER_PAGE}`;
 const url = `${process.env.REACT_APP_API_URL}`;
@@ -22,3 +23,6 @@ export const GetRatings = async (currentPage: number, shopId: string) =>
     SendGetRequest(
         `${url}/ice-cream-shops/${shopId}/ratings?per_page=${5}&current_page=${currentPage}`,
     );
+
+export const PostRating = async (shopId: number, ratingModel: CreateRatingModel) =>
+    SendPostRequest(`${url}/ice-cream-shops/${shopId}/rate`, ratingModel);

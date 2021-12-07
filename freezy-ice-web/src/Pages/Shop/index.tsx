@@ -1,4 +1,4 @@
-import { Grid, Pagination, Stack } from '@mui/material';
+import { Button, Grid, Pagination, Rating, Stack, TextField } from '@mui/material';
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
@@ -12,6 +12,7 @@ import { productState, ratingsState, shopDetailsState } from '../../Store/select
 import { FetchProductsList, FetchRatings, FetchShopDetails } from '../../Store/Reducer/Shop/action';
 import ShopBaseInfo from '../../Components/Shop/ShopBaseInfo';
 import ShopRating from '../../Components/Rating/ShopRating';
+import AddRating from '../../Components/Rating/AddRatingComponent';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -79,6 +80,7 @@ function ShopPage() {
                         </Grid>
                     </div>
                 ) : null}
+                {shop !== null && <AddRating shopId={shop.data.id} />}
             </div>
         </div>
     );

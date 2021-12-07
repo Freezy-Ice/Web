@@ -1,4 +1,5 @@
 import ActionsEnums from '../../../Helpers/enums/ActionsEnum';
+import { CreateRatingModel } from '../../Service/Shop/Models/CreateRatingModel';
 import {
     DislikeShop,
     GetProductList,
@@ -6,6 +7,7 @@ import {
     GetShopDetails,
     GetShops,
     LikeShop,
+    PostRating,
 } from '../../Service/Shop/ShopService';
 
 export async function FetchProductsList(dispatch: any, shopId: string) {
@@ -73,5 +75,15 @@ export async function FetchRatings(dispatch: any, currentPage: number, shopId: s
     });
     dispatch({
         type: ActionsEnums.LOADING,
+    });
+}
+
+export async function CreateRating(dispatch: any, shopId: number, ratingModel: CreateRatingModel) {
+    dispatch({
+        type: ActionsEnums.SAVING,
+    });
+    await PostRating(shopId, ratingModel);
+    dispatch({
+        type: ActionsEnums.SAVING,
     });
 }
