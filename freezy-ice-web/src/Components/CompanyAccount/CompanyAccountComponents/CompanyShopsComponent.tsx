@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Box, Button, Modal, Typography } from '@mui/material';
-import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
-import { LatLngExpression } from 'leaflet';
+import { Grid } from '@mui/material';
 import CompanyShopComponentDetails from './CompanyShopComponentDetails';
 import MapModal from '../../Modals/MapModal';
+import { ShopsIndex } from '../../../Store/Interface/BusinessShop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             marginLeft: '5%',
             marginRight: '5%',
-            display: 'flex',
-            flexDirection: 'column',
+            alignContent: 'center',
         },
         buttonBox: {
             marginBottom: '1%',
@@ -24,22 +22,24 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default function CompanyShopComponent() {
+interface IDefaultProps {
+    shops: ShopsIndex;
+}
+
+export default function CompanyShopComponent(props: IDefaultProps) {
+    const { shops } = props;
     const classes = useStyles();
     const [openMap, setOpenMap] = React.useState(false);
+    console.log(shops, 'compone');
 
     return (
-        <div className={classes.root}>
-            <div className={classes.buttonBox}>
-                <Button
-                    className={classes.button}
-                    variant="contained"
-                    onClick={() => setOpenMap(true)}
-                >
-                    <MapTwoToneIcon fontSize="large" color="action" />
-                </Button>
-            </div>
-            <div />
-        </div>
+        <Grid>
+            <Grid item xs={12}>
+                {shops?.data?.map((shop) => (
+                    <CompanyShopComponentDetails shop={shop} />
+                ))}
+            </Grid>
+            {/* {shops?.data?.map((shop) => ( <MapModal open={openMap} close={setOpenMap} shop={shop} />))} */}
+        </Grid>
     );
 }

@@ -8,7 +8,7 @@ import Error404 from './Pages/Error404';
 import Registration from './Components/Registration';
 import ShopPage from './Pages/Shop';
 import RestaurantRegistration from './Components/RestaurantRegistration';
-import CompanyAccount from './Components/CompanyAccount';
+import CompanyAccount from './Pages/CompanyAccount';
 import { useAppDispatch, useAppSelector } from './Store';
 import { tokenState } from './Store/selectors';
 import LoginInterface from './Store/Interface/Auth/AuthInterface';
@@ -18,6 +18,7 @@ function Router() {
     const token = useAppSelector(tokenState);
 
     const fetchToken = () => {
+        // eslint-disable-next-line
         console.log('router');
     };
 

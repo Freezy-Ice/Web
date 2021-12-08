@@ -6,6 +6,7 @@ import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import { LatLngExpression } from 'leaflet';
 import { ShopDetailsInterface, ShopsInterface } from '../../Store/Interface/Shop/ShopInterface';
+import { BusinessShopDetailsInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -24,7 +25,7 @@ interface IDefaultProps {
     open: boolean;
     close: Dispatch<SetStateAction<boolean>>;
     shops?: Array<ShopsInterface>;
-    shop?: ShopsInterface;
+    shop?: ShopsInterface | BusinessShopDetailsInterface;
     shopDetails?: ShopDetailsInterface;
 }
 

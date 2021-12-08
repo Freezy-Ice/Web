@@ -8,9 +8,6 @@ import { useTranslation } from 'react-i18next';
 import '../../Helpers/translations/i18n';
 
 import { ShopDetailsInterface } from '../../Store/Interface/Shop/ShopInterface';
-import { DateTimeFormatEnum } from '../../Helpers/enums';
-import { stringDateFormat } from '../../Helpers/date';
-import DayEnums from '../../Helpers/enums/DayEnum';
 import { PostLikeAndDislikeShop } from '../../Store/Reducer/Shop/action';
 import { useAppDispatch } from '../../Store';
 import MapModal from '../Modals/MapModal';
@@ -72,6 +69,7 @@ export default function ShopBaseInfo(props: IDefaultProps) {
     const [openMap, setOpenMap] = React.useState(false);
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
+    console.log(shop, 'ShopBaseInfo');
 
     const handleFavourite = () => {
         PostLikeAndDislikeShop(dispatch, shop.id.toString(), shop.favourite);

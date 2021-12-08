@@ -41,7 +41,9 @@ export default function Login(props: IDefaultProps) {
     const dispatch = useAppDispatch();
 
     const handleLoginButton = () => {
+        // eslint-disable-next-line
         console.log('login');
+
         fetchLogin();
         FetchLogin(dispatch, { login, password });
     };
