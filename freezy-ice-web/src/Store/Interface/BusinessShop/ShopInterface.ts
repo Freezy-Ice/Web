@@ -8,7 +8,6 @@ export interface BusinessShopDetailsInterface {
     description: string;
     imageUrl: string;
     rating: number;
-    favourite: boolean;
     coords: { lat: number; lng: number };
     openingHours: Array<OpeningHoursInterface>;
     updatedAt: string;
