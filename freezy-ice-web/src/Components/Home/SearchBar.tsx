@@ -87,7 +87,7 @@ export default function SearchBar() {
                     <Autocomplete
                         sx={{ mb: '3px' }}
                         disablePortal
-                        className={classes.textField}
+                        fullWidth
                         id="combo-box"
                         options={cities!.data.map((c) => c.name)}
                         renderInput={(params) => (
@@ -102,6 +102,7 @@ export default function SearchBar() {
                 )}
                 <TextField
                     sx={{ mb: '3px' }}
+                    fullWidth
                     className={classes.textField}
                     id="text-field-name"
                     label={t('shopName')}

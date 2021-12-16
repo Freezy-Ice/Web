@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
         },
         menuButton: {
-            marginRight: theme.spacing(2),
+            marginRight: '2%',
         },
         title: {
             flexGrow: 1,
@@ -49,6 +49,7 @@ export default function Navbar() {
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
+                        size="large"
                         edge="start"
                         className={classes.menuButton}
                         color="inherit"
@@ -56,7 +57,7 @@ export default function Navbar() {
                     >
                         <HomeIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography style={{ width: '10%' }} variant="h6" className={classes.title}>
                         <NavLink
                             to="/"
                             activeStyle={{ color: 'black' }}
@@ -90,7 +91,13 @@ export default function Navbar() {
                             open={openProfile}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <NavLink
+                                to="/profile"
+                                activeStyle={{ color: 'black' }}
+                                style={{ color: 'black', textDecoration: 'none' }}
+                            >
+                                <MenuItem onClick={handleClose}>Profil</MenuItem>
+                            </NavLink>
                             <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
                         </Menu>
                     </div>

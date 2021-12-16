@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignContent: 'center',
         },
         container: {
-            padding: theme.spacing(1),
+            padding: '1%',
         },
     }),
 );

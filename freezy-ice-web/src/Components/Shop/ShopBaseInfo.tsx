@@ -10,7 +10,6 @@ import '../../Helpers/translations/i18n';
 import { ShopDetailsInterface } from '../../Store/Interface/Shop/ShopInterface';
 import { DateTimeFormatEnum } from '../../Helpers/enums';
 import { stringDateFormat } from '../../Helpers/date';
-import DayEnums from '../../Helpers/enums/DayEnum';
 import { PostLikeAndDislikeShop } from '../../Store/Reducer/Shop/action';
 import { useAppDispatch } from '../../Store';
 import MapModal from '../Modals/MapModal';
