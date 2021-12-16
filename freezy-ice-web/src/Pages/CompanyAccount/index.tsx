@@ -70,7 +70,7 @@ export default function CpmpanyAccount() {
     console.log(shops);
 
     return (
-        <Container component="main" maxWidth="xl">
+        <Container component="main">
             <CssBaseline />
             <Box className={classes.box}>
                 <Grid>
@@ -81,7 +81,7 @@ export default function CpmpanyAccount() {
                             sx={{ width: 100, height: 100 }}
                         />
                         <div>
-                            <h1>Lody naturalne</h1>
+                            <h1>Twoje lodziarnie</h1>
                         </div>
                     </Stack>
                 </Grid>

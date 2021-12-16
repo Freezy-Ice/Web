@@ -1,4 +1,7 @@
 import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Box,
     Collapse,
     Grid,
@@ -7,15 +10,18 @@ import {
     ListItemIcon,
     ListItemText,
     Rating,
+    Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import RoomIcon from '@mui/icons-material/Room';
 import * as React from 'react';
-import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useTranslation } from 'react-i18next';
 import MapModal from '../../Modals/MapModal';
 import { BusinessShopDetailsInterface } from '../../../Store/Interface/BusinessShop/ShopInterface';
+import '../../../Helpers/translations/i18n';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,10 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
             border: '3px solid #81E2DC',
             marginBottom: '1px',
             display: 'flex',
-            maxHeight: '25vh',
+            minHeight: '25vh',
         },
         picture: {
             flexGrow: 1,
+            width: '30%',
             maxWidth: '30%',
         },
         deatils: {
@@ -50,6 +57,9 @@ const useStyles = makeStyles((theme: Theme) =>
         rate: {
             paddingTop: '10%',
         },
+        hours: {
+            margin: '5px',
+        },
     }),
 );
 
@@ -59,6 +69,7 @@ interface IDefaultProps {
 
 export default function CompanyShopComponentDetails(props: IDefaultProps) {
     const { shop } = props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const [openMap, setOpenMap] = React.useState(false);
     const [open, setOpen] = React.useState(true);
@@ -91,21 +102,29 @@ export default function CompanyShopComponentDetails(props: IDefaultProps) {
                 <div className={classes.detailsRight}>
                     <RoomIcon className={classes.detailsRight} onClick={() => setOpenMap(true)} />
                     <h5>{shop.address}</h5>
-                    <ListItemButton onClick={handleClick}>
-                        <ListItemIcon />
-                        <ListItemText primary="Inbox" />
-                        {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItemButton sx={{ pl: 4 }}>
-                                <ListItemIcon>
-                                    <StarBorder />
-                                </ListItemIcon>
-                                <ListItemText primary="Starred" />
-                            </ListItemButton>
-                        </List>
-                    </Collapse>
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography>Godziny otwarcia</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            {shop.openingHours.map((openingHour) => (
+                                <Typography>
+                                    <h5 className={classes.hours}>{t(openingHour.day)}:</h5>
+                                    {openingHour.open ? (
+                                        <p className={classes.hours}>
+                                            {openingHour.from}-{openingHour.to}
+                                        </p>
+                                    ) : (
+                                        <p className={classes.hours}>{t('closed')}</p>
+                                    )}
+                                </Typography>
+                            ))}
+                        </AccordionDetails>
+                    </Accordion>
                     <div className={classes.rateFrame}>
                         <Rating
                             name="read-only"

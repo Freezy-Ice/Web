@@ -43,6 +43,8 @@ export async function FetchBusinessShops(dispatch: any, currentPage: number) {
         type: ActionsEnums.LOADING,
     });
     const result = await GetBusinessShops(currentPage);
+    console.log('result', result);
+
     dispatch({
         payload: result,
         type: ActionsEnums.GET_BUSINESS_SHOPS,

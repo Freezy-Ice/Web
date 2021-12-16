@@ -1,4 +1,5 @@
 export enum RouterPathEnum {
+    COMPANYSHOPDETAILS = '/companyShopDetails',
     COMPANYACCOUNT = '/companyAccount',
     RESTAURANTREGISTRATION = '/restaurantRegistration',
     REGISTRATION = '/registration',

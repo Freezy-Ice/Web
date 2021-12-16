@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from './Store';
 import { tokenState } from './Store/selectors';
 import LoginInterface from './Store/Interface/Auth/AuthInterface';
 import { FetchLogin } from './Store/Reducer/Auth/action';
+import CompanyShopDetails from './Components/CompanyShop/CompanyShopDetails';
 
 function Router() {
     const token = useAppSelector(tokenState);
@@ -25,6 +26,7 @@ function Router() {
     return (
         <Switch>
             <Layout exact path={RouterPathEnum.COMPANYACCOUNT} component={CompanyAccount} />
+            <Layout exact path={RouterPathEnum.COMPANYSHOPDETAILS} component={CompanyShopDetails} />
             <Layout exact path={RouterPathEnum.HOME} component={HomePage} />
             <Layout
                 exact
