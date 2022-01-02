@@ -3,6 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
+    Button,
     Collapse,
     Grid,
     List,
@@ -12,7 +13,7 @@ import {
     Rating,
     Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import RoomIcon from '@mui/icons-material/Room';
@@ -22,6 +23,8 @@ import { useTranslation } from 'react-i18next';
 import MapModal from '../../Modals/MapModal';
 import { BusinessShopDetailsInterface } from '../../../Store/Interface/BusinessShop/ShopInterface';
 import '../../../Helpers/translations/i18n';
+import { useAppDispatch } from '../../../Store';
+import { RemoveShop } from '../../../Store/Reducer/BusinessShop/action';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -73,7 +76,11 @@ export default function CompanyShopComponentDetails(props: IDefaultProps) {
     const classes = useStyles();
     const [openMap, setOpenMap] = React.useState(false);
     const [open, setOpen] = React.useState(true);
-    console.log('CompanyShopComponentDetails', shop);
+    const dispatch = useAppDispatch();
+
+    const handleRemoveShop = () => {
+        RemoveShop(dispatch, shop.id.toString(), 1);
+    };
 
     const handleClick = () => {
         setOpen(!open);
@@ -82,7 +89,7 @@ export default function CompanyShopComponentDetails(props: IDefaultProps) {
     return (
         <Box className={classes.root} id={shop.id.toString()}>
             <Grid className={classes.picture}>
-                <Link to={`/shop/${shop.id}`} style={{ textDecoration: 'none' }}>
+                <Link to={`/companyShop/${shop.id}`} style={{ textDecoration: 'none' }}>
                     <img src={shop.imageUrl} alt="" width="100%" height="100%" />
                 </Link>
             </Grid>
@@ -98,6 +105,7 @@ export default function CompanyShopComponentDetails(props: IDefaultProps) {
                         Ostatnia aktualizacja:
                         {shop.updatedAt}
                     </h5>
+                    <Button onClick={() => handleRemoveShop()}>Usuń lodziarnię</Button>
                 </div>
                 <div className={classes.detailsRight}>
                     <RoomIcon className={classes.detailsRight} onClick={() => setOpenMap(true)} />

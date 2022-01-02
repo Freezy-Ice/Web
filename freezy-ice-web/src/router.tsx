@@ -11,9 +11,7 @@ import RestaurantRegistration from './Components/RestaurantRegistration';
 import CompanyAccount from './Pages/CompanyAccount';
 import { useAppDispatch, useAppSelector } from './Store';
 import { tokenState } from './Store/selectors';
-import LoginInterface from './Store/Interface/Auth/AuthInterface';
-import { FetchLogin } from './Store/Reducer/Auth/action';
-import CompanyShopDetails from './Components/CompanyShop/CompanyShopDetails';
+import CompanyShop from './Pages/CompanyShop';
 
 function Router() {
     const token = useAppSelector(tokenState);
@@ -26,7 +24,7 @@ function Router() {
     return (
         <Switch>
             <Layout exact path={RouterPathEnum.COMPANYACCOUNT} component={CompanyAccount} />
-            <Layout exact path={RouterPathEnum.COMPANYSHOPDETAILS} component={CompanyShopDetails} />
+            <Layout exact path={RouterPathEnum.COMPANYSHOP} component={CompanyShop} />
             <Layout exact path={RouterPathEnum.HOME} component={HomePage} />
             <Layout
                 exact

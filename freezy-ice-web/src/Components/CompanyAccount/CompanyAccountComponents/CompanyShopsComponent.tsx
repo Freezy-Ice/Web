@@ -12,7 +12,6 @@ interface IDefaultProps {
 
 export default function CompanyShopComponent(props: IDefaultProps) {
     const { shops } = props;
-    console.log(shops, 'compone');
 
     return (
         <Grid>

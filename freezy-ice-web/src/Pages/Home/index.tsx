@@ -34,7 +34,6 @@ function HomePage() {
         </Stack>
     );
     // eslint-disable-next-line
-    console.log(shops);
     return (
         <div>
             <SearchBar key="SearchBar" />

@@ -8,6 +8,8 @@ enum ActionsEnums {
     PROCESSING = 'Processing',
 
     GET_PRODUCTS = 'GET_PRODUCTS',
+    GET_PRODUCT_DETAILS = 'GET_PRODUCT_DETAILS',
+
     GET_SHOP_DETAILS = 'GET_SHOP_DETAILS',
     GET_SHOPS = 'GET_SHOPS',
 

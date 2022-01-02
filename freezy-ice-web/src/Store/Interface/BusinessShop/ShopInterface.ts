@@ -24,7 +24,7 @@ export interface ShopsIndex {
 
 export interface OpeningHoursInterface {
     day: string;
-    from: string;
-    to: string;
+    from: Date;
+    to: Date;
     open: boolean;
 }

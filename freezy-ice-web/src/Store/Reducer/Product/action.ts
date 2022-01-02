@@ -1,14 +1,18 @@
 import ActionsEnums from '../../../Helpers/enums/ActionsEnum';
 import { CreateShopInterface } from '../../Interface/BusinessShop/CreateShopInterface';
+import { ProductInterface } from '../../Interface/BusinessShop/Product/CompanyProductInterface';
 import { BusinessShopDetailsInterface } from '../../Interface/BusinessShop/ShopInterface';
 import {
-    CreateShop,
-    DeleteBusinessShop,
     GetBusinessShopDetails,
-    GetBusinessShops,
     GetProductList,
-    UpdateBusinessShop,
 } from '../../Service/BusinessShop/BussinesShopService';
+import ProductModel from '../../Service/Product/Model/ProductModel';
+import {
+    CreateProduct,
+    DeleteProduct,
+    EditProduct,
+    GetProduct,
+} from '../../Service/Product/ProductService';
 
 export async function FetchProductsList(dispatch: any, shopId: string) {
     dispatch({
@@ -24,67 +28,54 @@ export async function FetchProductsList(dispatch: any, shopId: string) {
     });
 }
 
-export async function FetchBusinessShopDetails(dispatch: any, shopId: string) {
+export async function FetchProduct(dispatch: any, shopId: string, productId: string) {
     dispatch({
         type: ActionsEnums.LOADING,
     });
-    const result = await GetBusinessShopDetails(shopId);
+    const result = await GetProduct(shopId, productId);
     dispatch({
         payload: result,
-        type: ActionsEnums.GET_BUSINESS_SHOP_DETAILS,
+        type: ActionsEnums.GET_PRODUCTS,
     });
     dispatch({
         type: ActionsEnums.LOADING,
     });
 }
 
-export async function FetchBusinessShops(dispatch: any, currentPage: number) {
-    dispatch({
-        type: ActionsEnums.LOADING,
-    });
-    const result = await GetBusinessShops(currentPage);
-    dispatch({
-        payload: result,
-        type: ActionsEnums.GET_BUSINESS_SHOPS,
-    });
-    dispatch({
-        type: ActionsEnums.LOADING,
-    });
-}
-
-export async function UpdateShop(
+export async function UpdateProduct(
     dispatch: any,
     shopId: string,
-    payload: BusinessShopDetailsInterface,
+    productId: string,
+    payload: ProductModel,
 ) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await UpdateBusinessShop(shopId, payload);
+    await EditProduct(shopId, productId, payload);
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetBusinessShopDetails(shopId);
+    await GetProduct;
 }
 
-export async function RemoveShop(dispatch: any, shopId: string, currentPage: number) {
+export async function RemoveProduct(dispatch: any, shopId: string, productId: string) {
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
-    await DeleteBusinessShop(shopId);
+    await DeleteProduct(shopId, productId);
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
-    await GetBusinessShops(currentPage);
+    await GetProductList(shopId);
 }
 
-export async function AddShop(dispatch: any, payload: CreateShopInterface, currentPage: number) {
+export async function AddProduct(dispatch: any, shopId: string, payload: ProductModel) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    const result = await CreateShop(payload);
+    const result = await CreateProduct(shopId, payload);
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetBusinessShops(currentPage);
+    await GetProductList(shopId);
 }

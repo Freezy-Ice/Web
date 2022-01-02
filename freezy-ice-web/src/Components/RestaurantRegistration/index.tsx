@@ -12,6 +12,12 @@ import { NavLink } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Autocomplete, Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../Store';
+import { AddShop } from '../../Store/Reducer/BusinessShop/action';
+import { FetchCitiesList } from '../../Store/Reducer/Dictionaries/action';
+import { citiesState } from '../../Store/selectors';
+import { OpeningHoursInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,17 +35,24 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Registration() {
+    let openingHour: Array<OpeningHoursInterface>;
     const classes = useStyles();
-    const [cities] = React.useState([
-        { label: 'Legnica' },
-        { label: 'Wrocław' },
-        { label: 'Sosnowiec' },
-    ]);
-
     const [name, setName] = React.useState('');
     const [cityName, setCityName] = React.useState('');
     const [street, setStreet] = React.useState('');
     const [descryption, setDescryption] = React.useState('');
+    const dispatch = useAppDispatch();
+    const cities = useAppSelector(citiesState);
+    const { t } = useTranslation();
+
+    // const handleAddShop = () => {
+    //     AddShop(dispatch, shop.id.toString(), 1);
+    // };
+    React.useEffect(() => {
+        if (cities === null) {
+            FetchCitiesList(dispatch);
+        }
+    }, [cities, dispatch]);
 
     /* eslint-disable react/jsx-props-no-spreading */
     return (
@@ -66,21 +79,23 @@ export default function Registration() {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Autocomplete
-                                sx={{ mb: '3px' }}
-                                disablePortal
-                                id="combo-box"
-                                options={cities}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Miasto"
-                                        onChange={(event) =>
-                                            setCityName(event.target.value as string)
-                                        }
-                                    />
-                                )}
-                            />
+                            {cities && (
+                                <Autocomplete
+                                    sx={{ mb: '3px' }}
+                                    disablePortal
+                                    id="combo-box"
+                                    options={cities!.data.map((c) => c.name)}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label={t('city')}
+                                            onChange={(event) =>
+                                                setCityName(event.target.value as string)
+                                            }
+                                        />
+                                    )}
+                                />
+                            )}
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField

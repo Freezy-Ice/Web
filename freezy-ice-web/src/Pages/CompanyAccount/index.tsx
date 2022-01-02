@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 
@@ -67,7 +67,6 @@ export default function CpmpanyAccount() {
 
     const classes = useStyles();
     const [openMap, setOpenMap] = React.useState(false);
-    console.log(shops);
 
     return (
         <Container component="main">

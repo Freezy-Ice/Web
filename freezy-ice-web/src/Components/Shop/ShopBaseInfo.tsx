@@ -69,7 +69,6 @@ export default function ShopBaseInfo(props: IDefaultProps) {
     const [openMap, setOpenMap] = React.useState(false);
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    console.log(shop, 'ShopBaseInfo');
 
     const handleFavourite = () => {
         PostLikeAndDislikeShop(dispatch, shop.id.toString(), shop.favourite);

@@ -18,7 +18,7 @@ export const UpdateBusinessShop = async (shopId: string, payload: BusinessShopDe
     SendPutRequest(`${url}/business/ice-cream-shops/${shopId}/like`, payload);
 
 export const DeleteBusinessShop = async (shopId: string) =>
-    SendDeleteRequest(`${url}/business/ice-cream-shops/${shopId}/dislike`);
+    SendDeleteRequest(`${url}/business/ice-cream-shops/${shopId}`);
 
 export const CreateShop = async (payload: CreateShopInterface) =>
     SendPostRequest(`${url}/business/ice-cream-shops`, payload);

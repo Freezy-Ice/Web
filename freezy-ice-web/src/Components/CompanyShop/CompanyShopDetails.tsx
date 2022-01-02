@@ -1,155 +1,127 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Checkbox from '@mui/material/Checkbox';
-import { NavLink } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Autocomplete, FormControlLabel } from '@mui/material';
+import { Button, Grid, IconButton, Rating } from '@mui/material';
+import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../Store';
-import { citiesState } from '../../Store/selectors';
-import { FetchCitiesList } from '../../Store/Reducer/Dictionaries/action';
 import '../../Helpers/translations/i18n';
+import { useAppDispatch } from '../../Store';
+import { BusinessShopDetailsInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
+import EditCompanyShopDetails from '../Modals/EditCompanyShopDetails';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        box: {
-            marginTop: 8,
+        shopDetailsFrame: {
+            marginLeft: '10%',
+            marginRight: '10%',
             display: 'flex',
             flexDirection: 'column',
+            border: '3px solid #81E2DC',
+            maxWidth: '80vw',
+            marginBottom: '2%',
+        },
+        pictureBox: {
+            maxHeight: '30vh',
+            overflow: 'hidden',
+        },
+        rateFrame: {
+            textAlign: 'center',
+        },
+        buttonBox: {
+            textAlign: 'center',
+        },
+        titleFrame: {
+            display: 'flex',
+            flexDirection: 'column',
+            borderBottom: '2px solid #81E2DC',
+        },
+        hourFrame: {
+            display: 'flex',
+            flexDirection: 'column',
+            textAlign: 'center',
+            borderBottom: '2px solid #81E2DC',
             alignItems: 'center',
         },
-        buton: {
-            marginTop: 3,
-            marginBotom: 2,
+        hourBox: {
+            display: 'flex',
+            flexDirection: 'row',
         },
-        textField: {
-            width: '500px',
-            marginBottom: '1%',
+        hours: {
+            margin: '5px',
+        },
+        descriptionFrame: {
+            paddingLeft: '5%',
+            paddingRight: '5%',
+        },
+        body: {
+            backgroundColor: 'black',
+            color: 'black',
         },
     }),
 );
 
-export default function CompanyShopDetails() {
+interface IDefaultProps {
+    shop: BusinessShopDetailsInterface;
+}
+
+export default function CompanyShopDetails(props: IDefaultProps) {
+    const { shop } = props;
     const classes = useStyles();
-    const cities = useAppSelector(citiesState);
-    const dispatch = useAppDispatch();
-
-    React.useEffect(() => {
-        FetchCitiesList(dispatch);
-    }, []);
-
+    const [open, setOpen] = React.useState(false);
+    const [openMap, setOpenMap] = React.useState(false);
     const { t } = useTranslation();
-    const [shopName, setShopName] = React.useState('aaaaaaa');
-    const [cityName, setCityName] = React.useState('kupa');
-    const [address, setAddress] = React.useState('acposdfm');
 
-    /* eslint-disable react/jsx-props-no-spreading */
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box className={classes.box}>
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} />
-                <Typography component="h1" variant="h5">
-                    Zarejestruj się
-                </Typography>
-                <Box component="form" noValidate sx={{ marginTop: 3 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="name"
-                                name="shopName"
-                                required
-                                fullWidth
-                                id="shopName"
-                                label="Nazwa Sklepu"
-                                value={shopName}
-                                autoFocus
-                                onChange={(event) => setShopName(event.target.value as string)}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            {cities && (
-                                <Autocomplete
-                                    sx={{ mb: '3px' }}
-                                    disablePortal
-                                    className={classes.textField}
-                                    id="combo-box"
-                                    options={cities!.data.map((c) => c.name)}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            className={classes.textField}
-                                            {...params}
-                                            label={t('city')}
-                                            onChange={(event) =>
-                                                setCityName(event.target.value as string)
-                                            }
-                                        />
-                                    )}
-                                    value={cityName}
-                                />
-                            )}
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="address"
-                                label="Adres"
-                                name="address"
-                                autoComplete="address"
-                                value={address}
-                                onChange={(event) => setAddress(event.target.value as string)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="email"
-                                label="Adres Email"
-                                name="email"
-                                autoComplete="email"
-                                onChange={(event) => setEmail(event.target.value as string)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                name="password"
-                                label="Hasło"
-                                type="password"
-                                id="password"
-                                autoComplete="new-password"
-                                onChange={(event) => setPassword(event.target.value as string)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={checked}
-                                        onChange={handleChange}
-                                        inputProps={{ 'aria-label': 'controlled' }}
-                                    />
-                                }
-                                label="Konto firmowe"
-                            />
-                        </Grid>
+        <div className={classes.shopDetailsFrame}>
+            <div className={classes.pictureBox}>
+                <img src={shop.imageUrl} alt="" width="100%" height="100%" />
+            </div>
+            <Grid container>
+                <Grid
+                    item
+                    xs={12}
+                    sx={{ backgroundColor: 'primary.main' }}
+                    className={classes.titleFrame}
+                >
+                    <Grid className={classes.body}>
+                        <Button onClick={() => setOpen(true)}>Edytuj szczegóły sklepu</Button>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained">
-                        Zarejestruj
-                    </Button>
-                </Box>
-            </Box>
-        </Container>
+                    <Grid textAlign="center" item xs={10}>
+                        <h2>{shop.name}</h2>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <div className={classes.rateFrame}>
+                            <Rating name="read-only" value={shop.rating} precision={0.5} readOnly />
+                        </div>
+                        <div className={classes.buttonBox}>
+                            <Button onClick={() => setOpenMap(true)}>
+                                <MapTwoToneIcon fontSize="large" color="action" />
+                            </Button>
+                        </div>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.hourFrame}>
+                        <h3>{t('openingHours')}:</h3>
+                        {shop.openingHours.map((oh) => (
+                            <div className={classes.hourBox}>
+                                <h5 className={classes.hours}>{t(oh.day)}:</h5>
+                                {oh.open ? (
+                                    <p className={classes.hours}>
+                                        {oh.from}-{oh.to}
+                                    </p>
+                                ) : (
+                                    <p className={classes.hours}>{t('closed')}</p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </Grid>
+                <Grid item xs={12} className={classes.descriptionFrame}>
+                    <p>{shop.description}</p>
+                </Grid>
+            </Grid>
+            <EditCompanyShopDetails open={open} close={setOpen} shop={shop} />
+        </div>
     );
 }
