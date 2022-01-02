@@ -52,13 +52,16 @@ export function HandleRouts() {
 function Router() {
     const token = useAppSelector(tokenState);
     const userInfo = useAppSelector(userState);
-
+    const tokenStorage = localStorage.getItem('token');
     const dispatch = useAppDispatch();
     React.useEffect(() => {
-        if (token !== null && userInfo == null) {
+        if (!tokenStorage && token && token?.data.token.length > 0) {
+            localStorage.setItem('token', token.data.token);
+        }
+        if (tokenStorage !== null && userInfo == null) {
             FetchUserInfos(dispatch);
         }
-    }, [token, dispatch]);
+    });
 
     return (
         <Switch>
