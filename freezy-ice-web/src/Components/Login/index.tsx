@@ -29,13 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-interface IDefaultProps {
-    fetchLogin: () => void;
-}
-
-export default function Login(props: IDefaultProps) {
+export default function Login() {
     const classes = useStyles();
-    const { fetchLogin } = props;
     const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
     const dispatch = useAppDispatch();
@@ -43,8 +38,6 @@ export default function Login(props: IDefaultProps) {
     const handleLoginButton = () => {
         // eslint-disable-next-line
         console.log('login');
-
-        fetchLogin();
         FetchLogin(dispatch, { login, password });
     };
 
@@ -79,16 +72,16 @@ export default function Login(props: IDefaultProps) {
                         autoComplete="current-password"
                         onChange={(event) => setPassword(event.target.value as string)}
                     />
-                    {/* <Link to="/" style={{ textDecoration: 'none' }}> */}
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        className={classes.button}
-                        onClick={handleLoginButton}
-                    >
-                        Zaloguj
-                    </Button>
-                    {/* </Link> */}
+                    <Link to="/" style={{ textDecoration: 'none' }}>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            className={classes.button}
+                            onClick={handleLoginButton}
+                        >
+                            Zaloguj
+                        </Button>
+                    </Link>
                     <Grid container>
                         <Grid item xs>
                             <NavLink

@@ -5,6 +5,8 @@ import React from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import { AccountCircle } from '@mui/icons-material';
 import { Link, NavLink } from 'react-router-dom';
+import { userState } from '../../../Store/selectors';
+import { useAppSelector } from '../../../Store';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,6 +32,7 @@ export default function Navbar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const openProfile = Boolean(anchorEl);
+    const userInfo = useAppSelector(userState);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -65,40 +68,45 @@ export default function Navbar() {
                             <h3 color="black">Freezy-Ice</h3>
                         </NavLink>
                     </Typography>
-                    <div>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenuProfile}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={openProfile}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
-                        </Menu>
-                    </div>
-                    <Link to="/Login" style={{ textDecoration: 'none' }}>
-                        <Button className={classes.button} variant="contained">
-                            Zaloguj
-                        </Button>
-                    </Link>
+                    {userInfo !== null ? (
+                        <div>
+                            <IconButton
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleMenuProfile}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={openProfile}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}>Profil</MenuItem>
+                                <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
+                            </Menu>
+                        </div>
+                    ) : (
+                        <div>
+                            <Link to="/Login" style={{ textDecoration: 'none' }}>
+                                <Button className={classes.button} variant="contained">
+                                    Zaloguj
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
                 </Toolbar>
             </AppBar>
         </div>

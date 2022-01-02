@@ -1,6 +1,6 @@
 import ActionsEnums from '../../../Helpers/enums/ActionsEnum';
 import LoginInterface from '../../Interface/Auth/AuthInterface';
-import { PostLogin } from '../../Service/Auth/AuthService';
+import { FetchUserInfo, PostLogin } from '../../Service/Auth/AuthService';
 
 export async function FetchLogin(dispatch: any, loginModel: LoginInterface) {
     dispatch({
@@ -10,6 +10,20 @@ export async function FetchLogin(dispatch: any, loginModel: LoginInterface) {
     dispatch({
         payload: result,
         type: ActionsEnums.GET_TOKEN,
+    });
+    dispatch({
+        type: ActionsEnums.LOADING,
+    });
+}
+
+export async function FetchUserInfos(dispatch: any) {
+    dispatch({
+        type: ActionsEnums.LOADING,
+    });
+    const result = await FetchUserInfo();
+    dispatch({
+        payload: result,
+        type: ActionsEnums.GET_USER_INFOS,
     });
     dispatch({
         type: ActionsEnums.LOADING,

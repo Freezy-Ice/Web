@@ -119,7 +119,7 @@ export default function CompanyShopComponentDetails(props: IDefaultProps) {
                             <Typography>Godziny otwarcia</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            {shop.openingHours.map((openingHour) => (
+                            {shop.openingHours?.map((openingHour) => (
                                 <Typography>
                                     <h5 className={classes.hours}>{t(openingHour.day)}:</h5>
                                     {openingHour.open ? (
