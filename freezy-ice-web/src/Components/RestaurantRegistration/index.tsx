@@ -18,6 +18,7 @@ import { AddShop } from '../../Store/Reducer/BusinessShop/action';
 import { FetchCitiesList } from '../../Store/Reducer/Dictionaries/action';
 import { citiesState } from '../../Store/selectors';
 import { OpeningHoursInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
+import CreateShopModel from '../../Store/Service/BusinessShop/Models/CreateShopModel';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -35,24 +36,31 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Registration() {
-    let openingHour: Array<OpeningHoursInterface>;
     const classes = useStyles();
     const [name, setName] = React.useState('');
     const [cityName, setCityName] = React.useState('');
     const [street, setStreet] = React.useState('');
     const [descryption, setDescryption] = React.useState('');
+    const [image, setImage] = React.useState<File>();
     const dispatch = useAppDispatch();
     const cities = useAppSelector(citiesState);
     const { t } = useTranslation();
 
-    // const handleAddShop = () => {
-    //     AddShop(dispatch, shop.id.toString(), 1);
-    // };
+    const handleAddShop = () => {
+        if (image)
+            AddShop(dispatch, new CreateShopModel(name, image, cityName, street, descryption), 1);
+    };
     React.useEffect(() => {
         if (cities === null) {
             FetchCitiesList(dispatch);
         }
     }, [cities, dispatch]);
+
+    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
 
     /* eslint-disable react/jsx-props-no-spreading */
     return (
@@ -102,43 +110,11 @@ export default function Registration() {
                                 required
                                 fullWidth
                                 name="street"
-                                label="Ulica"
+                                label="Ulica, numer"
                                 type="street"
                                 id="street"
                                 autoComplete="new-street"
                                 onChange={(event) => setStreet(event.target.value as string)}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="time"
-                                label="Otwarte od"
-                                type="time"
-                                defaultValue="07:00"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                inputProps={{
-                                    step: 300, // 5 min
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="time"
-                                label="Otwarte do"
-                                type="time"
-                                defaultValue="18:00"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                inputProps={{
-                                    step: 300, // 5 min
-                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -153,8 +129,11 @@ export default function Registration() {
                                 onChange={(event) => setDescryption(event.target.value as string)}
                             />
                         </Grid>
+                        <Grid>
+                            <input type="file" accept="image/*" onChange={handleImage} />
+                        </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained">
+                    <Button type="submit" fullWidth variant="contained" onClick={handleAddShop}>
                         Zarejestuj
                     </Button>
                 </Box>

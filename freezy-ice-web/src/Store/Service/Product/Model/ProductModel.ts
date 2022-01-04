@@ -1,6 +1,3 @@
-import CategoryModel from './CategoryModel';
-import FlavorModel from './FlavorModel';
-
 export default class ProductModel {
     name: string;
 

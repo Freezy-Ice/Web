@@ -9,6 +9,8 @@ import {
     GetProductList,
     UpdateBusinessShop,
 } from '../../Service/BusinessShop/BussinesShopService';
+import CreateShopModel from '../../Service/BusinessShop/Models/CreateShopModel';
+import UpdateShopModel from '../../Service/BusinessShop/Models/UpdateShopModel';
 
 export async function FetchProductsList(dispatch: any, shopId: string) {
     dispatch({
@@ -52,11 +54,7 @@ export async function FetchBusinessShops(dispatch: any, currentPage: number) {
     });
 }
 
-export async function UpdateShop(
-    dispatch: any,
-    shopId: string,
-    payload: BusinessShopDetailsInterface,
-) {
+export async function UpdateShop(dispatch: any, shopId: string, payload: UpdateShopModel) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
@@ -78,7 +76,7 @@ export async function RemoveShop(dispatch: any, shopId: string, currentPage: num
     await GetBusinessShops(currentPage);
 }
 
-export async function AddShop(dispatch: any, payload: CreateShopInterface, currentPage: number) {
+export async function AddShop(dispatch: any, payload: CreateShopModel, currentPage: number) {
     dispatch({
         type: ActionsEnums.SAVING,
     });

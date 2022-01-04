@@ -2,20 +2,31 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import plLocale from 'date-fns/locale/pl';
-import Modal from '@mui/material/Modal';
-import { AppBar, Chip, CssBaseline, Dialog, Grid, Rating, TextField, Toolbar } from '@mui/material';
-import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
+import {
+    AppBar,
+    Autocomplete,
+    CssBaseline,
+    Dialog,
+    Grid,
+    Rating,
+    TextField,
+    Toolbar,
+} from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
-import { LocalizationProvider, TimePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { flavorsState } from '../../Store/selectors';
-import { FetchFlavorsList } from '../../Store/Reducer/Dictionaries/action';
+import RoomIcon from '@mui/icons-material/Room';
+import { citiesState, flavorsState } from '../../Store/selectors';
+import { FetchCitiesList, FetchFlavorsList } from '../../Store/Reducer/Dictionaries/action';
 import { useAppDispatch, useAppSelector } from '../../Store';
-import { BusinessShopDetailsInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
+import {
+    BusinessShopDetailsInterface,
+    OpeningHoursInterface,
+} from '../../Store/Interface/BusinessShop/ShopInterface';
+import OpeningTimes from '../../Helpers/openingTimes/OpeningTimes';
+import { UpdateShop } from '../../Store/Reducer/BusinessShop/action';
+import ChangeMapLocation from './ChangeMapLocation';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -85,29 +96,64 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
     const { t } = useTranslation();
     const { open, close } = props;
     const { shop } = props;
-    const [value, setValue] = React.useState<Date | null>(null);
-    const [shoptName, setShopName] = React.useState('');
-    const [description, setDescription] = React.useState('');
+    const [shopName, setShopName] = React.useState(shop.name);
+    const [description, setDescription] = React.useState(shop.description);
     const [openMap, setOpenMap] = React.useState(false);
-    const [fileSelected, setFileSelected] = React.useState<File>();
+    const [coords, setCoords] = React.useState(shop.coords);
+    const [image, setImage] = React.useState<File>();
+    const [imageUrl, setImageUrl] = React.useState(shop?.imageUrl);
+    const [cityName, setCityName] = React.useState(shop.city);
+    const [street, setStreet] = React.useState(shop.address);
+    const cities = useAppSelector(citiesState);
     const dispatch = useAppDispatch();
+    const [openingHours, setOpeningHours] = React.useState<Array<OpeningHoursInterface>>(
+        shop.openingHours ?? [],
+    );
 
-    const handleImageChange = function (e: React.ChangeEvent<HTMLInputElement>) {
-        const fileList = e.target.files;
-
-        if (!fileList) return;
-
-        setFileSelected(fileList[0]);
+    const handleEditCompanyShop = () => {
+        if (image) {
+            console.log('edit');
+            UpdateShop(dispatch, shop.id.toString(), {
+                name: shopName,
+                image,
+                city: cityName,
+                address: street,
+                description,
+                coords: { lat: 13.24, lng: 13.24 },
+                openingHours,
+            });
+        }
     };
 
-    const uploadFile = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
-        if (fileSelected) {
-            const formData = new FormData();
-            formData.append('image', fileSelected, fileSelected.name);
+    const handleOpen = (openTime: OpeningHoursInterface) => {
+        const array = openingHours;
+        console.log('aaadgfswd', openTime);
+        if (openingHours?.some((openingHour) => openingHour.day === openTime.day)) {
+            const item = array.find((i) => i.day === openTime.day);
+            if (item) {
+                const index = array.indexOf(item);
+                if (index && index >= 0) {
+                    console.log('aaa', item);
+                    array?.splice(index, 1);
+                    array?.push(openTime);
+                    setOpeningHours(array);
+                }
+            }
+        } else {
+            console.log('aaaww', openTime);
+            array?.push(openTime);
+            setOpeningHours(array);
+        }
+    };
+
+    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setImage(e.target.files[0]);
         }
     };
 
     React.useEffect(() => {
+        FetchCitiesList(dispatch);
         FetchFlavorsList(dispatch);
     }, []);
 
@@ -142,7 +188,7 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                                     fullWidth
                                     id="shopName"
                                     label="Nazwa Sklepu"
-                                    value={shop.name}
+                                    value={shopName}
                                     autoFocus
                                     onChange={(event) => setShopName(event.target.value as string)}
                                 />
@@ -157,50 +203,48 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                                     />
                                 </div>
                                 <div className={classes.buttonBox}>
-                                    <Button onClick={() => setOpenMap(true)}>
-                                        <MapTwoToneIcon fontSize="large" color="action" />
-                                    </Button>
+                                    <RoomIcon onClick={() => setOpenMap(true)} />
                                 </div>
                             </Grid>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            {cities && (
+                                <Autocomplete
+                                    sx={{ mb: '3px' }}
+                                    disablePortal
+                                    id="combo-box"
+                                    options={cities!.data.map((c) => c.name)}
+                                    value={cityName}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label={t('city')}
+                                            onChange={(event) =>
+                                                setCityName(event.target.value as string)
+                                            }
+                                        />
+                                    )}
+                                />
+                            )}
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                name="street"
+                                label="Ulica, numer"
+                                type="street"
+                                id="street"
+                                value={street}
+                                autoComplete="new-street"
+                                onChange={(event) => setStreet(event.target.value as string)}
+                            />
                         </Grid>
                         <Grid item xs={12}>
                             <div className={classes.hourFrame}>
                                 <h3>{t('openingHours')}:</h3>
                                 {shop.openingHours.map((oh) => (
-                                    <div className={classes.hourBox}>
-                                        <h5 className={classes.hours}>{t(oh.day)}:</h5>
-                                        {oh.open ? (
-                                            <p className={classes.hours}>
-                                                <LocalizationProvider
-                                                    dateAdapter={AdapterDateFns}
-                                                    locale={plLocale}
-                                                >
-                                                    <TimePicker
-                                                        label="od"
-                                                        value={oh.from}
-                                                        onChange={(newValue) => {
-                                                            setValue(newValue);
-                                                        }}
-                                                        renderInput={(params) => (
-                                                            <TextField {...params} />
-                                                        )}
-                                                    />
-                                                    <TimePicker
-                                                        label="do"
-                                                        value={oh.to}
-                                                        onChange={(newValue) => {
-                                                            setValue(newValue);
-                                                        }}
-                                                        renderInput={(params) => (
-                                                            <TextField {...params} />
-                                                        )}
-                                                    />
-                                                </LocalizationProvider>
-                                            </p>
-                                        ) : (
-                                            <p className={classes.hours}>{t('closed')}</p>
-                                        )}
-                                    </div>
+                                    <OpeningTimes openingHours={oh} setOpeningHours={handleOpen} />
                                 ))}
                             </div>
                         </Grid>
@@ -212,12 +256,25 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                                 label="Opis"
                                 name="description"
                                 autoComplete="description"
-                                value={shop.description}
+                                value={description}
                                 onChange={(event) => setDescription(event.target.value as string)}
                             />
                         </Grid>
+                        <Grid>
+                            <input type="file" accept="image/*" onChange={handleImage} />
+                            <img src={imageUrl} alt="" width="100%" height="100%" />
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            onClick={handleEditCompanyShop}
+                        >
+                            Zapisz
+                        </Button>
                     </Box>
                 </Box>
+                <ChangeMapLocation open={openMap} close={setOpenMap} shopDetails={shop} />
             </Dialog>
         </div>
     );

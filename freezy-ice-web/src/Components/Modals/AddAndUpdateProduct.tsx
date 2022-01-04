@@ -9,6 +9,9 @@ import {
     CssBaseline,
     Dialog,
     Grid,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
     TextField,
     Toolbar,
 } from '@mui/material';
@@ -23,7 +26,6 @@ import { useAppDispatch, useAppSelector } from '../../Store';
 import { ProductInterface } from '../../Store/Interface/BusinessShop/Product/CompanyProductInterface';
 import { AddProduct, UpdateProduct } from '../../Store/Reducer/Product/action';
 import ProductModel from '../../Store/Service/Product/Model/ProductModel';
-import Flavor from '../CompanyShop/Flavor';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -79,10 +81,10 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
     const { shopId } = useParams<{ shopId?: string }>();
 
     const handleGetPRoduct = () => {
+        console.log(shopId, image, tasteIds);
         if (shopId && image && tasteIds) {
             if (product) {
                 console.log('edycja');
-
                 UpdateProduct(
                     dispatch,
                     shopId,
@@ -195,11 +197,11 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                                         className={classes.textField}
                                         id="combo-box"
                                         options={categories!.data.map((c) => c.name)}
+                                        value={product?.category.name}
                                         renderInput={(params) => (
                                             <TextField
                                                 className={classes.textField}
                                                 {...params}
-                                                value={product?.category}
                                                 label={t('categories')}
                                                 onChange={() =>
                                                     setCategoryId(product?.category.id ?? 0)
@@ -210,7 +212,16 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                                 )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <TextField
+                                <OutlinedInput
+                                    id="outlined-adornment-amount"
+                                    label="Cena"
+                                    value={price}
+                                    onChange={(event) => handlePrice(event.target.value as string)}
+                                    startAdornment={
+                                        <InputAdornment position="start">zł</InputAdornment>
+                                    }
+                                />
+                                {/* <TextField
                                     type="number"
                                     required
                                     fullWidth
@@ -220,7 +231,7 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                                     autoComplete="price"
                                     value={price}
                                     onChange={(event) => handlePrice(event.target.value as string)}
-                                />
+                                /> */}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -269,13 +280,13 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                         </Grid>
                         <Grid>
                             <input type="file" accept="image/*" onChange={handleImage} />
-                            {imageUrl}
+                            <img src={imageUrl} alt="" width="100%" height="100%" />
                         </Grid>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            onClick={handleGetPRoduct}
+                            onClick={() => handleGetPRoduct}
                         >
                             Zapisz
                         </Button>

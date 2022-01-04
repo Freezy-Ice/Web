@@ -5,9 +5,11 @@ import { Button, Grid, IconButton, Rating } from '@mui/material';
 import MapTwoToneIcon from '@mui/icons-material/MapTwoTone';
 import { useTranslation } from 'react-i18next';
 import '../../Helpers/translations/i18n';
+import RoomIcon from '@mui/icons-material/Room';
 import { useAppDispatch } from '../../Store';
 import { BusinessShopDetailsInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
 import EditCompanyShopDetails from '../Modals/EditCompanyShopDetails';
+import MapModal from '../Modals/MapModal';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -94,9 +96,7 @@ export default function CompanyShopDetails(props: IDefaultProps) {
                             <Rating name="read-only" value={shop.rating} precision={0.5} readOnly />
                         </div>
                         <div className={classes.buttonBox}>
-                            <Button onClick={() => setOpenMap(true)}>
-                                <MapTwoToneIcon fontSize="large" color="action" />
-                            </Button>
+                            <RoomIcon onClick={() => setOpenMap(true)} />
                         </div>
                     </Grid>
                 </Grid>
@@ -121,6 +121,7 @@ export default function CompanyShopDetails(props: IDefaultProps) {
                     <p>{shop.description}</p>
                 </Grid>
             </Grid>
+            <MapModal open={openMap} close={setOpenMap} shop={shop} />
             <EditCompanyShopDetails open={open} close={setOpen} shop={shop} />
         </div>
     );
