@@ -9,6 +9,10 @@ import Registration from './Components/Registration';
 import ShopPage from './Pages/Shop';
 import RestaurantRegistration from './Components/RestaurantRegistration';
 import ProfilePage from './Pages/Profile';
+import AdminPanel from './Pages/AdminPanel';
+import AcceptingShops from './Components/AdminPanel/AcceptingShops';
+import FlavorsList from './Components/AdminPanel/FlavorsList';
+import CategoriesList from './Components/AdminPanel/CategoriesList';
 
 function Router() {
     return (
@@ -19,6 +23,10 @@ function Router() {
                 path={RouterPathEnum.RESTAURANTREGISTRATION}
                 component={RestaurantRegistration}
             />
+            <Layout exact path={RouterPathEnum.CATEGORIESLIST} component={CategoriesList} />
+            <Layout exact path={RouterPathEnum.FLAVORSLIST} component={FlavorsList} />
+            <Layout exact path={RouterPathEnum.ADMINPANEL} component={AdminPanel} />
+            <Layout exact path={RouterPathEnum.ACCEPTINGSHOPS} component={AcceptingShops} />
             <Layout exact path={RouterPathEnum.REGISTRATION} component={Registration} />
             <Layout exact path={RouterPathEnum.LOGIN} component={Login} />
             <Layout exact path={RouterPathEnum.SHOP} component={ShopPage} />

@@ -1,4 +1,9 @@
-import { SendGetRequest, SendPostRequest, SendPostWithoutPayloadRequest } from '../AppService';
+import {
+    SendDeleteRequest,
+    SendGetRequest,
+    SendPostRequest,
+    SendPostWithoutPayloadRequest,
+} from '../AppService';
 import { CreateRatingModel } from './Models/CreateRatingModel';
 
 const perPage = `${process.env.PER_PAGE}`;
@@ -26,3 +31,6 @@ export const GetRatings = async (currentPage: number, shopId: string) =>
 
 export const PostRating = async (shopId: number, ratingModel: CreateRatingModel) =>
     SendPostRequest(`${url}/ice-cream-shops/${shopId}/rate`, ratingModel);
+
+export const RemoveRatings = async (shopId: string, ratingId: string) =>
+    SendDeleteRequest(`${url}/ice-cream-shops/${shopId}/${ratingId}`);

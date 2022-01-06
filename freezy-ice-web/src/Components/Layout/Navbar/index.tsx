@@ -98,6 +98,13 @@ export default function Navbar() {
                             >
                                 <MenuItem onClick={handleClose}>Profil</MenuItem>
                             </NavLink>
+                            <NavLink
+                                to="/adminPanel"
+                                activeStyle={{ color: 'black' }}
+                                style={{ color: 'black', textDecoration: 'none' }}
+                            >
+                                <MenuItem onClick={handleClose}>Panel adminstartora</MenuItem>
+                            </NavLink>
                             <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
                         </Menu>
                     </div>

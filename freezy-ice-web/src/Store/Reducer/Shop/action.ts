@@ -8,6 +8,7 @@ import {
     GetShops,
     LikeShop,
     PostRating,
+    RemoveRatings,
 } from '../../Service/Shop/ShopService';
 
 export async function FetchProductsList(dispatch: any, shopId: string) {
@@ -85,5 +86,14 @@ export async function CreateRating(dispatch: any, shopId: number, ratingModel: C
     await PostRating(shopId, ratingModel);
     dispatch({
         type: ActionsEnums.SAVING,
+    });
+}
+export async function DeleteRating(dispatch: any, shopId: string, ratingId: string) {
+    dispatch({
+        type: ActionsEnums.PROCESSING,
+    });
+    await RemoveRatings(shopId, ratingId);
+    dispatch({
+        type: ActionsEnums.PROCESSING,
     });
 }

@@ -1,3 +1,4 @@
+import AdminState from './AdminShop';
 import { CommonState } from './CommonInterface';
 import { DictionaryState } from './Dictionaries';
 import { ProfileState } from './Profile';
@@ -8,6 +9,7 @@ interface IState {
     shopState: ShopState;
     dictionaryState: DictionaryState;
     profileState: ProfileState;
+    adminState: AdminState;
 }
 
 export default IState;
