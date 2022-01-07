@@ -1,8 +1,24 @@
-import { Box, Button, Dialog, TextField } from '@mui/material';
+import { CloseOutlined } from '@mui/icons-material';
+import { Theme } from '@mui/material/styles';
+import { createStyles, makeStyles } from '@mui/styles';
+import { Box, Button, Dialog, IconButton, TextField } from '@mui/material';
 import React, { SetStateAction, Dispatch } from 'react';
 import { useAppDispatch } from '../../Store';
 import CategoryInterface from '../../Store/Interface/Dictionaries/CategoryInterface';
 import { CrateCategory, UpdateCategory } from '../../Store/Reducer/Dictionaries/action';
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        rateFrame: {
+            display: 'flex',
+            justifyContent: 'right',
+            textAlign: 'right',
+        },
+        rate: {
+            paddingTop: '10%',
+        },
+    }),
+);
 
 interface IDefaultProps {
     open: boolean;
@@ -26,8 +42,23 @@ export default function CategoryModal(props: IDefaultProps) {
 
     return (
         <div>
-            <Dialog open={open} onClose={() => close(false)}>
-                <Box component="form" noValidate sx={{ marginTop: 1 }}>
+            <Dialog
+                fullWidth
+                maxWidth="md"
+                sx={{ backgroundColor: 'transparent' }}
+                open={open}
+                onClose={() => close(false)}
+            >
+                <IconButton
+                    sx={{ width: '30px', marginLeft: '2%' }}
+                    edge="start"
+                    color="inherit"
+                    onClick={() => close(false)}
+                    aria-label="close"
+                >
+                    <CloseOutlined />
+                </IconButton>
+                <Box component="form" noValidate sx={{ marginTop: 1, padding: '2%' }}>
                     <TextField
                         margin="normal"
                         required
@@ -40,7 +71,12 @@ export default function CategoryModal(props: IDefaultProps) {
                         value={category?.name}
                         onChange={(event) => setCategoryName(event.target.value as string)}
                     />
-                    <Button onClick={() => handleAddOrUpdateCategory(category?.id)}>Zapisz</Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => handleAddOrUpdateCategory(category?.id)}
+                    >
+                        Zapisz
+                    </Button>
                 </Box>
             </Dialog>
         </div>

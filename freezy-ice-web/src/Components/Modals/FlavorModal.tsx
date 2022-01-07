@@ -1,4 +1,5 @@
-import { Box, Button, Dialog, TextField } from '@mui/material';
+import { CloseOutlined } from '@mui/icons-material';
+import { Box, Button, Dialog, IconButton, TextField } from '@mui/material';
 import React, { SetStateAction, Dispatch } from 'react';
 import { useAppDispatch } from '../../Store';
 import FlavorInterface from '../../Store/Interface/Dictionaries/FlavorInterface';
@@ -26,8 +27,23 @@ export default function FlavorModal(props: IDefaultProps) {
 
     return (
         <div>
-            <Dialog open={open} onClose={() => close(false)}>
-                <Box component="form" noValidate sx={{ marginTop: 1 }}>
+            <Dialog
+                fullWidth
+                maxWidth="md"
+                sx={{ backgroundColor: 'transparent' }}
+                open={open}
+                onClose={() => close(false)}
+            >
+                <IconButton
+                    sx={{ width: '30px', marginLeft: '2%' }}
+                    edge="start"
+                    color="inherit"
+                    onClick={() => close(false)}
+                    aria-label="close"
+                >
+                    <CloseOutlined />
+                </IconButton>
+                <Box component="form" noValidate sx={{ marginTop: 1, padding: '2%' }}>
                     <TextField
                         margin="normal"
                         required
@@ -37,10 +53,12 @@ export default function FlavorModal(props: IDefaultProps) {
                         name="flavor"
                         autoComplete="flavor"
                         autoFocus
-                        value={flavor?.name}
+                        value={flavorName}
                         onChange={(event) => setFlavorName(event.target.value as string)}
                     />
-                    <Button onClick={() => handleAddOrUpdateFlavor(flavor?.id)}>Zapisz</Button>
+                    <Button variant="outlined" onClick={() => handleAddOrUpdateFlavor(flavor?.id)}>
+                        Zapisz
+                    </Button>
                 </Box>
             </Dialog>
         </div>
