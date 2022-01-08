@@ -80,7 +80,7 @@ export async function AddShop(dispatch: any, payload: CreateShopModel, currentPa
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    const result = await CreateShop(payload);
+    await CreateShop(payload);
     dispatch({
         type: ActionsEnums.SAVING,
     });

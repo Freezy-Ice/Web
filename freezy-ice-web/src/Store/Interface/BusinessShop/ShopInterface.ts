@@ -8,9 +8,14 @@ export interface BusinessShopDetailsInterface {
     description: string;
     imageUrl: string;
     rating: number;
-    coords: { lat: number; lng: number };
+    coords: CoordsInterface;
     openingHours: Array<OpeningHoursInterface>;
     updatedAt: string;
+}
+
+export interface CoordsInterface {
+    lat: number;
+    lng: number;
 }
 
 export interface ShopDetails {

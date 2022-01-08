@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import '../../Helpers/translations/i18n';
 import { useParams } from 'react-router';
 import { ProductInterface } from '../../Store/Interface/Shop/Product/ProductInterface';
-import AddProduct from '../Modals/AddAndUpdateProduct';
+import AddEditProduct from '../Modals/AddEditProduct';
 import { RemoveProduct } from '../../Store/Reducer/Product/action';
 import { useAppDispatch } from '../../Store';
 
@@ -47,23 +47,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IDefaultProps {
+    shopId: number;
     product: ProductInterface;
 }
 
 export default function CompanyProductInfo(props: IDefaultProps) {
-    const { product } = props;
+    const { product, shopId } = props;
     const classes = useStyles();
     const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
-    const { shopId } = useParams<{ shopId?: string }>();
     const dispatch = useAppDispatch();
 
     const handleRemoveProduct = () => {
-        console.log('shopId', shopId);
-
         if (shopId) {
-            RemoveProduct(dispatch, shopId, product.id.toString());
-            console.log('usunięto');
+            RemoveProduct(dispatch, shopId.toString(), product.id.toString());
         }
     };
 
@@ -102,7 +99,7 @@ export default function CompanyProductInfo(props: IDefaultProps) {
                 </Stack>
                 <Button onClick={() => setOpen(true)}>Edytuj produkt</Button>
                 <Button onClick={() => handleRemoveProduct()}>Usuń produkt</Button>
-                <AddProduct open={open} close={setOpen} product={product} />
+                {open && <AddEditProduct open={open} close={setOpen} product={product} />}
             </div>
         </div>
     );

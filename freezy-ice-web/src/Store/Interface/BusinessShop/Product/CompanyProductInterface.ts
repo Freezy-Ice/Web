@@ -17,5 +17,5 @@ export interface CategoryInterface {
 }
 
 export interface ProductState {
-    data: Array<ProductInterface> | null;
+    data: Array<ProductInterface>;
 }

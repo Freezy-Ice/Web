@@ -1,11 +1,14 @@
-import { AppBar, Dialog, IconButton, Rating, Toolbar } from '@mui/material';
+import { AppBar, Button, Dialog, IconButton, Rating, Toolbar } from '@mui/material';
 import * as React from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import { Dispatch, SetStateAction } from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { LatLngExpression } from 'leaflet';
-import { BusinessShopDetailsInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
+import L, { icon, LatLngExpression } from 'leaflet';
+import {
+    BusinessShopDetailsInterface,
+    CoordsInterface,
+} from '../../Store/Interface/BusinessShop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,61 +26,40 @@ const useStyles = makeStyles((theme: Theme) =>
 interface IDefaultProps {
     open: boolean;
     close: Dispatch<SetStateAction<boolean>>;
-    shopDetails?: BusinessShopDetailsInterface;
-}
-
-function ChangeMapView({ coords }: { coords: any }) {
-    const map = useMap();
-    map.setView(coords, map.getZoom());
-
-    return null;
+    coords: CoordsInterface;
+    setCoords: Dispatch<SetStateAction<CoordsInterface>>;
 }
 
 export default function ChangeMapLocation(props: IDefaultProps) {
     const classes = useStyles();
-    const { open, close, shopDetails } = props;
-    const [coord, setCoord] = React.useState<LatLngExpression | null>(null);
+    const { open, close, setCoords, coords } = props;
 
-    React.useEffect(() => {
-        if (shopDetails && shopDetails !== null && coord === null) {
-            setCoord([shopDetails.coords.lat, shopDetails.coords.lng]);
-        }
-    }, []);
-
-    const handleClikMap = (event: any) => {
-        setCoord(event.latlang);
-    };
+    function HandleAddEditPoint() {
+        useMapEvents({
+            dblclick: (e) => {
+                const { lat, lng } = e.latlng;
+                setCoords({ lat, lng });
+            },
+        });
+        return null;
+    }
 
     return (
         <Dialog fullScreen open={open} onClose={() => close(false)}>
             <AppBar sx={{ position: 'relative' }}>
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={() => close(false)}
-                        aria-label="close"
-                    />
+                    <Button color="inherit" onClick={() => close(false)}>
+                        X
+                    </Button>
                 </Toolbar>
             </AppBar>
-            <MapContainer center={{ lat: 52.23, lng: 21.01 }} zoom={13} scrollWheelZoom>
+            <MapContainer center={{ lat: 52.23, lng: 21.01 }} zoom={6} scrollWheelZoom>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {coord === null ? null : <ChangeMapView coords={coord} />}
-                {/* {coord === null ? null : (
-                    <Marker
-                        position={coord}
-                        eventHandlers={{
-                            click: (e) => {
-                                console.log('marker clicked', e);
-                            },
-                        }}
-                    >
-                        <Popup>You are here</Popup>
-                    </Marker>
-                )} */}
+                {coords !== null ? <Marker position={coords} /> : null}
+                <HandleAddEditPoint />
             </MapContainer>
         </Dialog>
     );

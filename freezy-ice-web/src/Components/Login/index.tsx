@@ -36,8 +36,6 @@ export default function Login() {
     const dispatch = useAppDispatch();
 
     const handleLoginButton = () => {
-        // eslint-disable-next-line
-        console.log('login');
         FetchLogin(dispatch, { login, password });
     };
 
@@ -59,7 +57,7 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        onChange={(event) => setLogin(event.target.value as string)}
+                        onChange={(event: any) => setLogin(event.target.value as string)}
                     />
                     <TextField
                         margin="normal"
@@ -70,7 +68,7 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        onChange={(event) => setPassword(event.target.value as string)}
+                        onChange={(event: any) => setPassword(event.target.value as string)}
                     />
                     <Link to="/" style={{ textDecoration: 'none' }}>
                         <Button

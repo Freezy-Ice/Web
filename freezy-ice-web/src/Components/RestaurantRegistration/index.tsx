@@ -47,8 +47,9 @@ export default function Registration() {
     const { t } = useTranslation();
 
     const handleAddShop = () => {
-        if (image)
+        if (image) {
             AddShop(dispatch, new CreateShopModel(name, image, cityName, street, descryption), 1);
+        }
     };
     React.useEffect(() => {
         if (cities === null) {
@@ -83,7 +84,7 @@ export default function Registration() {
                                 label="Nazwa lodziarni"
                                 name="name"
                                 autoComplete="name"
-                                onChange={(event) => setName(event.target.value as string)}
+                                onChange={(event: any) => setName(event.target.value as string)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -97,7 +98,7 @@ export default function Registration() {
                                         <TextField
                                             {...params}
                                             label={t('city')}
-                                            onChange={(event) =>
+                                            onChange={(event: any) =>
                                                 setCityName(event.target.value as string)
                                             }
                                         />
@@ -114,7 +115,7 @@ export default function Registration() {
                                 type="street"
                                 id="street"
                                 autoComplete="new-street"
-                                onChange={(event) => setStreet(event.target.value as string)}
+                                onChange={(event: any) => setStreet(event.target.value as string)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -126,7 +127,9 @@ export default function Registration() {
                                 type="descryption"
                                 id="descryption"
                                 autoComplete="new-descryption"
-                                onChange={(event) => setDescryption(event.target.value as string)}
+                                onChange={(event: any) =>
+                                    setDescryption(event.target.value as string)
+                                }
                             />
                         </Grid>
                         <Grid>

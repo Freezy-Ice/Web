@@ -1,13 +1,14 @@
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
 import * as React from 'react';
-import { LocalizationProvider, TimePicker } from '@mui/lab';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import plLocale from 'date-fns/locale/pl';
 import { useTranslation } from 'react-i18next';
+import { LocalizationProvider, TimePicker } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { OpeningHoursInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
-import OpeningHoursModels from '../../Store/Service/BusinessShop/Models/OpeningHoursModel';
+import { DateTimeFormatEnum } from '../enums';
+import { stringDateFormat } from '../date';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,10 +35,8 @@ export default function OpeningTimes(props: IDefaultProps) {
     const [to, setTo] = React.useState(openingHours.to);
     const [open, setOpen] = React.useState(openingHours.open);
     const [day] = React.useState(openingHours.day);
-    console.log('from to', from, to);
 
     const handleOpen = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('open');
         setOpen(event.target.checked);
     };
 
@@ -51,19 +50,19 @@ export default function OpeningTimes(props: IDefaultProps) {
                         label="od"
                         value={from}
                         disabled={open === false}
-                        onChange={(newValue) => {
+                        onChange={(newValue: any) => {
                             setFrom(newValue);
                         }}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params: any) => <TextField {...params} />}
                     />
                     <TimePicker
                         label="do"
                         value={to}
                         disabled={open === false}
-                        onChange={(newValue) => {
+                        onChange={(newValue: any) => {
                             setTo(newValue);
                         }}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={(params: any) => <TextField {...params} />}
                     />
                 </LocalizationProvider>
                 <FormControlLabel
@@ -76,7 +75,7 @@ export default function OpeningTimes(props: IDefaultProps) {
                     }
                     label="otwarte"
                 />
-                <Button onClick={() => setOpeningHours({ day, from, to, open })}>
+                <Button variant="outlined" onClick={() => setOpeningHours({ day, from, to, open })}>
                     Zapisz godzinę
                 </Button>
             </p>

@@ -1,10 +1,8 @@
-import { Button, Grid, Pagination, Stack } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import * as React from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-
 import '../../Helpers/translations/i18n';
 import ProductInfo from '../../Components/CompanyShop/CompanyProductInfo';
 import { useAppDispatch, useAppSelector } from '../../Store';
@@ -13,7 +11,7 @@ import {
     FetchProductsList,
     FetchBusinessShopDetails,
 } from '../../Store/Reducer/BusinessShop/action';
-import AddProduct from '../../Components/Modals/AddAndUpdateProduct';
+import AddEditProduct from '../../Components/Modals/AddEditProduct';
 import CompanyShopDetails from '../../Components/CompanyShop/CompanyShopDetails';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,14 +43,16 @@ function CompanyShopPage() {
     const shop = useAppSelector(businessShopDetailsState);
     const dispatch = useAppDispatch();
     const { id } = useParams<{ id?: string }>();
-    const { t } = useTranslation();
-    const handleOpen = () => setOpen(true);
 
-    React.useEffect(() => {
+    const handleFirstLoad = () => {
         if (id) {
             FetchProductsList(dispatch, id);
             FetchBusinessShopDetails(dispatch, id);
         }
+    };
+
+    React.useEffect(() => {
+        handleFirstLoad();
     }, []);
 
     return (
@@ -65,14 +65,15 @@ function CompanyShopPage() {
             </div>
             <div className={classes.root}>
                 <Grid container spacing={2} direction="row" className={classes.root}>
-                    {products?.data?.map((product) => (
-                        <Grid item xs={12} md={4}>
-                            <ProductInfo product={product} />
-                        </Grid>
-                    ))}
+                    {shop &&
+                        products?.data.map((product) => (
+                            <Grid item xs={12} md={4}>
+                                <ProductInfo product={product} shopId={shop?.data.id} />
+                            </Grid>
+                        ))}
                 </Grid>
             </div>
-            <AddProduct open={open} close={setOpen} product={null} />
+            <AddEditProduct open={open} close={setOpen} product={null} />
         </div>
     );
 }

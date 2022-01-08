@@ -55,9 +55,11 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: '5%',
             paddingRight: '5%',
         },
-        body: {
-            backgroundColor: 'black',
-            color: 'black',
+        button: {
+            '&.MuiButton-outlined': {
+                color: 'black',
+                border: '1px black solid',
+            },
         },
     }),
 );
@@ -85,8 +87,15 @@ export default function CompanyShopDetails(props: IDefaultProps) {
                     sx={{ backgroundColor: 'primary.main' }}
                     className={classes.titleFrame}
                 >
-                    <Grid className={classes.body}>
-                        <Button onClick={() => setOpen(true)}>Edytuj szczegóły sklepu</Button>
+                    <Grid className={classes.buttonBox}>
+                        <Button
+                            className={classes.button}
+                            variant="outlined"
+                            size="small"
+                            onClick={() => setOpen(true)}
+                        >
+                            Edytuj szczegóły sklepu
+                        </Button>
                     </Grid>
                     <Grid textAlign="center" item xs={10}>
                         <h2>{shop.name}</h2>

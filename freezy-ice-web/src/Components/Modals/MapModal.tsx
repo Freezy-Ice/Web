@@ -1,4 +1,4 @@
-import { AppBar, Dialog, IconButton, Rating, Toolbar } from '@mui/material';
+import { AppBar, Button, Dialog, IconButton, Rating, Toolbar } from '@mui/material';
 import * as React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Dispatch, SetStateAction } from 'react';
@@ -51,12 +51,9 @@ export default function MapModal(props: IDefaultProps) {
         <Dialog fullScreen open={open} onClose={() => close(false)}>
             <AppBar sx={{ position: 'relative' }}>
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={() => close(false)}
-                        aria-label="close"
-                    />
+                    <Button color="inherit" onClick={() => close(false)}>
+                        X
+                    </Button>
                 </Toolbar>
             </AppBar>
             {shops && coords ? (

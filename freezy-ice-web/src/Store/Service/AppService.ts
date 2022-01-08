@@ -46,7 +46,7 @@ export const SendPostRequest = async (url: string, payload: any) =>
             }
             return response.status === 200 ? response.json() : '';
         })
-        .catch(() => {
+        .catch((err) => {
             toast.error('Tworzenie zakończyło się niepowodzeniem', {
                 position: toast.POSITION.TOP_CENTER,
             });
@@ -101,7 +101,7 @@ export const SendPutRequest = async (url: string, payload: any) =>
 
             return response.status === 200 ? response.json() : '';
         })
-        .catch(() => {
+        .catch((err) => {
             toast.error('Aktualizacja zakończyło się niepowodzeniem', {
                 position: toast.POSITION.TOP_CENTER,
             });

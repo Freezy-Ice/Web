@@ -1,3 +1,5 @@
+import FlavorModel from './FlavorModel';
+
 export default class ProductModel {
     name: string;
 
@@ -7,7 +9,7 @@ export default class ProductModel {
 
     category: number;
 
-    flavors: Array<number>;
+    flavors: Array<FlavorModel>;
 
     price: number;
 
@@ -18,7 +20,7 @@ export default class ProductModel {
         image: File,
         description: string,
         category: number,
-        flavors: Array<number>,
+        flavors: Array<FlavorModel>,
         price: number,
         kcal: number,
     ) {

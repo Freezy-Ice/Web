@@ -22,6 +22,7 @@ import { FetchCitiesList, FetchFlavorsList } from '../../Store/Reducer/Dictionar
 import { useAppDispatch, useAppSelector } from '../../Store';
 import {
     BusinessShopDetailsInterface,
+    CoordsInterface,
     OpeningHoursInterface,
 } from '../../Store/Interface/BusinessShop/ShopInterface';
 import OpeningTimes from '../../Helpers/openingTimes/OpeningTimes';
@@ -41,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
             marginRight: '10%',
             display: 'flex',
             flexDirection: 'column',
-            border: '3px solid #81E2DC',
             maxWidth: '80vw',
             marginBottom: '2%',
         },
@@ -58,13 +58,12 @@ const useStyles = makeStyles((theme: Theme) =>
         titleFrame: {
             display: 'flex',
             flexDirection: 'column',
-            borderBottom: '2px solid #81E2DC',
+            paddingBottom: '2%',
         },
         hourFrame: {
             display: 'flex',
             flexDirection: 'column',
             textAlign: 'center',
-            borderBottom: '2px solid #81E2DC',
             alignItems: 'center',
         },
         hourBox: {
@@ -99,7 +98,7 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
     const [shopName, setShopName] = React.useState(shop.name);
     const [description, setDescription] = React.useState(shop.description);
     const [openMap, setOpenMap] = React.useState(false);
-    const [coords, setCoords] = React.useState(shop.coords);
+    const [coords, setCoords] = React.useState<CoordsInterface>(shop.coords);
     const [image, setImage] = React.useState<File>();
     const [imageUrl, setImageUrl] = React.useState(shop?.imageUrl);
     const [cityName, setCityName] = React.useState(shop.city);
@@ -112,14 +111,13 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
 
     const handleEditCompanyShop = () => {
         if (image) {
-            console.log('edit');
             UpdateShop(dispatch, shop.id.toString(), {
                 name: shopName,
                 image,
                 city: cityName,
                 address: street,
                 description,
-                coords: { lat: 13.24, lng: 13.24 },
+                coords,
                 openingHours,
             });
         }
@@ -127,24 +125,21 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
 
     const handleOpen = (openTime: OpeningHoursInterface) => {
         const array = openingHours;
-        console.log('aaadgfswd', openTime);
         if (openingHours?.some((openingHour) => openingHour.day === openTime.day)) {
             const item = array.find((i) => i.day === openTime.day);
             if (item) {
                 const index = array.indexOf(item);
-                if (index && index >= 0) {
-                    console.log('aaa', item);
+                if (index >= 0) {
                     array?.splice(index, 1);
-                    array?.push(openTime);
                     setOpeningHours(array);
                 }
             }
         } else {
-            console.log('aaaww', openTime);
             array?.push(openTime);
             setOpeningHours(array);
         }
     };
+    const handleCoords = (lat: number, lng: number) => {};
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -173,13 +168,8 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                     <Typography component="h1" variant="h5">
                         Szczegóły lodziarni
                     </Typography>
-                    <Box component="form" noValidate sx={{ marginTop: 3 }}>
-                        <Grid
-                            item
-                            xs={12}
-                            sx={{ backgroundColor: 'primary.main' }}
-                            className={classes.titleFrame}
-                        >
+                    <Box component="form" noValidate sx={{ marginTop: 5 }}>
+                        <Grid item xs={12} className={classes.titleFrame}>
                             <Grid textAlign="center" item xs={10}>
                                 <TextField
                                     autoComplete="name"
@@ -190,55 +180,53 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                                     label="Nazwa Sklepu"
                                     value={shopName}
                                     autoFocus
-                                    onChange={(event) => setShopName(event.target.value as string)}
+                                    onChange={(event: any) =>
+                                        setShopName(event.target.value as string)
+                                    }
                                 />
                             </Grid>
                             <Grid item xs={2}>
-                                <div className={classes.rateFrame}>
-                                    <Rating
-                                        name="read-only"
-                                        value={shop.rating}
-                                        precision={0.5}
-                                        readOnly
-                                    />
-                                </div>
                                 <div className={classes.buttonBox}>
                                     <RoomIcon onClick={() => setOpenMap(true)} />
                                 </div>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            {cities && (
-                                <Autocomplete
-                                    sx={{ mb: '3px' }}
-                                    disablePortal
-                                    id="combo-box"
-                                    options={cities!.data.map((c) => c.name)}
-                                    value={cityName}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label={t('city')}
-                                            onChange={(event) =>
-                                                setCityName(event.target.value as string)
-                                            }
-                                        />
-                                    )}
+                        <Grid item xs={12} className={classes.titleFrame}>
+                            <Grid item xs={12} sm={6}>
+                                {cities && (
+                                    <Autocomplete
+                                        sx={{ mb: '3px' }}
+                                        disablePortal
+                                        id="combo-box"
+                                        options={cities!.data.map((c) => c.name)}
+                                        value={cityName}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label={t('city')}
+                                                onChange={(event: any) =>
+                                                    setCityName(event.target.value as string)
+                                                }
+                                            />
+                                        )}
+                                    />
+                                )}
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="street"
+                                    label="Ulica, numer"
+                                    type="street"
+                                    id="street"
+                                    value={street}
+                                    autoComplete="new-street"
+                                    onChange={(event: any) =>
+                                        setStreet(event.target.value as string)
+                                    }
                                 />
-                            )}
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                name="street"
-                                label="Ulica, numer"
-                                type="street"
-                                id="street"
-                                value={street}
-                                autoComplete="new-street"
-                                onChange={(event) => setStreet(event.target.value as string)}
-                            />
+                            </Grid>
                         </Grid>
                         <Grid item xs={12}>
                             <div className={classes.hourFrame}>
@@ -257,24 +245,26 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                                 name="description"
                                 autoComplete="description"
                                 value={description}
-                                onChange={(event) => setDescription(event.target.value as string)}
+                                onChange={(event: any) =>
+                                    setDescription(event.target.value as string)
+                                }
                             />
                         </Grid>
                         <Grid>
                             <input type="file" accept="image/*" onChange={handleImage} />
                             <img src={imageUrl} alt="" width="100%" height="100%" />
                         </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            onClick={handleEditCompanyShop}
-                        >
+                        <Button fullWidth variant="contained" onClick={handleEditCompanyShop}>
                             Zapisz
                         </Button>
                     </Box>
                 </Box>
-                <ChangeMapLocation open={openMap} close={setOpenMap} shopDetails={shop} />
+                <ChangeMapLocation
+                    open={openMap}
+                    close={setOpenMap}
+                    coords={coords}
+                    setCoords={setCoords}
+                />
             </Dialog>
         </div>
     );

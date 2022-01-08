@@ -16,7 +16,6 @@ import { FetchUserInfos } from './Store/Reducer/Auth/action';
 
 export function HandleRouts() {
     const userInfo = useAppSelector(userState);
-    console.log('abcd', userInfo);
     const defaultRoutes = (
         <div>
             <Layout exact path={RouterPathEnum.HOME} component={HomePage} />

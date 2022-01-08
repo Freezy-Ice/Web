@@ -1,17 +1,12 @@
 import ActionsEnums from '../../../Helpers/enums/ActionsEnum';
-import { CreateShopInterface } from '../../Interface/BusinessShop/CreateShopInterface';
 import { ProductInterface } from '../../Interface/BusinessShop/Product/CompanyProductInterface';
-import { BusinessShopDetailsInterface } from '../../Interface/BusinessShop/ShopInterface';
-import {
-    GetBusinessShopDetails,
-    GetProductList,
-} from '../../Service/BusinessShop/BussinesShopService';
 import ProductModel from '../../Service/Product/Model/ProductModel';
 import {
     CreateProduct,
     DeleteProduct,
     EditProduct,
     GetProduct,
+    GetProductList,
 } from '../../Service/Product/ProductService';
 
 export async function FetchProductsList(dispatch: any, shopId: string) {
@@ -55,7 +50,7 @@ export async function UpdateProduct(
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetProduct;
+    // await GetProduct;
 }
 
 export async function RemoveProduct(dispatch: any, shopId: string, productId: string) {

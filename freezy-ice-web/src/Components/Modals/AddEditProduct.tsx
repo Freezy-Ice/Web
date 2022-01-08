@@ -9,9 +9,6 @@ import {
     CssBaseline,
     Dialog,
     Grid,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
     TextField,
     Toolbar,
 } from '@mui/material';
@@ -26,6 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../Store';
 import { ProductInterface } from '../../Store/Interface/BusinessShop/Product/CompanyProductInterface';
 import { AddProduct, UpdateProduct } from '../../Store/Reducer/Product/action';
 import ProductModel from '../../Store/Service/Product/Model/ProductModel';
+import FlavorModel from '../../Store/Service/Product/Model/FlavorModel';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -62,9 +60,11 @@ interface IDefaultProps {
     product: ProductInterface | null;
 }
 
-export default function AddAndUpdateProduct(props: IDefaultProps) {
+export default function AddEditProduct(props: IDefaultProps) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const categories = useAppSelector(categoriesState);
+    const flavors = useAppSelector(flavorsState);
     const { product } = props;
     const { open, close } = props;
     const [productName, setProductName] = React.useState(product?.name ?? '');
@@ -72,60 +72,36 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
     const [kcal, setKcal] = React.useState(product?.kcal ?? 0);
     const [description, setDescription] = React.useState(product?.description ?? '');
     const [price, setPrice] = React.useState(product?.price ?? 0);
-    const categories = useAppSelector(categoriesState);
-    const flavors = useAppSelector(flavorsState);
-    const [tasteIds, setTasteIds] = React.useState<Array<number>>([]);
+    const [tasteIds, setTasteIds] = React.useState<Array<FlavorModel>>([]);
     const [image, setImage] = React.useState<File>();
     const [imageUrl, setImageUrl] = React.useState(product?.imageUrl ?? '');
     const dispatch = useAppDispatch();
-    const { shopId } = useParams<{ shopId?: string }>();
+    const { id } = useParams<{ id?: string }>();
 
-    const handleGetPRoduct = () => {
-        console.log(shopId, image, tasteIds);
-        if (shopId && image && tasteIds) {
+    const handleGetProduct = () => {
+        if (id && image && tasteIds) {
             if (product) {
-                console.log('edycja');
-                UpdateProduct(
-                    dispatch,
-                    shopId,
-                    product.id.toString(),
-                    new ProductModel(
-                        productName,
-                        image,
-                        description,
-                        categoryId,
-                        tasteIds,
-                        price,
-                        kcal,
-                    ),
-                );
+                UpdateProduct(dispatch, id, product.id.toString(), {
+                    name: productName,
+                    image,
+                    description,
+                    category: categoryId,
+                    flavors: tasteIds,
+                    price: price * 1000,
+                    kcal,
+                });
             } else {
-                console.log('dodawanie');
-                AddProduct(
-                    dispatch,
-                    shopId,
-                    new ProductModel(
-                        productName,
-                        image,
-                        description,
-                        categoryId,
-                        tasteIds,
-                        price,
-                        kcal,
-                    ),
-                );
+                AddProduct(dispatch, id, {
+                    name: productName,
+                    image,
+                    description,
+                    category: categoryId,
+                    flavors: tasteIds,
+                    price: price * 1000,
+                    kcal,
+                });
             }
         }
-    };
-
-    const handleKcal = (kc: string) => {
-        setKcal(Number(kc));
-        console.log(kcal);
-    };
-
-    const handlePrice = (pr: string) => {
-        setPrice(Number(pr));
-        console.log(price);
     };
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,24 +111,22 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
     };
 
     const handleFlavorsArrayChange = (flavorId: number) => {
-        console.log('aaa', flavorId, tasteIds);
+        const flavor: FlavorModel = { id: flavorId };
         const array = tasteIds;
-        if (tasteIds?.some((id) => id === flavorId)) {
-            const index = array?.indexOf(flavorId);
+        if (tasteIds?.some((taste) => taste.id === flavorId)) {
+            const index = array?.indexOf(flavor);
             if (index && index >= 0) {
                 array?.splice(index, 1);
-                console.log('remove', tasteIds);
                 setTasteIds(array);
             }
         } else {
-            array?.push(flavorId);
+            array?.push(flavor);
             setTasteIds(array);
         }
     };
 
     React.useEffect(() => {
         FetchCategoriesList(dispatch);
-
         FetchFlavorsList(dispatch);
     }, []);
 
@@ -184,7 +158,7 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                                     label="Nazwa Produktu"
                                     value={productName}
                                     autoFocus
-                                    onChange={(event) =>
+                                    onChange={(event: any) =>
                                         setProductName(event.target.value as string)
                                     }
                                 />
@@ -212,54 +186,48 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                                 )}
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <OutlinedInput
-                                    id="outlined-adornment-amount"
-                                    label="Cena"
+                                <TextField
+                                    id="price"
+                                    required
+                                    label="cena"
+                                    type="number"
                                     value={price}
-                                    onChange={(event) => handlePrice(event.target.value as string)}
-                                    startAdornment={
-                                        <InputAdornment position="start">zł</InputAdornment>
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={(event: any) =>
+                                        setPrice(event.target.value as number)
                                     }
                                 />
-                                {/* <TextField
-                                    type="number"
-                                    required
-                                    fullWidth
-                                    id="price"
-                                    label="Cena"
-                                    name="price"
-                                    autoComplete="price"
-                                    value={price}
-                                    onChange={(event) => handlePrice(event.target.value as string)}
-                                /> */}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    type="number"
-                                    required
-                                    fullWidth
                                     id="kcal"
-                                    label="Kalorie"
-                                    name="kcal"
+                                    required
+                                    label="kalorie"
                                     autoComplete="kcal"
+                                    type="number"
                                     value={kcal}
-                                    onChange={(event) => handleKcal(event.target.value as string)}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    onChange={(event: any) => setKcal(event.target.value as number)}
                                 />
                             </Grid>
                             <Grid className={classes.filterField}>
                                 <h3 className={classes.h3}>{t('tastes')}: </h3>
-                                {flavors?.data.map((taste) => (
+                                {flavors?.data.map((flavor) => (
                                     <Chip
-                                        key={taste.id}
+                                        key={flavor.id}
                                         color="primary"
                                         sx={{ m: 1 }}
-                                        label={taste.name}
+                                        label={flavor.name}
                                         variant={
-                                            tasteIds?.some((id) => id === taste.id)
+                                            tasteIds?.some((taste) => taste.id === flavor.id)
                                                 ? 'outlined'
                                                 : 'filled'
                                         }
-                                        onClick={() => handleFlavorsArrayChange(taste.id)}
+                                        onClick={() => handleFlavorsArrayChange(flavor.id)}
                                     />
                                 ))}
                             </Grid>
@@ -272,7 +240,7 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                                     name="description"
                                     autoComplete="description"
                                     value={description}
-                                    onChange={(event) =>
+                                    onChange={(event: any) =>
                                         setDescription(event.target.value as string)
                                     }
                                 />
@@ -282,12 +250,7 @@ export default function AddAndUpdateProduct(props: IDefaultProps) {
                             <input type="file" accept="image/*" onChange={handleImage} />
                             <img src={imageUrl} alt="" width="100%" height="100%" />
                         </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            onClick={() => handleGetPRoduct}
-                        >
+                        <Button fullWidth variant="contained" onClick={() => handleGetProduct()}>
                             Zapisz
                         </Button>
                     </Box>
