@@ -11,3 +11,5 @@ export const ratingsState = (state: RootState) => state.shopState.ratingsListSta
 export const userProfileState = (state: RootState) => state.profileState.userProfileState;
 export const userFavouriteShopsState = (state: RootState) => state.profileState.favouriteShopsState;
 export const userRatingsState = (state: RootState) => state.profileState.ratingState;
+export const adminShopsState = (state: RootState) => state.adminState.adminShops;
+export const adminShopState = (state: RootState) => state.adminState.adminShop;

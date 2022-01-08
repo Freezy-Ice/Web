@@ -6,4 +6,8 @@ export enum RouterPathEnum {
     HOME = '/',
     Error404 = '',
     SHOP = '/shop/:id',
+    ADMINPANEL = '/adminPanel',
+    ACCEPTINGSHOPS = '/acceptingShops',
+    FLAVORSLIST = '/flavorsList',
+    CATEGORIESLIST = '/categoriesList',
 }
