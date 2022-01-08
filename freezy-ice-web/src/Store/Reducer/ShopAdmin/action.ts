@@ -17,8 +17,6 @@ export async function GetUnacceptedShops(dispatch: any, currentPage: number) {
         type: ActionsEnums.LOADING,
     });
     const result = await GetNotApprovedShops(currentPage);
-    console.log('action', result);
-
     dispatch({
         payload: result,
         type: ActionsEnums.GET_UNACCEPTED_SHOPS,

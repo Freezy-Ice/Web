@@ -7,19 +7,6 @@ import { useAppDispatch } from '../../Store';
 import CategoryInterface from '../../Store/Interface/Dictionaries/CategoryInterface';
 import { CrateCategory, UpdateCategory } from '../../Store/Reducer/Dictionaries/action';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        rateFrame: {
-            display: 'flex',
-            justifyContent: 'right',
-            textAlign: 'right',
-        },
-        rate: {
-            paddingTop: '10%',
-        },
-    }),
-);
-
 interface IDefaultProps {
     open: boolean;
     close: Dispatch<SetStateAction<boolean>>;

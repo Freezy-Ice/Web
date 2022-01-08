@@ -33,17 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'right',
             textAlign: 'right',
         },
-        rateFrame: {
-            display: 'flex',
-            justifyContent: 'right',
-            textAlign: 'right',
-        },
-        rate: {
-            paddingTop: '10%',
-        },
-        hours: {
-            margin: '5px',
-        },
     }),
 );
 
@@ -55,7 +44,6 @@ export default function AcceptingShopDetails(props: IDefaultProps) {
     const { shop } = props;
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    console.log('shop', shop);
 
     const handleAcceptedShop = () => {
         PostAcceptedShop(dispatch, shop.id.toString(), 1);
