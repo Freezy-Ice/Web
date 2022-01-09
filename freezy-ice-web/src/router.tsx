@@ -72,9 +72,14 @@ function Router() {
                 path={RouterPathEnum.RESTAURANTREGISTRATION}
                 component={RestaurantRegistration}
             />
+            <Layout exact path={RouterPathEnum.CATEGORIESLIST} component={CategoriesList} />
+            <Layout exact path={RouterPathEnum.FLAVORSLIST} component={FlavorsList} />
+            <Layout exact path={RouterPathEnum.ADMINPANEL} component={AdminPanel} />
+            <Layout exact path={RouterPathEnum.ACCEPTINGSHOPS} component={AcceptingShops} />
             <Layout exact path={RouterPathEnum.REGISTRATION} component={Registration} />
             <Layout exact path={RouterPathEnum.LOGIN} component={Login} />
             <Layout exact path={RouterPathEnum.SHOP} component={ShopPage} />
+            <Layout exact path={RouterPathEnum.PROFILE} component={ProfilePage} />
             <Layout exact={false} path={RouterPathEnum.Error404} component={Error404} />
 
             <Redirect to={RouterPathEnum.Error404} />

@@ -13,3 +13,8 @@ export const businessShopDetailsState = (state: RootState) => state.businessShop
 export const businessShopState = (state: RootState) => state.businessShopState.shopsListState;
 export const businessProductState = (state: RootState) => state.businessShopState.productListState;
 export const userState = (state: RootState) => state.authState.userState;
+export const userProfileState = (state: RootState) => state.profileState.userProfileState;
+export const userFavouriteShopsState = (state: RootState) => state.profileState.favouriteShopsState;
+export const userRatingsState = (state: RootState) => state.profileState.ratingState;
+export const adminShopsState = (state: RootState) => state.adminState.adminShops;
+export const adminShopState = (state: RootState) => state.adminState.adminShop;
