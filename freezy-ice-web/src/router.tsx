@@ -13,6 +13,11 @@ import { useAppDispatch, useAppSelector } from './Store';
 import { tokenState, userState } from './Store/selectors';
 import CompanyShop from './Pages/CompanyShop';
 import { FetchUserInfos } from './Store/Reducer/Auth/action';
+import ProfilePage from './Pages/Profile';
+import AcceptingShops from './Components/AdminPanel/AcceptingShops';
+import AdminPanel from './Pages/AdminPanel';
+import FlavorsList from './Components/AdminPanel/FlavorsList';
+import CategoriesList from './Components/AdminPanel/CategoriesList';
 
 export function HandleRouts() {
     const userInfo = useAppSelector(userState);
