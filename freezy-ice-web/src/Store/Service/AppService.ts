@@ -2,11 +2,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import errHandler from '../../Helpers/utils/Utils';
 
+const token: string = '5|AXRacyLrVXBvej3JSncFyFUfpQ2uvSPhYp4pSAfV';
 export const SendGetRequest = async (url: string) =>
     fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer  ${token}`,
         },
     })
         .then((response) => {
@@ -31,6 +33,7 @@ export const SendPostRequest = async (url: string, payload: any) =>
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer  ${token}`,
         },
         body: JSON.stringify(payload),
     })

@@ -6,16 +6,16 @@ const perPage = `${process.env.PER_PAGE}`;
 const url = `${process.env.REACT_APP_API_URL}`;
 
 export const GetProductList = async (shopId: string) =>
-    SendGetRequest(`${url}/ice-cream-shops/${shopId}/products`);
+    SendGetRequest(`${url}/business/shops/${shopId}/products`);
 
 export const CreateProduct = async (shopId: string, payload: ProductModel) =>
-    SendPostRequest(`${url}/business/ice-cream-shops/${shopId}/products`, payload);
+    SendPostRequest(`${url}/business/shops/${shopId}/products`, payload);
 
 export const GetProduct = async (shopId: string, productId: string) =>
-    SendGetRequest(`${url}/ice-cream-shops/${shopId}/products/${productId}`);
+    SendGetRequest(`${url}/business/shops/${shopId}/products/${productId}`);
 
 export const EditProduct = async (shopId: string, productId: string, payload: ProductModel) =>
-    SendPutRequest(`${url}/business/ice-cream-shops/${shopId}/products/${productId}`, payload);
+    SendPutRequest(`${url}/business/shops/${shopId}/products/${productId}`, payload);
 
 export const DeleteProduct = async (shopId: string, productId: string) =>
-    SendDeleteRequest(`${url}/business/ice-cream-shops/${shopId}/products/${productId}`);
+    SendDeleteRequest(`${url}/business/shops/${shopId}/products/${productId}`);

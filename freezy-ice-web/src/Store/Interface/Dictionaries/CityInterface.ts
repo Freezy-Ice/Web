@@ -1,6 +1,7 @@
 interface CityInterface {
     id: number;
     name: string;
+    slug: string;
 }
 
 export interface CitiesState {

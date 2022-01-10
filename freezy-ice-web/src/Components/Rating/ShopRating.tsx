@@ -45,7 +45,7 @@ export default function ShopRating(props: IDefaultProps) {
 
     const handleRemoveRating = () => {
         if (id) {
-            DeleteRating(dispatch, id, rating.id.toString());
+            DeleteRating(dispatch, rating.id.toString());
         }
     };
 

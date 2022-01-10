@@ -4,7 +4,7 @@ const perPage = `${process.env.PER_PAGE}`;
 const url = `${process.env.REACT_APP_API_URL}`;
 
 export const GetNotApprovedShops = async (currentPage: number) =>
-    SendGetRequest(`${url}/admin/ice-cream-shops?per_page=5&current_page=${currentPage}`);
+    SendGetRequest(`${url}/admin/shops?perPage=5&currentPage=${currentPage}`);
 
 export const PostApprovedShop = async (shopId: string) =>
-    SendPostWithoutPayloadRequest(`${url}/admin/ice-cream-shops/${shopId}`);
+    SendPostWithoutPayloadRequest(`${url}/admin/shops/${shopId}/accept`);

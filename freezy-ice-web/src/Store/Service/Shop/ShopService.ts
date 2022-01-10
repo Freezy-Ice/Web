@@ -11,27 +11,24 @@ const url = `${process.env.REACT_APP_API_URL}`;
 console.log(url);
 
 export const GetProductList = async (shopId: string) =>
-    SendGetRequest(`${url}/ice-cream-shops/${shopId}/products`);
+    SendGetRequest(`${url}/shops/${shopId}/products`);
 
-export const GetShopDetails = async (shopId: string) =>
-    SendGetRequest(`${url}/ice-cream-shops/${shopId}`);
+export const GetShopDetails = async (shopId: string) => SendGetRequest(`${url}/shops/${shopId}`);
 
 export const GetShops = async (currentPage: number) =>
-    SendGetRequest(`${url}/shops?per_page=${5}&current_page=${currentPage}`);
+    SendGetRequest(`${url}/shops?per_page=${5}&currentPage=${currentPage}`);
 
 export const LikeShop = async (shopId: string) =>
-    SendPostWithoutPayloadRequest(`${url}/ice-cream-shops/${shopId}/like`);
+    SendPostWithoutPayloadRequest(`${url}/shops/${shopId}/like`);
 
 export const DislikeShop = async (shopId: string) =>
-    SendPostWithoutPayloadRequest(`${url}/ice-cream-shops/${shopId}/dislike`);
+    SendPostWithoutPayloadRequest(`${url}/shops/${shopId}/like`);
 
 export const GetRatings = async (currentPage: number, shopId: string) =>
-    SendGetRequest(
-        `${url}/ice-cream-shops/${shopId}/ratings?per_page=${5}&current_page=${currentPage}`,
-    );
+    SendGetRequest(`${url}/shops/${shopId}/ratings?perPage=${5}&currentPage=${currentPage}`);
 
 export const PostRating = async (shopId: number, ratingModel: CreateRatingModel) =>
-    SendPostRequest(`${url}/ice-cream-shops/${shopId}/rate`, ratingModel);
+    SendPostRequest(`${url}/shops/${shopId}/review`, ratingModel);
 
-export const RemoveRatings = async (shopId: string, ratingId: string) =>
-    SendDeleteRequest(`${url}/ice-cream-shops/${shopId}/${ratingId}`);
+export const RemoveRatings = async (ratingId: string) =>
+    SendDeleteRequest(`${url}/admin/reviews/1${ratingId}`);

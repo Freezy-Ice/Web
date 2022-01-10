@@ -88,11 +88,11 @@ export async function CreateRating(dispatch: any, shopId: number, ratingModel: C
         type: ActionsEnums.SAVING,
     });
 }
-export async function DeleteRating(dispatch: any, shopId: string, ratingId: string) {
+export async function DeleteRating(dispatch: any, ratingId: string) {
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
-    await RemoveRatings(shopId, ratingId);
+    await RemoveRatings(ratingId);
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
