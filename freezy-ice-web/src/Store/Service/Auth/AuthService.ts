@@ -6,4 +6,4 @@ const url = `${process.env.REACT_APP_API_URL}`;
 export const PostLogin = async (loginModel: LoginInterface) =>
     SendPostRequest(`${url}/auth/login`, loginModel);
 
-export const FetchUserInfo = async () => SendGetRequest(`${url}/auth/user`);
+export const FetchUserInfo = async () => SendGetRequest(`${url}/me`);

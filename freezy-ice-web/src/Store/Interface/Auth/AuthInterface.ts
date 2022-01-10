@@ -1,7 +1,7 @@
 import { UserState } from './UserInterface';
 
 interface LoginInterface {
-    login: string;
+    email: string;
     password: string;
 }
 

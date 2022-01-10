@@ -10,7 +10,6 @@ import Container from '@mui/material/Container';
 import { Link, NavLink } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
-import LoginInterface from '../../Store/Interface/Auth/AuthInterface';
 import { useAppDispatch } from '../../Store';
 import { FetchLogin } from '../../Store/Reducer/Auth/action';
 
@@ -31,12 +30,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Login() {
     const classes = useStyles();
-    const [login, setLogin] = React.useState('');
+    const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const dispatch = useAppDispatch();
 
     const handleLoginButton = () => {
-        FetchLogin(dispatch, { login, password });
+        FetchLogin(dispatch, { email, password });
     };
 
     return (
@@ -57,7 +56,7 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
-                        onChange={(event: any) => setLogin(event.target.value as string)}
+                        onChange={(event: any) => setEmail(event.target.value as string)}
                     />
                     <TextField
                         margin="normal"

@@ -1,6 +1,4 @@
 import { CloseOutlined } from '@mui/icons-material';
-import { Theme } from '@mui/material/styles';
-import { createStyles, makeStyles } from '@mui/styles';
 import { Box, Button, Dialog, IconButton, TextField } from '@mui/material';
 import React, { SetStateAction, Dispatch } from 'react';
 import { useAppDispatch } from '../../Store';
@@ -56,7 +54,7 @@ export default function CategoryModal(props: IDefaultProps) {
                         autoComplete="category"
                         autoFocus
                         value={category?.name}
-                        onChange={(event) => setCategoryName(event.target.value as string)}
+                        onChange={(event: any) => setCategoryName(event.target.value as string)}
                     />
                     <Button
                         variant="outlined"

@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from 'react';
-
 import { IconContext } from 'react-icons';
 import { ToastContainer } from 'react-toastify';
 import { Route } from 'react-router-dom';
@@ -11,7 +10,6 @@ import ErrorSnack from '../LayoutComponents/ErrorSnack';
 import Loading from '../LayoutComponents/Loading';
 import { useAppSelector } from '../../Store';
 import { commonState } from '../../Store/selectors';
-import LoginInterface from '../../Store/Interface/Auth/AuthInterface';
 
 interface IDefaultProps {
     component: any;

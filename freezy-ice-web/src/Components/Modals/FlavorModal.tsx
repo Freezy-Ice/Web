@@ -54,7 +54,7 @@ export default function FlavorModal(props: IDefaultProps) {
                         autoComplete="flavor"
                         autoFocus
                         value={flavorName}
-                        onChange={(event) => setFlavorName(event.target.value as string)}
+                        onChange={(event: any) => setFlavorName(event.target.value as string)}
                     />
                     <Button variant="outlined" onClick={() => handleAddOrUpdateFlavor(flavor?.id)}>
                         Zapisz

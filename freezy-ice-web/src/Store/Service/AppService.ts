@@ -43,6 +43,8 @@ export const SendPostRequest = async (url: string, payload: any) =>
             return response.status === 200 ? response.json() : '';
         })
         .then((data) => {
+            console.log('request', data);
+
             toast.success(data.message, {
                 position: toast.POSITION.TOP_CENTER,
             });

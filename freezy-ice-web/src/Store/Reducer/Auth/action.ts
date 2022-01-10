@@ -7,6 +7,7 @@ export async function FetchLogin(dispatch: any, loginModel: LoginInterface) {
         type: ActionsEnums.LOADING,
     });
     const result: any = await PostLogin(loginModel);
+    console.log('token', result.data);
     localStorage.setItem('token', result?.data.token);
     dispatch({
         payload: result,
