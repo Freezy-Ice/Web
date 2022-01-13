@@ -86,7 +86,7 @@ export default function CpmpanyAccount() {
                 </Grid>
                 <Grid item xs={12} className={classes.button}>
                     <Link to="/restaurantRegistration" style={{ textDecoration: 'none' }}>
-                        <Button type="submit" fullWidth variant="contained">
+                        <Button fullWidth variant="contained">
                             Dodaj Lodziarnię
                         </Button>
                     </Link>

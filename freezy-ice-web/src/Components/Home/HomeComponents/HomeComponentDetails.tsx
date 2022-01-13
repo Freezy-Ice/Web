@@ -59,7 +59,7 @@ export default function HomeComponentDetails(props: IDefaultProps) {
         <div className={classes.root} id={shop.id.toString()}>
             <Paper className={classes.picture}>
                 <Link to={`/shop/${shop.id}`} style={{ textDecoration: 'none' }}>
-                    <img src={shop.image.url} alt="" width="100%" height="100%" />
+                    <img src={shop?.image?.url} alt="" width="100%" height="100%" />
                 </Link>
             </Paper>
             <Paper className={classes.deatils}>

@@ -1,7 +1,14 @@
 import { CreateShopInterface } from '../../Interface/BusinessShop/CreateShopInterface';
 import { BusinessShopDetailsInterface } from '../../Interface/BusinessShop/ShopInterface';
-import { SendGetRequest, SendPostRequest, SendPutRequest, SendDeleteRequest } from '../AppService';
+import {
+    SendGetRequest,
+    SendPostRequest,
+    SendPutRequest,
+    SendDeleteRequest,
+    SendImageRequest,
+} from '../AppService';
 import CreateShopModel from './Models/CreateShopModel';
+import ImageModel from './Models/ImageModel';
 import UpdateShopModel from './Models/UpdateShopModel';
 
 const perPage = `${process.env.PER_PAGE}`;
@@ -14,7 +21,7 @@ export const GetBusinessShopDetails = async (shopId: string) =>
     SendGetRequest(`${url}/business/shops/${shopId}`);
 
 export const GetBusinessShops = async (currentPage: number) =>
-    SendGetRequest(`${url}/business/perPage=${5}&currentPage=1${currentPage}`);
+    SendGetRequest(`${url}/business/shops?perPage=${5}&currentPage=1${currentPage}`);
 
 export const UpdateBusinessShop = async (shopId: string, payload: UpdateShopModel) =>
     SendPutRequest(`${url}/business/shops/${shopId}`, payload);
@@ -24,3 +31,6 @@ export const DeleteBusinessShop = async (shopId: string) =>
 
 export const CreateShop = async (payload: CreateShopModel) =>
     SendPostRequest(`${url}/business/shops`, payload);
+
+export const CreateImage = async (payload: ImageModel) =>
+    SendImageRequest(`${url}/business/images`, payload);

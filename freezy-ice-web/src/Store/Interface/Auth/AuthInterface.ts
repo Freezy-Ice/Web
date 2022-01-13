@@ -6,9 +6,7 @@ interface LoginInterface {
 }
 
 export interface TokenInterface {
-    data: {
-        token: string;
-    };
+    data: string;
 }
 
 export interface AuthState {

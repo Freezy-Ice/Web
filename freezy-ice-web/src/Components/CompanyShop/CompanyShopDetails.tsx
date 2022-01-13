@@ -131,7 +131,7 @@ export default function CompanyShopDetails(props: IDefaultProps) {
                 </Grid>
             </Grid>
             <MapModal open={openMap} close={setOpenMap} shop={shop} />
-            <EditCompanyShopDetails open={open} close={setOpen} shop={shop} />
+            {open && <EditCompanyShopDetails open={open} close={setOpen} shop={shop} />}
         </div>
     );
 }

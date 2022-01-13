@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 import '../../Helpers/translations/i18n';
 import ProductInfo from '../../Components/Shop/ProductInfo';
 import { useAppDispatch, useAppSelector } from '../../Store';
-import { productState, ratingsState, shopDetailsState } from '../../Store/selectors';
+import { productState, ratingsState, shopDetailsState, userState } from '../../Store/selectors';
 import { FetchProductsList, FetchRatings, FetchShopDetails } from '../../Store/Reducer/Shop/action';
 import ShopBaseInfo from '../../Components/Shop/ShopBaseInfo';
 import ShopRating from '../../Components/Rating/ShopRating';
@@ -31,6 +31,7 @@ function ShopPage() {
     const dispatch = useAppDispatch();
     const { id } = useParams<{ id?: string }>();
     const { t } = useTranslation();
+    const userInfo = useAppSelector(userState);
 
     React.useEffect(() => {
         if (id) {
@@ -80,7 +81,7 @@ function ShopPage() {
                         </Grid>
                     </div>
                 ) : null}
-                {shop !== null && <AddRating shopId={shop.data.id} />}
+                {shop !== null && userInfo !== null && <AddRating shopId={shop.data.id} />}
             </div>
         </div>
     );

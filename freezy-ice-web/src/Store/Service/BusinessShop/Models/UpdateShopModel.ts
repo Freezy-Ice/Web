@@ -3,7 +3,7 @@ import OpeningHoursModels from './OpeningHoursModel';
 export default class UpdateShopModel {
     name: string;
 
-    image: File;
+    image: string;
 
     city: string;
 
@@ -17,7 +17,7 @@ export default class UpdateShopModel {
 
     constructor(
         name: string,
-        image: File,
+        image: string,
         city: string,
         address: string,
         description: string,

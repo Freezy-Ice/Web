@@ -22,12 +22,14 @@ function HomePage() {
         if (shops !== null) FetchShops(dispatch, value);
     };
 
+    const paginationTotal = shops ? shops?.paginationData.total / 5 : 0;
+
     const paginationComponent = (pagination: PaginationInterface) => (
         <Stack spacing={2} alignItems="center">
             <Pagination
                 color="primary"
                 size="large"
-                count={pagination.total / 5}
+                count={Math.ceil(paginationTotal)}
                 page={pagination.currentPage}
                 onChange={handleChange}
             />
@@ -36,7 +38,7 @@ function HomePage() {
     // eslint-disable-next-line
     return (
         <div>
-            <SearchBar key="SearchBar" />
+            {shops && <SearchBar key="SearchBar" currentPage={shops?.paginationData.currentPage} />}
             {shops && shops !== null ? (
                 <div>
                     {paginationComponent(shops.paginationData)}

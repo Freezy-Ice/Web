@@ -50,7 +50,7 @@ export async function UpdateProduct(
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    // await GetProduct;
+    await FetchProductsList(dispatch, shopId);
 }
 
 export async function RemoveProduct(dispatch: any, shopId: string, productId: string) {
@@ -61,7 +61,7 @@ export async function RemoveProduct(dispatch: any, shopId: string, productId: st
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
-    await GetProductList(shopId);
+    await FetchProductsList(dispatch, shopId);
 }
 
 export async function AddProduct(dispatch: any, shopId: string, payload: ProductModel) {
@@ -72,5 +72,5 @@ export async function AddProduct(dispatch: any, shopId: string, payload: Product
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetProductList(shopId);
+    await FetchProductsList(dispatch, shopId);
 }

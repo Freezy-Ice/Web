@@ -17,7 +17,7 @@ import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import { useTranslation } from 'react-i18next';
 import RoomIcon from '@mui/icons-material/Room';
-import { citiesState, flavorsState } from '../../Store/selectors';
+import { citiesState, flavorsState, imageState } from '../../Store/selectors';
 import { FetchCitiesList, FetchFlavorsList } from '../../Store/Reducer/Dictionaries/action';
 import { useAppDispatch, useAppSelector } from '../../Store';
 import {
@@ -26,7 +26,7 @@ import {
     OpeningHoursInterface,
 } from '../../Store/Interface/BusinessShop/ShopInterface';
 import OpeningTimes from '../../Helpers/openingTimes/OpeningTimes';
-import { UpdateShop } from '../../Store/Reducer/BusinessShop/action';
+import { AddImage, UpdateShop } from '../../Store/Reducer/BusinessShop/action';
 import ChangeMapLocation from './ChangeMapLocation';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -105,15 +105,16 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
     const [street, setStreet] = React.useState(shop.address);
     const cities = useAppSelector(citiesState);
     const dispatch = useAppDispatch();
+    const uploadedImage = useAppSelector(imageState);
     const [openingHours, setOpeningHours] = React.useState<Array<OpeningHoursInterface>>(
         shop.openingHours ?? [],
     );
 
     const handleEditCompanyShop = () => {
-        if (image) {
+        if (uploadedImage || image) {
             UpdateShop(dispatch, shop.id.toString(), {
                 name: shopName,
-                image,
+                image: uploadedImage !== null ? uploadedImage.data.id : imageUrl,
                 city: cityName,
                 address: street,
                 description,
@@ -144,6 +145,7 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
+            AddImage(dispatch, { image: e.target.files[0] });
         }
     };
 
@@ -252,7 +254,12 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                         </Grid>
                         <Grid>
                             <input type="file" accept="image/*" onChange={handleImage} />
-                            <img src={imageUrl} alt="" width="100%" height="100%" />
+                            <img
+                                src={uploadedImage !== null ? uploadedImage?.data?.url : imageUrl}
+                                alt=""
+                                width="100%"
+                                height="100%"
+                            />
                         </Grid>
                         <Button fullWidth variant="contained" onClick={handleEditCompanyShop}>
                             Zapisz

@@ -20,6 +20,7 @@ import {
     FetchCitiesList,
     FetchFlavorsList,
 } from '../../Store/Reducer/Dictionaries/action';
+import { FetchFilteredShops } from '../../Store/Reducer/Shop/action';
 import { categoriesState, citiesState, flavorsState } from '../../Store/selectors';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,9 +51,15 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
-export default function SearchBar() {
+
+interface IDefaultProps {
+    currentPage: number;
+}
+
+export default function SearchBar(props: IDefaultProps) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const { currentPage } = props;
 
     const cities = useAppSelector(citiesState);
     const categories = useAppSelector(categoriesState);
@@ -71,13 +78,24 @@ export default function SearchBar() {
         }
     }, [cities, categories, flavors, dispatch]);
 
-    const [sortType, setSortType] = React.useState(0);
-    const [categoryId, setCategoryId] = React.useState(0);
-    const [tasteId, setTasteId] = React.useState(0);
+    const [sortType, setSortType] = React.useState<number | null>(null);
+    const [categoryId, setCategoryId] = React.useState<number | null>(null);
+    const [tasteId, setTasteId] = React.useState<number | null>(null);
     const [name, setName] = React.useState('');
-    const [cityName, setCityName] = React.useState('');
-    const [priceFrom, setPriceFrom] = React.useState(0);
-    const [priceTo, setPriceTo] = React.useState(0);
+    const [cityId, setCityId] = React.useState<number | undefined>(0);
+    const [priceFrom, setPriceFrom] = React.useState<number | null>(null);
+    const [priceTo, setPriceTo] = React.useState<number | null>(null);
+
+    const handleButton = () => {
+        FetchFilteredShops(dispatch, currentPage, {
+            search: name,
+            city: cityId,
+            priceMin: priceFrom !== null ? priceFrom * 100 : null,
+            priceMax: priceTo !== null ? priceTo * 100 : null,
+            flavor: tasteId,
+            category: categoryId,
+        });
+    };
 
     /* eslint-disable react/jsx-props-no-spreading */
     return (
@@ -89,15 +107,16 @@ export default function SearchBar() {
                         disablePortal
                         fullWidth
                         id="combo-box"
-                        options={cities!.data.map((c) => c.name)}
+                        options={cities!.data}
+                        getOptionLabel={(option) => option.name}
                         renderInput={(params) => (
                             <TextField
                                 className={classes.textField}
                                 {...params}
                                 label={t('city')}
-                                onChange={(event) => setCityName(event.target.value as string)}
                             />
                         )}
+                        onChange={(event, newValue) => setCityId(newValue?.id)}
                     />
                 )}
                 <TextField
@@ -160,7 +179,7 @@ export default function SearchBar() {
                         }}
                     />
                 </div>
-                <Button variant="contained" size="large" fullWidth>
+                <Button variant="contained" size="large" fullWidth onClick={() => handleButton()}>
                     <h4>{t('search')}</h4>
                 </Button>
             </div>

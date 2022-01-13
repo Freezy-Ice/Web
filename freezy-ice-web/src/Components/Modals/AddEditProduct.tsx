@@ -105,8 +105,11 @@ export default function AddEditProduct(props: IDefaultProps) {
     };
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const formData = new FormData();
+
         if (e.target.files && e.target.files[0]) {
-            setImage(e.target.files[0]);
+            formData.append('image', e.target.files[0]);
+            // setImage(e.target.files[0]);
         }
     };
 

@@ -1,10 +1,5 @@
-export interface UserInterface {
-    id: number;
-    name: string;
-    email: string;
-    companyAccount: boolean;
-}
+import UserProfileInterface from '../Profile/UserProfileInterface';
 
 export interface UserState {
-    data: UserInterface;
+    data: UserProfileInterface;
 }

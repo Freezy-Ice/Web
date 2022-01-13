@@ -45,7 +45,7 @@ export default function ShopRating(props: IDefaultProps) {
 
     const handleRemoveRating = () => {
         if (id) {
-            DeleteRating(dispatch, rating.id.toString());
+            DeleteRating(dispatch, rating.id.toString(), 1, id);
         }
     };
 
@@ -59,9 +59,9 @@ export default function ShopRating(props: IDefaultProps) {
             </Paper>
             <Paper sx={{ p: '3' }}>
                 <h4 className={classes.text}>{rating.comment}</h4>
-                {/* {user === null || user.data.isAdmin === false ? null : ( */}
-                <Button onClick={handleRemoveRating}>Usuń</Button>
-                {/* )} */}
+                {user === null || user.data.adminAccount === false ? null : (
+                    <Button onClick={handleRemoveRating}>Usuń</Button>
+                )}
                 <h5 className={classes.createdAt}>{rating.createdAt}</h5>
             </Paper>
         </div>

@@ -109,7 +109,7 @@ export default function Registration() {
                             />
                         </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained">
+                    <Button fullWidth variant="contained">
                         Zarejestruj
                     </Button>
                     <Grid>

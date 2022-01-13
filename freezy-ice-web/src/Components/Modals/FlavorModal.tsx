@@ -19,10 +19,11 @@ export default function FlavorModal(props: IDefaultProps) {
 
     const handleAddOrUpdateFlavor = (flavorId: number | undefined) => {
         if (flavorId) {
-            UpdateFlavor(dispatch, flavorId.toString(), flavorName);
+            UpdateFlavor(dispatch, flavorId.toString(), { name: flavorName });
         } else {
-            CrateFlavor(dispatch, flavorName);
+            CrateFlavor(dispatch, { name: flavorName });
         }
+        close(false);
     };
 
     return (

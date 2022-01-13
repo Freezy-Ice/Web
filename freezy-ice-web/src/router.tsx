@@ -49,6 +49,17 @@ export function HandleRouts() {
             </div>
         );
     }
+    if (userInfo?.data.adminAccount) {
+        return (
+            <div>
+                {defaultRoutes}
+                <Layout exact path={RouterPathEnum.CATEGORIESLIST} component={CategoriesList} />
+                <Layout exact path={RouterPathEnum.FLAVORSLIST} component={FlavorsList} />
+                <Layout exact path={RouterPathEnum.ADMINPANEL} component={AdminPanel} />
+                <Layout exact path={RouterPathEnum.ACCEPTINGSHOPS} component={AcceptingShops} />
+            </div>
+        );
+    }
 
     return defaultRoutes;
 }
@@ -59,32 +70,17 @@ function Router() {
     const tokenStorage = localStorage.getItem('token');
     const dispatch = useAppDispatch();
     React.useEffect(() => {
-        if (!tokenStorage && token && token?.data.token.length > 0) {
-            localStorage.setItem('token', token.data.token);
+        if (!tokenStorage && token && token?.data.length > 0) {
+            localStorage.setItem('token', token?.data);
         }
-        if (tokenStorage !== null && userInfo == null) {
+        if (tokenStorage !== null && userInfo === null) {
             FetchUserInfos(dispatch);
         }
     });
 
     return (
         <Switch>
-            <Layout exact path={RouterPathEnum.COMPANYACCOUNT} component={CompanyAccount} />
-            <Layout exact path={RouterPathEnum.COMPANYSHOP} component={CompanyShop} />
-            <Layout exact path={RouterPathEnum.HOME} component={HomePage} />
-            <Layout
-                exact
-                path={RouterPathEnum.RESTAURANTREGISTRATION}
-                component={RestaurantRegistration}
-            />
-            <Layout exact path={RouterPathEnum.CATEGORIESLIST} component={CategoriesList} />
-            <Layout exact path={RouterPathEnum.FLAVORSLIST} component={FlavorsList} />
-            <Layout exact path={RouterPathEnum.ADMINPANEL} component={AdminPanel} />
-            <Layout exact path={RouterPathEnum.ACCEPTINGSHOPS} component={AcceptingShops} />
-            <Layout exact path={RouterPathEnum.REGISTRATION} component={Registration} />
-            <Layout exact path={RouterPathEnum.LOGIN} component={Login} />
-            <Layout exact path={RouterPathEnum.SHOP} component={ShopPage} />
-            <Layout exact path={RouterPathEnum.PROFILE} component={ProfilePage} />
+            <HandleRouts />
             <Layout exact={false} path={RouterPathEnum.Error404} component={Error404} />
 
             <Redirect to={RouterPathEnum.Error404} />

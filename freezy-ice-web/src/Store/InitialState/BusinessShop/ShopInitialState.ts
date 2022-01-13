@@ -5,5 +5,6 @@ const businessShopInitialState: BusinessShopState = {
     productDetails: null,
     shopDetails: null,
     shopsListState: null,
+    imageState: null,
 };
 export default businessShopInitialState;

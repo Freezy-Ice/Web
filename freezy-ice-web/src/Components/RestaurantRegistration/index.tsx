@@ -38,30 +38,21 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Registration() {
     const classes = useStyles();
     const [name, setName] = React.useState('');
-    const [cityName, setCityName] = React.useState('');
+    const [cityId, setCityId] = React.useState<number | undefined>(0);
     const [street, setStreet] = React.useState('');
     const [descryption, setDescryption] = React.useState('');
-    const [image, setImage] = React.useState<File>();
     const dispatch = useAppDispatch();
     const cities = useAppSelector(citiesState);
     const { t } = useTranslation();
 
     const handleAddShop = () => {
-        if (image) {
-            AddShop(dispatch, new CreateShopModel(name, image, cityName, street, descryption), 1);
-        }
+        if (cityId) AddShop(dispatch, new CreateShopModel(name, cityId, street, descryption), 1);
     };
     React.useEffect(() => {
         if (cities === null) {
             FetchCitiesList(dispatch);
         }
     }, [cities, dispatch]);
-
-    const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setImage(e.target.files[0]);
-        }
-    };
 
     /* eslint-disable react/jsx-props-no-spreading */
     return (
@@ -93,16 +84,12 @@ export default function Registration() {
                                     sx={{ mb: '3px' }}
                                     disablePortal
                                     id="combo-box"
-                                    options={cities!.data.map((c) => c.name)}
+                                    options={cities!.data}
+                                    getOptionLabel={(option) => option.name}
                                     renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label={t('city')}
-                                            onChange={(event: any) =>
-                                                setCityName(event.target.value as string)
-                                            }
-                                        />
+                                        <TextField {...params} label={t('city')} />
                                     )}
+                                    onChange={(event, newValue) => setCityId(newValue?.id)}
                                 />
                             )}
                         </Grid>
@@ -132,11 +119,8 @@ export default function Registration() {
                                 }
                             />
                         </Grid>
-                        <Grid>
-                            <input type="file" accept="image/*" onChange={handleImage} />
-                        </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" onClick={handleAddShop}>
+                    <Button fullWidth variant="contained" onClick={handleAddShop}>
                         Zarejestuj
                     </Button>
                 </Box>

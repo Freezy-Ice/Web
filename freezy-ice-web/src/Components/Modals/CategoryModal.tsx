@@ -19,10 +19,11 @@ export default function CategoryModal(props: IDefaultProps) {
 
     const handleAddOrUpdateCategory = (categoryId: number | undefined) => {
         if (categoryId) {
-            UpdateCategory(dispatch, categoryId.toString(), categoryName);
+            UpdateCategory(dispatch, categoryId.toString(), { name: categoryName });
         } else {
-            CrateCategory(dispatch, categoryName);
+            CrateCategory(dispatch, { name: categoryName });
         }
+        close(false);
     };
 
     return (
@@ -53,7 +54,7 @@ export default function CategoryModal(props: IDefaultProps) {
                         name="category"
                         autoComplete="category"
                         autoFocus
-                        value={category?.name}
+                        value={categoryName}
                         onChange={(event: any) => setCategoryName(event.target.value as string)}
                     />
                     <Button

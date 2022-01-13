@@ -33,3 +33,12 @@ export interface OpeningHoursInterface {
     to: Date | null;
     open: boolean;
 }
+
+export interface ImageState {
+    data: ImageInterface;
+}
+
+export interface ImageInterface {
+    id: string;
+    url: string;
+}
