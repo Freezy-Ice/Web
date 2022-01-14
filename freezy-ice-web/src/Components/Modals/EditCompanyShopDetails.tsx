@@ -101,8 +101,9 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
     const [coords, setCoords] = React.useState<CoordsInterface>(shop.coords);
     const [image, setImage] = React.useState<File>();
     const [imageUrl, setImageUrl] = React.useState(shop?.imageUrl);
-    const [cityName, setCityName] = React.useState(shop.city);
+    const [cityName, setCityName] = React.useState(shop.city.name);
     const [street, setStreet] = React.useState(shop.address);
+    const [cityId, setCityId] = React.useState<number | undefined>(shop.city.id);
     const cities = useAppSelector(citiesState);
     const dispatch = useAppDispatch();
     const uploadedImage = useAppSelector(imageState);
@@ -110,12 +111,14 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
         shop.openingHours ?? [],
     );
 
+    console.log(coords);
+
     const handleEditCompanyShop = () => {
-        if (uploadedImage || image) {
+        if (cityId) {
             UpdateShop(dispatch, shop.id.toString(), {
                 name: shopName,
-                image: uploadedImage !== null ? uploadedImage.data.id : imageUrl,
-                city: cityName,
+                image: '938b959f-57dc-4e50-9cb8-499d2d1a411a',
+                city: cityId,
                 address: street,
                 description,
                 coords,
@@ -200,17 +203,12 @@ export default function EditCompanyShopDetails(props: IDefaultProps) {
                                         sx={{ mb: '3px' }}
                                         disablePortal
                                         id="combo-box"
-                                        options={cities!.data.map((c) => c.name)}
-                                        value={cityName}
+                                        options={cities!.data}
+                                        getOptionLabel={(option) => option.name}
                                         renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label={t('city')}
-                                                onChange={(event: any) =>
-                                                    setCityName(event.target.value as string)
-                                                }
-                                            />
+                                            <TextField {...params} label={t('city')} />
                                         )}
+                                        onChange={(event, newValue) => setCityId(newValue?.id)}
                                     />
                                 )}
                             </Grid>

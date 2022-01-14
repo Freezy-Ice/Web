@@ -5,7 +5,7 @@ export default class UpdateShopModel {
 
     image: string;
 
-    city: string;
+    city: number;
 
     address: string;
 
@@ -18,7 +18,7 @@ export default class UpdateShopModel {
     constructor(
         name: string,
         image: string,
-        city: string,
+        city: number,
         address: string,
         description: string,
         coords: { lat: number; lng: number },

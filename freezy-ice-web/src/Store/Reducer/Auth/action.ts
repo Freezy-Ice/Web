@@ -7,6 +7,7 @@ export async function FetchUserInfos(dispatch: any) {
         type: ActionsEnums.LOADING,
     });
     const result = await FetchUserInfo();
+    console.log('xd');
     dispatch({
         payload: result,
         type: ActionsEnums.GET_USER_INFOS,

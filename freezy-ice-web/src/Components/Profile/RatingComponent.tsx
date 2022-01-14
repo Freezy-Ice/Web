@@ -5,7 +5,7 @@ import { Grid, IconButton, Rating } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 
-import RatingInterface from '../../Store/Interface/Profile/RatingInterface';
+import RatingInterface, { RateInterface } from '../../Store/Interface/Profile/RatingInterface';
 import { FetchUserRatings, RemoveUserRating } from '../../Store/Reducer/Profile/action';
 import { useAppDispatch } from '../../Store';
 
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IDefaultProps {
-    rating: RatingInterface;
+    rating: RateInterface;
     currentPage: number;
 }
 
@@ -48,32 +48,26 @@ export default function RatingComponent(props: IDefaultProps) {
         FetchUserRatings(dispatch, currentPage);
     };
 
+    console.log(rating);
+
     return (
         <div className={classes.root}>
             <Grid container>
-                <Grid item xs={12} md={10}>
-                    <Link to={`/shop/${rating.id}`} style={{ textDecoration: 'none' }}>
-                        <h2>{rating.name}</h2>
-                    </Link>
-                </Grid>
                 <Grid className={classes.buttonBox} item xs={12} md={2}>
                     <IconButton onClick={deleteRating} size="large">
                         <DeleteIcon />
                     </IconButton>
                 </Grid>
             </Grid>
-            <p>{rating.myRating.comment}</p>
+            <p>{rating?.comment}</p>
             <div className={classes.rateFrame}>
                 <Rating
                     name="read-only"
-                    value={rating.myRating.rating}
+                    value={rating?.rating}
                     precision={0.5}
                     readOnly
                     className={classes.rate}
                 />
-            </div>
-            <div>
-                <p>{rating.myRating.createdAt}</p>
             </div>
         </div>
     );

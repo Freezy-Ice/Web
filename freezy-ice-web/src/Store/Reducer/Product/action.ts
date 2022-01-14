@@ -68,6 +68,8 @@ export async function AddProduct(dispatch: any, shopId: string, payload: Product
     dispatch({
         type: ActionsEnums.SAVING,
     });
+    console.log(payload);
+
     const result = await CreateProduct(shopId, payload);
     dispatch({
         type: ActionsEnums.SAVING,

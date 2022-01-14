@@ -89,6 +89,7 @@ export async function CreateRating(dispatch: any, shopId: number, ratingModel: C
     dispatch({
         type: ActionsEnums.SAVING,
     });
+    await FetchRatings(dispatch, 1, shopId.toString());
 }
 
 export async function DeleteRating(

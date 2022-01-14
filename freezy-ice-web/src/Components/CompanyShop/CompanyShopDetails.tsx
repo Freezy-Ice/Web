@@ -107,6 +107,10 @@ export default function CompanyShopDetails(props: IDefaultProps) {
                         <div className={classes.buttonBox}>
                             <RoomIcon onClick={() => setOpenMap(true)} />
                         </div>
+                        <div className={classes.buttonBox}>
+                            <h3>{shop.city.name}, </h3>
+                            <h3>{shop.address}</h3>
+                        </div>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>

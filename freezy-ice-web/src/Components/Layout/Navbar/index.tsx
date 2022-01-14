@@ -102,7 +102,7 @@ export default function Navbar() {
                                 >
                                     <MenuItem onClick={handleClose}>Profil</MenuItem>
                                 </NavLink>
-                                {userInfo.data.adminAccount && (
+                                {userInfo?.data.adminAccount && (
                                     <NavLink
                                         to="/adminPanel"
                                         activeStyle={{ color: 'black' }}

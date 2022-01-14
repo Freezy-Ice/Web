@@ -72,6 +72,8 @@ export default function ShopBaseInfo(props: IDefaultProps) {
     const dispatch = useAppDispatch();
     const userInfo = useAppSelector(userState);
 
+    console.log(shop);
+
     const handleFavourite = () => {
         PostLikeAndDislikeShop(dispatch, shop.id.toString(), shop.favourite);
     };

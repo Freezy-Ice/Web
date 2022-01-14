@@ -68,7 +68,9 @@ export default function AddEditProduct(props: IDefaultProps) {
     const { product } = props;
     const { open, close } = props;
     const [productName, setProductName] = React.useState(product?.name ?? '');
-    const [categoryId, setCategoryId] = React.useState(0);
+    const [categoryId, setCategoryId] = React.useState<number | undefined>(
+        product?.category.id ?? 0,
+    );
     const [kcal, setKcal] = React.useState(product?.kcal ?? 0);
     const [description, setDescription] = React.useState(product?.description ?? '');
     const [price, setPrice] = React.useState(product?.price ?? 0);
@@ -79,21 +81,22 @@ export default function AddEditProduct(props: IDefaultProps) {
     const { id } = useParams<{ id?: string }>();
 
     const handleGetProduct = () => {
-        if (id && image && tasteIds) {
+        if (id && tasteIds && categoryId) {
+            console.log(categoryId);
             if (product) {
                 UpdateProduct(dispatch, id, product.id.toString(), {
                     name: productName,
-                    image,
+                    image: '938b959f-57dc-4e50-9cb8-499d2d1a411a',
                     description,
                     category: categoryId,
                     flavors: tasteIds,
-                    price: price * 1000,
+                    price: price * 100,
                     kcal,
                 });
             } else {
                 AddProduct(dispatch, id, {
                     name: productName,
-                    image,
+                    image: '938b959f-57dc-4e50-9cb8-499d2d1a411a',
                     description,
                     category: categoryId,
                     flavors: tasteIds,
@@ -146,9 +149,7 @@ export default function AddEditProduct(props: IDefaultProps) {
                 </AppBar>
                 <CssBaseline />
                 <Box className={classes.box}>
-                    <Typography component="h1" variant="h5">
-                        Szczegóły lodziarni
-                    </Typography>
+                    <Typography component="h1" variant="h5" />
                     <Box component="form" noValidate sx={{ marginTop: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
@@ -173,18 +174,16 @@ export default function AddEditProduct(props: IDefaultProps) {
                                         disablePortal
                                         className={classes.textField}
                                         id="combo-box"
-                                        options={categories!.data.map((c) => c.name)}
-                                        value={product?.category.name}
+                                        options={categories!.data}
+                                        getOptionLabel={(option) => option.name}
                                         renderInput={(params) => (
                                             <TextField
                                                 className={classes.textField}
                                                 {...params}
-                                                label={t('categories')}
-                                                onChange={() =>
-                                                    setCategoryId(product?.category.id ?? 0)
-                                                }
+                                                label={t('category')}
                                             />
                                         )}
+                                        onChange={(event, newValue) => setCategoryId(newValue?.id)}
                                     />
                                 )}
                             </Grid>

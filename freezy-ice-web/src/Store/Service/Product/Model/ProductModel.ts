@@ -3,7 +3,7 @@ import FlavorModel from './FlavorModel';
 export default class ProductModel {
     name: string;
 
-    image: File;
+    image: string;
 
     description: string;
 
@@ -17,7 +17,7 @@ export default class ProductModel {
 
     constructor(
         name: string,
-        image: File,
+        image: string,
         description: string,
         category: number,
         flavors: Array<FlavorModel>,

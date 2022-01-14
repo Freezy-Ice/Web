@@ -10,6 +10,7 @@ import UserProfileInterface from '../../Store/Interface/Profile/UserProfileInter
 import { useAppDispatch, useAppSelector } from '../../Store';
 import { userProfileState } from '../../Store/selectors';
 import { DeleteRating } from '../../Store/Reducer/Shop/action';
+import { FetchUserInfos } from '../../Store/Reducer/Auth/action';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -42,6 +43,8 @@ export default function ShopRating(props: IDefaultProps) {
     const { id } = useParams<{ id?: string }>();
     const classes = useStyles();
     const dispatch = useAppDispatch();
+
+    console.log(user);
 
     const handleRemoveRating = () => {
         if (id) {

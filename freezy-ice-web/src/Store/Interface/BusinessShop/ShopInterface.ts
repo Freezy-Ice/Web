@@ -1,9 +1,10 @@
+import CityInterface from '../Dictionaries/CityInterface';
 import { PaginationInterface } from '../Shop/PaginationInterface';
 
 export interface BusinessShopDetailsInterface {
     id: number;
     name: string;
-    city: string;
+    city: CityInterface;
     address: string;
     description: string;
     imageUrl: string;

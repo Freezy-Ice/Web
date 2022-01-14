@@ -33,4 +33,4 @@ export const PostRating = async (shopId: number, ratingModel: CreateRatingModel)
     SendPostRequest(`${url}/shops/${shopId}/review`, ratingModel);
 
 export const RemoveRatings = async (ratingId: string) =>
-    SendDeleteRequest(`${url}/admin/reviews/1${ratingId}`);
+    SendDeleteRequest(`${url}/admin/reviews/${ratingId}`);

@@ -25,6 +25,7 @@ export function HandleRouts() {
         <div>
             <Layout exact path={RouterPathEnum.HOME} component={HomePage} />
             <Layout exact path={RouterPathEnum.SHOP} component={ShopPage} />
+            <Layout exact path={RouterPathEnum.PROFILE} component={ProfilePage} />
         </div>
     );
     if (userInfo === null) {
