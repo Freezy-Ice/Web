@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction } from 'react';
-
 import { IconContext } from 'react-icons';
 import { ToastContainer } from 'react-toastify';
 import { Route } from 'react-router-dom';
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignContent: 'center',
         },
         container: {
-            padding: '1%',
+            padding: 1,
         },
     }),
 );

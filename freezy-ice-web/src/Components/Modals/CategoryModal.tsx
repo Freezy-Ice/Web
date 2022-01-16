@@ -1,6 +1,4 @@
 import { CloseOutlined } from '@mui/icons-material';
-import { Theme } from '@mui/material/styles';
-import { createStyles, makeStyles } from '@mui/styles';
 import { Box, Button, Dialog, IconButton, TextField } from '@mui/material';
 import React, { SetStateAction, Dispatch } from 'react';
 import { useAppDispatch } from '../../Store';
@@ -21,10 +19,11 @@ export default function CategoryModal(props: IDefaultProps) {
 
     const handleAddOrUpdateCategory = (categoryId: number | undefined) => {
         if (categoryId) {
-            UpdateCategory(dispatch, categoryId.toString(), categoryName);
+            UpdateCategory(dispatch, categoryId.toString(), { name: categoryName });
         } else {
-            CrateCategory(dispatch, categoryName);
+            CrateCategory(dispatch, { name: categoryName });
         }
+        close(false);
     };
 
     return (
@@ -55,8 +54,8 @@ export default function CategoryModal(props: IDefaultProps) {
                         name="category"
                         autoComplete="category"
                         autoFocus
-                        value={category?.name}
-                        onChange={(event) => setCategoryName(event.target.value as string)}
+                        value={categoryName}
+                        onChange={(event: any) => setCategoryName(event.target.value as string)}
                     />
                     <Button
                         variant="outlined"

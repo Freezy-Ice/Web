@@ -1,3 +1,5 @@
+import CityInterface from '../Dictionaries/CityInterface';
+import ImageInterface from '../Dictionaries/ImageInterface';
 import { PaginationInterface } from './PaginationInterface';
 
 export interface ShopDetailsInterface {
@@ -21,10 +23,10 @@ export interface ShopDetails {
 export interface ShopsInterface {
     id: number;
     name: string;
-    city: string;
+    city: CityInterface;
     address: string;
     description: string;
-    imageUrl: string;
+    image: ImageInterface;
     rating: number;
     favourite: boolean;
     coords: { lat: number; lng: number };

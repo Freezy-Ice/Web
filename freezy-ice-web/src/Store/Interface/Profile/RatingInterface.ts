@@ -14,7 +14,7 @@ interface RatingInterface {
 }
 
 export interface RatingState {
-    data: Array<RatingInterface>;
+    data: Array<RateInterface>;
     paginationData: PaginationInterface;
 }
 
@@ -22,7 +22,6 @@ export interface RateInterface {
     id: number;
     rating: number;
     comment: string;
-    createdAt: string;
 }
 
 export default RatingInterface;

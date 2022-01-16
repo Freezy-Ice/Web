@@ -1,12 +1,12 @@
-import { AppBar, Dialog, IconButton, Rating, Toolbar } from '@mui/material';
+import { AppBar, Button, Dialog, IconButton, Rating, Toolbar } from '@mui/material';
 import * as React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import { Dispatch, SetStateAction } from 'react';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import { LatLngExpression } from 'leaflet';
 import { ShopDetailsInterface, ShopsInterface } from '../../Store/Interface/Shop/ShopInterface';
+import { BusinessShopDetailsInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,7 +25,7 @@ interface IDefaultProps {
     open: boolean;
     close: Dispatch<SetStateAction<boolean>>;
     shops?: Array<ShopsInterface>;
-    shop?: ShopsInterface;
+    shop?: ShopsInterface | BusinessShopDetailsInterface;
     shopDetails?: ShopDetailsInterface;
 }
 
@@ -51,14 +51,9 @@ export default function MapModal(props: IDefaultProps) {
         <Dialog fullScreen open={open} onClose={() => close(false)}>
             <AppBar sx={{ position: 'relative' }}>
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={() => close(false)}
-                        aria-label="close"
-                    >
-                        <CloseOutlined />
-                    </IconButton>
+                    <Button color="inherit" onClick={() => close(false)}>
+                        X
+                    </Button>
                 </Toolbar>
             </AppBar>
             {shops && coords ? (

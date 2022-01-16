@@ -99,17 +99,13 @@ export default function CategoriesList() {
                                             Edytuj
                                         </Button>
                                     </TableCell>
-                                    <CategoryModal
-                                        open={open}
-                                        close={setOpen}
-                                        category={categoryModal}
-                                    />
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
             </Grid>
+            {open && <CategoryModal open={open} close={setOpen} category={categoryModal} />}
         </Grid>
     );
 }

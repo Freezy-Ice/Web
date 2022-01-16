@@ -11,6 +11,8 @@ import {
     GetCities,
     GetFlavors,
 } from '../../Service/Dictionaries/DictionaryService';
+import CategoryModal from '../../Service/Dictionaries/Models/CategoryModel';
+import FlavorPutModel from '../../Service/Product/Model/FlavorPutModel';
 
 export async function FetchCitiesList(dispatch: any) {
     dispatch({
@@ -31,6 +33,7 @@ export async function FetchFlavorsList(dispatch: any) {
         type: ActionsEnums.LOADING,
     });
     const result = await GetFlavors();
+
     dispatch({
         payload: result,
         type: ActionsEnums.GET_FLAVORS,
@@ -40,7 +43,7 @@ export async function FetchFlavorsList(dispatch: any) {
     });
 }
 
-export async function UpdateFlavor(dispatch: any, flavorId: string, payload: string) {
+export async function UpdateFlavor(dispatch: any, flavorId: string, payload: FlavorPutModel) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
@@ -48,10 +51,10 @@ export async function UpdateFlavor(dispatch: any, flavorId: string, payload: str
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetFlavors();
+    await FetchFlavorsList(dispatch);
 }
 
-export async function CrateFlavor(dispatch: any, payload: string) {
+export async function CrateFlavor(dispatch: any, payload: FlavorPutModel) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
@@ -59,7 +62,7 @@ export async function CrateFlavor(dispatch: any, payload: string) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetFlavors();
+    await FetchFlavorsList(dispatch);
 }
 
 export async function RemoveFlavor(dispatch: any, flavorId: string) {
@@ -70,7 +73,7 @@ export async function RemoveFlavor(dispatch: any, flavorId: string) {
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
-    await GetFlavors();
+    await FetchFlavorsList(dispatch);
 }
 
 export async function FetchCategoriesList(dispatch: any) {
@@ -87,7 +90,7 @@ export async function FetchCategoriesList(dispatch: any) {
     });
 }
 
-export async function CrateCategory(dispatch: any, payload: string) {
+export async function CrateCategory(dispatch: any, payload: CategoryModal) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
@@ -95,10 +98,10 @@ export async function CrateCategory(dispatch: any, payload: string) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetCategories();
+    await FetchCategoriesList(dispatch);
 }
 
-export async function UpdateCategory(dispatch: any, categoryId: string, payload: string) {
+export async function UpdateCategory(dispatch: any, categoryId: string, payload: CategoryModal) {
     dispatch({
         type: ActionsEnums.SAVING,
     });
@@ -106,7 +109,7 @@ export async function UpdateCategory(dispatch: any, categoryId: string, payload:
     dispatch({
         type: ActionsEnums.SAVING,
     });
-    await GetCategories();
+    await FetchCategoriesList(dispatch);
 }
 
 export async function RemoveCategory(dispatch: any, categoryId: string) {
@@ -117,5 +120,5 @@ export async function RemoveCategory(dispatch: any, categoryId: string) {
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
-    await GetCategories();
+    await FetchCategoriesList(dispatch);
 }

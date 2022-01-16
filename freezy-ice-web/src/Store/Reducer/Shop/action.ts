@@ -1,7 +1,9 @@
 import ActionsEnums from '../../../Helpers/enums/ActionsEnum';
 import { CreateRatingModel } from '../../Service/Shop/Models/CreateRatingModel';
+import { FilterModel } from '../../Service/Shop/Models/FilterModel';
 import {
     DislikeShop,
+    GetFilteredShops,
     GetProductList,
     GetRatings,
     GetShopDetails,
@@ -87,13 +89,43 @@ export async function CreateRating(dispatch: any, shopId: number, ratingModel: C
     dispatch({
         type: ActionsEnums.SAVING,
     });
+    await FetchRatings(dispatch, 1, shopId.toString());
 }
-export async function DeleteRating(dispatch: any, shopId: string, ratingId: string) {
+
+export async function DeleteRating(
+    dispatch: any,
+    ratingId: string,
+    currentPage: number,
+    shopId: string,
+) {
     dispatch({
         type: ActionsEnums.PROCESSING,
     });
-    await RemoveRatings(shopId, ratingId);
+    await RemoveRatings(ratingId);
     dispatch({
         type: ActionsEnums.PROCESSING,
+    });
+    await FetchRatings(dispatch, currentPage, shopId);
+}
+
+export async function FetchFilteredShops(dispatch: any, currentPage: number, filter: FilterModel) {
+    dispatch({
+        type: ActionsEnums.LOADING,
+    });
+    const filterUrl: string = `/shops?perPage=${5}&currentPage=${currentPage}${
+        filter.search.length > 0 ? `&search=${filter.search}` : ''
+    }${filter.category !== null ? `&category=${filter.category}` : ''}
+    ${filter.flavor !== null ? `&flavor=${filter.flavor}` : ''}
+    ${filter.priceMin !== null ? `&priceMin=${filter.priceMin * 100}` : ''}
+    ${filter.priceMax !== null ? `&PriceMax=${filter.priceMax * 100}` : ''}
+    ${filter.city ? `&city=${filter.city}` : ''}
+`;
+    const result = await GetFilteredShops(filterUrl);
+    dispatch({
+        payload: result,
+        type: ActionsEnums.GET_SHOPS,
+    });
+    dispatch({
+        type: ActionsEnums.LOADING,
     });
 }

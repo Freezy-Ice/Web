@@ -105,7 +105,7 @@ export default function FlavorsList() {
                     </Table>
                 </TableContainer>
             </Grid>
-            <FlavorModal open={open} close={setOpen} flavor={flavorModal} />
+            {open && <FlavorModal open={open} close={setOpen} flavor={flavorModal} />}
         </Grid>
     );
 }

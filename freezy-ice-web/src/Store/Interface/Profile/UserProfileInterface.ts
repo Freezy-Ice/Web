@@ -3,7 +3,7 @@ interface UserProfileInterface {
     name: string;
     email: string;
     companyAccount: boolean;
-    isAdmin: boolean;
+    adminAccount: boolean;
 }
 
 export interface UserProfileState {

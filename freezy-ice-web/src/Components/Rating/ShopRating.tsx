@@ -10,6 +10,7 @@ import UserProfileInterface from '../../Store/Interface/Profile/UserProfileInter
 import { useAppDispatch, useAppSelector } from '../../Store';
 import { userProfileState } from '../../Store/selectors';
 import { DeleteRating } from '../../Store/Reducer/Shop/action';
+import { FetchUserInfos } from '../../Store/Reducer/Auth/action';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,9 +44,11 @@ export default function ShopRating(props: IDefaultProps) {
     const classes = useStyles();
     const dispatch = useAppDispatch();
 
+    console.log(user);
+
     const handleRemoveRating = () => {
         if (id) {
-            DeleteRating(dispatch, id, rating.id.toString());
+            DeleteRating(dispatch, rating.id.toString(), 1, id);
         }
     };
 
@@ -59,9 +62,9 @@ export default function ShopRating(props: IDefaultProps) {
             </Paper>
             <Paper sx={{ p: '3' }}>
                 <h4 className={classes.text}>{rating.comment}</h4>
-                {/* {user === null || user.data.isAdmin === false ? null : ( */}
-                <Button onClick={handleRemoveRating}>Usuń</Button>
-                {/* )} */}
+                {user === null || user.data.adminAccount === false ? null : (
+                    <Button onClick={handleRemoveRating}>Usuń</Button>
+                )}
                 <h5 className={classes.createdAt}>{rating.createdAt}</h5>
             </Paper>
         </div>

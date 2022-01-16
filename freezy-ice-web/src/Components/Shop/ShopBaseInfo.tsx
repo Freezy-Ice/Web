@@ -8,11 +8,10 @@ import { useTranslation } from 'react-i18next';
 import '../../Helpers/translations/i18n';
 
 import { ShopDetailsInterface } from '../../Store/Interface/Shop/ShopInterface';
-import { DateTimeFormatEnum } from '../../Helpers/enums';
-import { stringDateFormat } from '../../Helpers/date';
 import { PostLikeAndDislikeShop } from '../../Store/Reducer/Shop/action';
-import { useAppDispatch } from '../../Store';
+import { useAppDispatch, useAppSelector } from '../../Store';
 import MapModal from '../Modals/MapModal';
+import { userState } from '../../Store/selectors';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,6 +70,9 @@ export default function ShopBaseInfo(props: IDefaultProps) {
     const [openMap, setOpenMap] = React.useState(false);
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
+    const userInfo = useAppSelector(userState);
+
+    console.log(shop);
 
     const handleFavourite = () => {
         PostLikeAndDislikeShop(dispatch, shop.id.toString(), shop.favourite);
@@ -99,13 +101,15 @@ export default function ShopBaseInfo(props: IDefaultProps) {
                             <Button onClick={() => setOpenMap(true)}>
                                 <MapTwoToneIcon fontSize="large" color="action" />
                             </Button>
-                            <IconButton size="large" onClick={() => handleFavourite()}>
-                                {shop.favourite ? (
-                                    <FavoriteIcon style={{ fill: 'red' }} />
-                                ) : (
-                                    <FavoriteIcon />
-                                )}
-                            </IconButton>
+                            {userInfo !== null && (
+                                <IconButton size="large" onClick={() => handleFavourite()}>
+                                    {shop.favourite ? (
+                                        <FavoriteIcon style={{ fill: 'red' }} />
+                                    ) : (
+                                        <FavoriteIcon />
+                                    )}
+                                </IconButton>
+                            )}
                         </div>
                     </Grid>
                 </Grid>

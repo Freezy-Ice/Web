@@ -8,6 +8,12 @@ export const categoriesState = (state: RootState) => state.dictionaryState.categ
 export const citiesState = (state: RootState) => state.dictionaryState.citiesListState;
 export const flavorsState = (state: RootState) => state.dictionaryState.flavorsListState;
 export const ratingsState = (state: RootState) => state.shopState.ratingsListState;
+export const tokenState = (state: RootState) => state.authState.tokenState;
+export const businessShopDetailsState = (state: RootState) => state.businessShopState.shopDetails;
+export const businessShopState = (state: RootState) => state.businessShopState.shopsListState;
+export const businessProductState = (state: RootState) => state.businessShopState.productListState;
+export const imageState = (state: RootState) => state.businessShopState.imageState;
+export const userState = (state: RootState) => state.authState.userState;
 export const userProfileState = (state: RootState) => state.profileState.userProfileState;
 export const userFavouriteShopsState = (state: RootState) => state.profileState.favouriteShopsState;
 export const userRatingsState = (state: RootState) => state.profileState.ratingState;

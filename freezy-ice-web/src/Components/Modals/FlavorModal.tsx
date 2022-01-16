@@ -19,10 +19,11 @@ export default function FlavorModal(props: IDefaultProps) {
 
     const handleAddOrUpdateFlavor = (flavorId: number | undefined) => {
         if (flavorId) {
-            UpdateFlavor(dispatch, flavorId.toString(), flavorName);
+            UpdateFlavor(dispatch, flavorId.toString(), { name: flavorName });
         } else {
-            CrateFlavor(dispatch, flavorName);
+            CrateFlavor(dispatch, { name: flavorName });
         }
+        close(false);
     };
 
     return (
@@ -54,7 +55,7 @@ export default function FlavorModal(props: IDefaultProps) {
                         autoComplete="flavor"
                         autoFocus
                         value={flavorName}
-                        onChange={(event) => setFlavorName(event.target.value as string)}
+                        onChange={(event: any) => setFlavorName(event.target.value as string)}
                     />
                     <Button variant="outlined" onClick={() => handleAddOrUpdateFlavor(flavor?.id)}>
                         Zapisz

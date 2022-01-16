@@ -12,6 +12,13 @@ import { NavLink } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Autocomplete, Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, useAppSelector } from '../../Store';
+import { AddShop } from '../../Store/Reducer/BusinessShop/action';
+import { FetchCitiesList } from '../../Store/Reducer/Dictionaries/action';
+import { citiesState } from '../../Store/selectors';
+import { OpeningHoursInterface } from '../../Store/Interface/BusinessShop/ShopInterface';
+import CreateShopModel from '../../Store/Service/BusinessShop/Models/CreateShopModel';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -30,16 +37,22 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Registration() {
     const classes = useStyles();
-    const [cities] = React.useState([
-        { label: 'Legnica' },
-        { label: 'Wrocław' },
-        { label: 'Sosnowiec' },
-    ]);
-
     const [name, setName] = React.useState('');
-    const [cityName, setCityName] = React.useState('');
+    const [cityId, setCityId] = React.useState<number | undefined>(0);
     const [street, setStreet] = React.useState('');
     const [descryption, setDescryption] = React.useState('');
+    const dispatch = useAppDispatch();
+    const cities = useAppSelector(citiesState);
+    const { t } = useTranslation();
+
+    const handleAddShop = () => {
+        if (cityId) AddShop(dispatch, new CreateShopModel(name, cityId, street, descryption), 1);
+    };
+    React.useEffect(() => {
+        if (cities === null) {
+            FetchCitiesList(dispatch);
+        }
+    }, [cities, dispatch]);
 
     /* eslint-disable react/jsx-props-no-spreading */
     return (
@@ -62,68 +75,34 @@ export default function Registration() {
                                 label="Nazwa lodziarni"
                                 name="name"
                                 autoComplete="name"
-                                onChange={(event) => setName(event.target.value as string)}
+                                onChange={(event: any) => setName(event.target.value as string)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Autocomplete
-                                sx={{ mb: '3px' }}
-                                disablePortal
-                                id="combo-box"
-                                options={cities}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Miasto"
-                                        onChange={(event) =>
-                                            setCityName(event.target.value as string)
-                                        }
-                                    />
-                                )}
-                            />
+                            {cities && (
+                                <Autocomplete
+                                    sx={{ mb: '3px' }}
+                                    disablePortal
+                                    id="combo-box"
+                                    options={cities!.data}
+                                    getOptionLabel={(option) => option.name}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label={t('city')} />
+                                    )}
+                                    onChange={(event, newValue) => setCityId(newValue?.id)}
+                                />
+                            )}
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 required
                                 fullWidth
                                 name="street"
-                                label="Ulica"
+                                label="Ulica, numer"
                                 type="street"
                                 id="street"
                                 autoComplete="new-street"
-                                onChange={(event) => setStreet(event.target.value as string)}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="time"
-                                label="Otwarte od"
-                                type="time"
-                                defaultValue="07:00"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                inputProps={{
-                                    step: 300, // 5 min
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="time"
-                                label="Otwarte do"
-                                type="time"
-                                defaultValue="18:00"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                inputProps={{
-                                    step: 300, // 5 min
-                                }}
+                                onChange={(event: any) => setStreet(event.target.value as string)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -135,11 +114,13 @@ export default function Registration() {
                                 type="descryption"
                                 id="descryption"
                                 autoComplete="new-descryption"
-                                onChange={(event) => setDescryption(event.target.value as string)}
+                                onChange={(event: any) =>
+                                    setDescryption(event.target.value as string)
+                                }
                             />
                         </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained">
+                    <Button fullWidth variant="contained" onClick={handleAddShop}>
                         Zarejestuj
                     </Button>
                 </Box>

@@ -5,12 +5,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Checkbox from '@mui/material/Checkbox';
 import { NavLink } from 'react-router-dom';
 import { Theme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
+import { FormControlLabel } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -33,14 +34,17 @@ export default function Registration() {
     const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [checked, setChecked] = React.useState(false);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+    };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box className={classes.box}>
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} />
                 <Typography component="h1" variant="h5">
                     Zarejestruj się
                 </Typography>
@@ -92,18 +96,31 @@ export default function Registration() {
                                 onChange={(event) => setPassword(event.target.value as string)}
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={checked}
+                                        onChange={handleChange}
+                                        inputProps={{ 'aria-label': 'controlled' }}
+                                    />
+                                }
+                                label="Konto firmowe"
+                            />
+                        </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained">
+                    <Button fullWidth variant="contained">
                         Zarejestruj
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <NavLink to="/" activeStyle={{ color: '#81E2DC' }}>
-                                Zarejestruj własną lodziarnię
+                    <Grid>
+                        <Grid item pt={2}>
+                            <NavLink
+                                to="/login"
+                                activeStyle={{ color: '#81E2DC' }}
+                                style={{ color: '#81E2DC', textDecoration: 'none' }}
+                            >
+                                Masz już konto? Zaloguj się
                             </NavLink>
-                        </Grid>
-                        <Grid item>
-                            <NavLink to="/login">Masz już konto? Zaloguj się</NavLink>
                         </Grid>
                     </Grid>
                 </Box>
